@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://sealkfc.github.io/sitemap.xml
+Sitemap: https://aaronrhim.github.io/sitemap.xml
