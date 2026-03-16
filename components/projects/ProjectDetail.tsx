@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
-import { ExternalLink, Github, Globe, Link as LinkIcon } from "lucide-react";
+import { ExternalLink, Github, Globe, Link as LinkIcon, Trophy } from "lucide-react";
 import { Project, ProjectLink } from "./ProjectCard";
 // import { motion } from "framer-motion"; // Removed unused motion import related to gallery
 
@@ -131,6 +131,13 @@ export default function ProjectDetail({
             </div>
         </div>
 
+        {project.achievements && (
+          <div className="flex items-center gap-2 mb-6 px-4 py-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 w-fit">
+            <Trophy className="w-4 h-4 text-amber-400 shrink-0" />
+            <span className="text-sm font-medium text-amber-300">{project.achievements}</span>
+          </div>
+        )}
+
         <div className="prose prose-invert prose-lg max-w-none text-muted-foreground mb-8">
           <p className="leading-relaxed">
             {project.longDescription || project.description}
@@ -142,9 +149,9 @@ export default function ProjectDetail({
             <h4 className="text-sm font-bold uppercase tracking-wider text-primary mb-4">Key Features</h4>
             <ul className="space-y-3">
               {project.features.map((f, i) => (
-                <li key={i} className="flex gap-3 text-white/80">
-                   <span className="text-primary mt-1.5">•</span>
-                   <span>{f}</span>
+                <li key={i} className="flex items-start gap-3 text-white/80">
+                   <span className="inline-block w-1.5 h-1.5 rounded-full bg-primary mt-2 shrink-0" />
+                   <span className="text-sm leading-relaxed">{f}</span>
                 </li>
               ))}
             </ul>

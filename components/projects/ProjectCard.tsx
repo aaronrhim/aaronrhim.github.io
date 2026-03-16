@@ -22,6 +22,7 @@ export interface Project {
   extendingImages?: string[]; // Images that "pop out" of the card
   longDescription?: string;
   features?: string[];
+  achievements?: string;
 }
 
 interface ProjectCardProps {

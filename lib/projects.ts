@@ -3,9 +3,15 @@ export const PROJECTS = [
   {
     id: "engine",
     title: "3D Simulation Engine",
-    description: "Built a custom knock-off matlab with movement mechanics all in Java.",
-    longDescription: "I built a physics engine built from scratch in Java that simulates scalar fields and has the capability to visualize Machine Learning algorithms and functions. This application will allow users to input a scalar field (xy function wrt z) and visualize multiple ML algorithms in a 3D space. I implemented a camera controller after taking MATH 200 (Multivariable Calculus) and multithreading (simple concurrency) after taking CPSC 313 (Computer Hardware and Operating Systems).",
-    features: ["Custom Physics implementation", "Custom virtualization & rasterization", "Visualize gradient descent", "Visualize K-Nearest Neighbobrs"],
+    description: "A from-scratch physics engine in Java for visualizing scalar fields and ML algorithms in 3D.",
+    longDescription: "A physics engine built entirely from scratch in Java, designed to simulate scalar fields and visualize machine learning algorithms in three-dimensional space. Users can input scalar fields (functions of x and y mapped to z) and observe ML algorithms such as gradient descent and K-Nearest Neighbors rendered in real time. The project incorporates a custom camera controller informed by multivariable calculus (MATH 200) and leverages multithreading for concurrent rendering, drawing on concepts from computer hardware and operating systems (CPSC 313).",
+    features: [
+      "Custom physics simulation from scratch",
+      "Software-based rasterization and rendering pipeline",
+      "Interactive 3D visualization of gradient descent",
+      "K-Nearest Neighbors spatial visualization",
+      "Multithreaded rendering with custom camera controls",
+    ],
     image: "/images/thumbnails/3dengine.png",
     tags: ["Java"],
     links: [
@@ -26,9 +32,15 @@ export const PROJECTS = [
   {
     id: "rememberme",
     title: "Remember Me",
-    description: "Attachable AI-powered camera and speaking memory aid for Alzheimers' patients.",
-    longDescription: "Started off as an idea to \"screw over meta glasses,\" we quickly realized that was a huge goal. We created an attachable memory aid for Alzheimers' patients so that they can remember their loved ones. All you need to do is simply attach it to your glasses, get your family to set it up with detailed instructions, and it will start capturing your memories and familiars right there! The backend uses AWS Rekognition to recognize passerbyes in which we made it so that the attachment will announce the familiar's name when the patient walks near.",
-    features: ["AWS Rekognition for facial recognition", "ElevenLabs for natural text-to-speech", "OpenAI API for memory summarization", "ExpoGo for cross-platform mobile app"],
+    description: "An attachable AI-powered camera that helps Alzheimer's patients recognize and remember their loved ones.",
+    longDescription: "Remember Me is a wearable memory aid designed for Alzheimer's patients. The device attaches to a pair of glasses and continuously captures the wearer's surroundings. When a recognized individual approaches, the system announces their name and relationship context through a built-in speaker. The backend leverages AWS Rekognition for real-time facial recognition, ElevenLabs for natural-sounding text-to-speech output, and OpenAI's API for summarizing and contextualizing stored memories. Family members configure the device through a cross-platform mobile app built with Expo and React Native, backed by Firebase and DynamoDB for persistent storage.",
+    features: [
+      "Real-time facial recognition via AWS Rekognition",
+      "Natural text-to-speech announcements with ElevenLabs",
+      "Memory summarization and contextualization using OpenAI API",
+      "Cross-platform companion app built with Expo and React Native",
+      "Cloud storage with Firebase, AWS S3, and DynamoDB",
+    ],
     image: "/images/thumbnails/rememberme.png",
     tags: ["ExpoGo", "React Native", "Firebase", "ElevenLabs", "OpenAI API", "AWS Rekognition", "AWS S3", "DynamoDB"],
     links: [
@@ -57,9 +69,15 @@ export const PROJECTS = [
   {
     id: "grannyai",
     title: "Granny AI",
-    description: "An agent that helps your grandma navigate her technology.",
-    longDescription: "Built as an Electron app, we created a workflow that allowed ElevenLabs and Gemini to control your mouse and navigate your computer. It was initially designed to only have those campabilities but due to some really bad buffering, we had to switch to using a combination of playwright and Gemini to give the AI access to mode features (opening apps and accessing websites) at the cost of full mouse movement/usage.",
-    features: ["Agentic Workflow with ElevenLabs and Gemini", "Electron App for cross-platform compatibility", "Playwright for web navigation", "Text-to-Speech with ElevenLabs"],
+    description: "An AI-powered desktop agent that helps elderly users navigate their computer through voice commands.",
+    longDescription: "Granny AI is an Electron-based desktop application that enables elderly users to operate their computers through natural voice interaction. The system combines ElevenLabs for speech synthesis and Gemini for intent understanding and action planning. Initially built with full mouse control capabilities, the architecture was refined to use Playwright for web navigation and application launching, improving reliability and expanding the range of supported interactions. The result is a voice-first interface that bridges the gap between complex desktop software and users who may not be comfortable with traditional input methods.",
+    features: [
+      "Agentic workflow powered by ElevenLabs and Gemini",
+      "Cross-platform Electron desktop application",
+      "Automated web navigation via Playwright",
+      "Natural voice interaction with text-to-speech feedback",
+      "Real-time communication via SocketIO",
+    ],
     image: "/images/thumbnails/grandbuddy.png",
     tags: ["Gemini API", "ElevenLabs", "Playwright", "Electron", "React", "Bun", "TypeScript", "Vercel", "SocketIO"],
     links: [
@@ -88,9 +106,15 @@ export const PROJECTS = [
   {
     id: "lecruiter",
     title: "LeCruiter AI",
-    description: "AI-powered platform enabling users to practice both behavioral and technical interviews, delivering generative prompts, realistic feedback, and automated scoring.",
-    longDescription: "I'm not ashamed to admit it. This was by far, the most fun I've ever had in a hackathon. While it was hosted by AWS and was pretty competitive to get into, my team spontaneously decided that \"if we can't win, then we might as well have a good time.\" Designed to aid the interview prep process, LeCruiter AI is a platform for practicing both behavioral and technical interviews. We used AWS Bedrock primarily to power the whole thing and used standard full-stack tools like FastAPI, React, Typescript, and other tools to build the website.",
-    features: ["AWS Bedrock for Generative AI", "FastAPI for backend services", "Tone & Sentiment Analysis for voice", "Automated Scoring Engine"],
+    description: "AI-driven interview preparation platform with generative prompts, real-time feedback, and automated scoring.",
+    longDescription: "LeCruiter AI is a full-stack platform designed to help candidates prepare for both behavioral and technical interviews. Built at an AWS-hosted hackathon, the application uses AWS Bedrock to generate contextual interview questions, analyze candidate responses in real time, and provide actionable feedback with automated scoring. The platform includes tone and sentiment analysis to evaluate delivery alongside content quality. The backend is powered by FastAPI with a React and TypeScript frontend, providing a responsive and intuitive practice environment.",
+    features: [
+      "Generative interview prompts via AWS Bedrock",
+      "Real-time tone and sentiment analysis on voice responses",
+      "Automated scoring engine with detailed feedback",
+      "FastAPI backend with RESTful service architecture",
+      "Responsive React frontend with TypeScript",
+    ],
     image: "/images/thumbnails/lecruiter.png",
     tags: ["React", "TailwindCSS", "AWS Bedrock", "Python", "FastAPI"],
     links: [
@@ -115,9 +139,15 @@ export const PROJECTS = [
   {
     id: "portfolio",
     title: "Portfolio Website",
-    description: "The very website that you are looking at. Built with Next.js, Supabase, Framer Motion, React, and RESTful API.",
-    longDescription: "I built this website mainly to share my projects and experiences with others but also to show people more about myself and my personality. My main feature is the \"earnings\" gimmick which was created to incentivize users to read more of my website so that they can \"earn more money!\" Of course, this feature is still in development and I eventually want to incorporate some sort of spending mechanic but for now, I'm going to leave it as it is. The website is built with Next.js for server-side rendering, Supabase for client-side persistence, Framer Motion for animations, and React for the overall structure.",
-    features: ["Gamified currency system", "Next.js for server-side rendering", "Supabase for client-side persistence", "Framer Motion for animations", "RESTful API for backend services"],
+    description: "A personal portfolio featuring gamified engagement, server-side rendering, and smooth animations.",
+    longDescription: "This portfolio website was designed to showcase projects and experiences while reflecting a bit of personality through interactive design. The standout feature is a gamified currency system that rewards visitors for exploring different sections of the site. Built with Next.js for server-side rendering and optimized performance, Supabase for client-side data persistence, and Framer Motion for fluid page transitions and micro-interactions. The architecture follows RESTful conventions with a clean separation between presentation and data layers.",
+    features: [
+      "Gamified currency system to incentivize exploration",
+      "Server-side rendering with Next.js",
+      "Client-side persistence via Supabase",
+      "Fluid animations and transitions with Framer Motion",
+      "RESTful API architecture",
+    ],
     image: "/images/thumbnails/websitethumbnail.png",
     tags: ["React", "TailwindCSS", "Next.js", "Framer Motion", "TypeScript", "Supabase", "Prettier"],
     links: [
@@ -145,13 +175,15 @@ export const PROJECTS = [
   {
     id: "aigymtrainer",
     title: "Get Swole",
-    description: "AI-powered gym trainer that analyzes your workout form in real-time to ensure every rep counts.",
-    longDescription: "This hackathon marked the beginning of my journey as a Computer Scientist. I was alone, hungry (lived off of chocolate for 48 hours), yet dedicated (somehow) to winning the hackathon. While it may have been small, I wanted to prove to myself that I can do anything. Going into this hackathon, I had never used Node.JS before (and chatGPT, still being in the GPT-4 phase, was the equivalent to almost useless). I also had never done a hackathon before, never used Vite before, or Next.js, FastAPI, SocketIO (a form of websockets that I randomly found), or had done any practical Computer Vision (of course I came from a background in AI so that's why I chose Comptuter Vision as my first project). Anyways, Get Swole took quite the toll on me and as you can see in the images to the right, I looked anything but clean. In the end, yes, through it all, I was able to secure 3rd-place and awards for Best Solo Hack and Best First Hack.",
+    description: "Real-time AI workout coach that analyzes exercise form using computer vision and provides instant feedback.",
+    longDescription: "Get Swole is a real-time workout form analyzer built as a solo project at my first hackathon. The application uses MediaPipe for pose estimation to track body positioning during exercises, paired with a custom machine learning model that verifies repetition quality and counts. The full-stack architecture connects a FastAPI backend handling computer vision processing with a React frontend delivering immediate visual feedback on form corrections. The project earned 3rd place overall along with awards for Best Solo Hack and Best First Hack.",
+    achievements: "3rd Place Overall | Best Solo Hack | Best First Hack",
     features: [
-      "Real-Time Pose Estimation via MediaPipe",
-      "Custom ML model for Repetition Verification",
-      "Full-stack Integration (FastAPI & React)",
-      "Near Instant Visual Feedback on Form"
+      "Real-time pose estimation via MediaPipe",
+      "Custom ML model for repetition counting and verification",
+      "Full-stack architecture with FastAPI and React",
+      "Instant visual feedback on exercise form",
+      "Low-latency video processing pipeline",
     ],
     image: "/images/thumbnails/get-swole.png",
     tags: ["MediaPipe", "Python", "FastAPI", "React", "Next.js", "Machine Learning"],
@@ -177,14 +209,14 @@ export const PROJECTS = [
   {
     id: "fact",
     title: "F.A.C.T",
-    description: "AR-powered virtual try-on platform that lets users visualize fabric patterns and clothing designs in real-time.",
-    longDescription: "F.A.C.T (Felix, Aaron, Charlotte, Tyra) was created by one computer scientist, two electrical engineers, and one mechie. Bonded by the memories we gained (being part of the Aerial Robotics and Rocketry Club at UBC), we really had no sense of fashion (as you can see from the UI on the right). I don't really know what drove us to do a fashion app but it was fun nonetheless. This app was built with MediaPipe to do real-time pose estimation and OpenCV to do the fabric pattern overlay. We also built a Flask-based web interface that used SocketIO to provide low-latency feedback to the user. And finally, I'd like to accredit all of the UI to Tyra, one of our electrical engineers, who designed the whole thing in Google Slides!",
+    description: "AR-powered virtual try-on platform for visualizing fabric patterns and clothing designs in real time.",
+    longDescription: "F.A.C.T (Felix, Aaron, Charlotte, Tyra) is an augmented reality virtual try-on platform built by a cross-disciplinary team of computer science and engineering students from UBC's Aerial Robotics and Rocketry Club. The application uses MediaPipe for real-time body pose estimation and OpenCV for dynamic fabric pattern overlay, allowing users to visualize how different materials and designs would look on their body. A Flask-based web interface with SocketIO provides low-latency video streaming and interaction. The system automatically handles pattern scaling, tiling, and positioning to create a realistic preview of garments.",
     features: [
-      "Real-time AR clothing overlay using MediaPipe",
+      "Real-time AR clothing overlay using MediaPipe pose estimation",
       "Dynamic fabric pattern swapping and tiling with OpenCV",
-      "Interactive pattern viewing portal and catalog",
-      "Flask-based web interface with SocketIO for low-latency feedback",
-      "Automated pattern scaling and positioning"
+      "Interactive pattern catalog with live preview",
+      "Low-latency web interface via Flask and SocketIO",
+      "Automated pattern scaling and body-aware positioning",
     ],
     image: "/images/thumbnails/factthumbnail.png",
     tags: ["Python", "Flask", "OpenCV", "MediaPipe", "NumPy", "SocketIO", "JavaScript", "BeautifulSoup"],
