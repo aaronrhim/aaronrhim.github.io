@@ -65,19 +65,19 @@ export default function ExperienceDetail({
   const links = experience.links || [];
 
   return (
-    <div className="flex flex-col md:grid md:grid-cols-[1.5fr_1fr] h-full bg-card/95 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
-      
+    <div className="flex flex-col md:grid md:grid-cols-[1.5fr_1fr] h-full bg-card/95 backdrop-blur-xl border border-white/10 sm:rounded-2xl overflow-hidden">
+
       {/* LEFT COLUMN: Narrative & Details */}
-      <div className="flex flex-col h-full overflow-y-auto p-6 md:p-10 order-2 md:order-1 scrollbar-hide relative">
+      <div className="flex flex-col h-full overflow-y-auto p-4 sm:p-6 md:p-10 order-2 md:order-1 scrollbar-hide relative">
         
         {/* Header Section */}
-        <div className="mb-8 border-b border-white/10 pb-6">
-            <div className="flex items-center gap-4 mb-4">
-                 <div className="relative w-16 h-16 rounded-xl bg-white/5 p-2 border border-white/10">
-                     <Image src={experience.badge} alt={experience.company} fill className="object-contain p-2" />
+        <div className="mb-6 sm:mb-8 border-b border-white/10 pb-4 sm:pb-6">
+            <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
+                 <div className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-xl bg-white/5 p-1.5 sm:p-2 border border-white/10">
+                     <Image src={experience.badge} alt={experience.company} fill className="object-contain p-1.5 sm:p-2" />
                  </div>
                  <div>
-                     <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-white glow-text">
+                     <h2 className="text-xl sm:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-white glow-text">
                         {experience.company}
                      </h2>
                      {experience.location && (
@@ -89,11 +89,11 @@ export default function ExperienceDetail({
                  </div>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-4">
-                 <div className="text-xl font-medium text-white/90">
+            <div className="flex flex-wrap items-center justify-between gap-2 sm:gap-4">
+                 <div className="text-base sm:text-xl font-medium text-white/90">
                     {experience.role}
                  </div>
-                 <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-bold tracking-wide">
+                 <div className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs sm:text-sm font-bold tracking-wide">
                     {experience.dates}
                  </div>
             </div>
@@ -121,9 +121,9 @@ export default function ExperienceDetail({
         </div>
 
         {/* Short & Long Description */}
-        <div className="prose prose-invert max-w-none mb-8">
+        <div className="prose prose-invert max-w-none mb-6 sm:mb-8">
             <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-2">Overview</h4>
-            <p className="text-lg leading-relaxed text-white/80">
+            <p className="text-base sm:text-lg leading-relaxed text-white/80">
                 {experience.longDescription || experience.description}
             </p>
         </div>
@@ -160,7 +160,7 @@ export default function ExperienceDetail({
       </div>
 
       {/* RIGHT COLUMN: Gallery */}
-      <div className="h-64 md:h-full bg-black/40 relative overflow-hidden order-1 md:order-2 border-b md:border-b-0 md:border-l border-white/10">
+      <div className="h-48 sm:h-64 md:h-full bg-black/40 relative overflow-hidden order-1 md:order-2 border-b md:border-b-0 md:border-l border-white/10">
          {experience.gallery && experience.gallery.length > 0 ? (
              <Gallery images={experience.gallery} />
          ) : (

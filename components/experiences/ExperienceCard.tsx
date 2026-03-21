@@ -84,11 +84,11 @@ export default function ExperienceCard({ experience, onClick, index }: Experienc
       })}
 
       <div className="relative z-10 w-full overflow-hidden rounded-xl border border-white/10 bg-card/10 p-0 backdrop-blur-sm transition-all duration-300 hover:bg-card/20 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
-         
-        <div className={`flex flex-col md:flex-row min-h-[250px] ${!isEven ? 'md:flex-row-reverse' : ''}`}>
-             
+
+        <div className={`flex flex-col md:flex-row min-h-[200px] md:min-h-[250px] ${!isEven ? 'md:flex-row-reverse' : ''}`}>
+
             {/* Thumbnail Section */}
-            <div className="relative w-full md:w-[40%] h-48 md:h-auto overflow-hidden group-hover:brightness-110 transition-all duration-500">
+            <div className="relative w-full md:w-[40%] h-36 sm:h-48 md:h-auto overflow-hidden group-hover:brightness-110 transition-all duration-500">
                 {experience.thumbnail ? (
                     <Image 
                         src={experience.thumbnail} 
@@ -107,11 +107,11 @@ export default function ExperienceCard({ experience, onClick, index }: Experienc
             </div>
          
             {/* Content Section */}
-            <div className="relative z-10 flex-1 flex flex-col justify-center gap-4 p-6 md:p-8">
+            <div className="relative z-10 flex-1 flex flex-col justify-center gap-3 sm:gap-4 p-4 sm:p-6 md:p-8">
                 {/* Header: Logo & Role */}
-                <div className="flex items-start justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                    <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-xl bg-white/5 p-2 border border-white/10">
+                <div className="flex items-start justify-between gap-3 sm:gap-4">
+                    <div className="flex items-center gap-3 sm:gap-4">
+                    <div className="relative h-10 w-10 sm:h-14 sm:w-14 flex-shrink-0 overflow-hidden rounded-xl bg-white/5 p-1.5 sm:p-2 border border-white/10">
                         <Image
                         src={experience.badge}
                         alt={experience.company}
@@ -120,17 +120,17 @@ export default function ExperienceCard({ experience, onClick, index }: Experienc
                         />
                     </div>
                     <div>
-                        <h3 className="text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
+                        <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
                         {experience.role}
                         </h3>
-                        <div className="flex items-center gap-2 mt-1">
-                            <span className="text-base font-medium text-white/80">{experience.company}</span>
+                        <div className="flex items-center gap-2 mt-0.5 sm:mt-1">
+                            <span className="text-sm sm:text-base font-medium text-white/80">{experience.company}</span>
                         </div>
                     </div>
                     </div>
-                    
-                    {/* Arrow Icon */}
-                    <div className="flex h-10 w-10 -translate-y-2 translate-x-2 items-center justify-center rounded-full bg-white/5 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 text-primary border border-white/10">
+
+                    {/* Arrow Icon - hidden on mobile, shown on hover for desktop */}
+                    <div className="hidden sm:flex h-10 w-10 -translate-y-2 translate-x-2 items-center justify-center rounded-full bg-white/5 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 text-primary border border-white/10">
                     <ArrowRight className="h-5 w-5" />
                     </div>
                 </div>
@@ -147,8 +147,8 @@ export default function ExperienceCard({ experience, onClick, index }: Experienc
                 </div>
 
                 {/* Snippet */}
-                <div className="pt-2">
-                    <p className="text-base text-gray-300 line-clamp-3 leading-relaxed">
+                <div className="pt-1 sm:pt-2">
+                    <p className="text-sm sm:text-base text-gray-300 line-clamp-2 sm:line-clamp-3 leading-relaxed">
                     {experience.description || (experience.bullets.length > 0 ? experience.bullets[0].replace(/\[\[.*?\|(.*?)\]\]/g, '$1') : "")}
                     </p>
                 </div>

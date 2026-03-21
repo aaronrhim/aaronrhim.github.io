@@ -170,7 +170,7 @@ export default function ExperienceSection() {
       >
         <div className="mx-auto max-w-5xl">
             {items.length > 0 ? (
-                <div className="flex flex-col gap-8 md:gap-12 px-4">
+                <div className="flex flex-col gap-5 sm:gap-8 md:gap-12 px-0 sm:px-4">
                   {items.map((item, index) => (
                      <div key={item.id} className="w-full">
                        <ExperienceCard 

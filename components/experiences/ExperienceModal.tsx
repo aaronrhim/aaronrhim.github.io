@@ -28,7 +28,7 @@ export default function ExperienceModal({ experience, onClose }: ExperienceModal
 
           {/* Modal */}
           <motion.div
-            className="fixed inset-4 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-[90vw] md:max-w-6xl md:h-[85vh] z-50 rounded-3xl overflow-hidden shadow-2xl"
+            className="fixed inset-0 sm:inset-4 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-[90vw] md:max-w-6xl md:h-[85vh] z-50 rounded-none sm:rounded-3xl overflow-hidden shadow-2xl"
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
