@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import AnimatedBalance from "@/components/AnimatedBalance";
 import { useMoney } from "@/lib/money-context";
 
@@ -14,6 +15,7 @@ export default function Header() {
   const accumulatedDown = useRef(0);
 
   const [visible, setVisible] = useState(true);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   // Tune these to taste
   const SHOW_AFTER_UP_PX = 20;     // how much upward scroll triggers showing
@@ -63,42 +65,99 @@ export default function Header() {
     }
   });
 
-  return (
-    <motion.header
-      initial={false}
-      animate={visible ? "shown" : "hidden"}
-      variants={{
-        shown: { y: 0, opacity: 1 },
-        hidden: { y: -120, opacity: 0 },
-      }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-      className="fixed left-0 right-0 top-0 z-[100] flex justify-center pl-40"
-    >
-      <div className="w-full max-w-5xl rounded-b-2xl rounded-t-none border-x border-b border-white/60 border-t-0 bg-[var(--background)]">
-        <div className="flex items-center justify-between px-6 py-4 text-white">
+  const navLinks = [
+    { href: "/", label: "Home" },
+    { href: "/about", label: "About Me" },
+    { href: "/projects", label: "Projects" },
+    { href: "/resume", label: "Resume" },
+  ];
 
-          <div className="flex items-center w-full">
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-4">
-                <div className="text-base font-bold tracking-tight text-white/90">Balance</div>
-                <div className="flex items-center gap-0.5 font-mono text-xl font-bold tabular-nums tracking-tight text-white relative">
-                   <span className="text-emerald-400 select-none">$</span>
-                   <AnimatedBalance value={money.balance} className="text-lg" />
-                   <RewardPopup />
-                </div>
+  return (
+    <>
+      <motion.header
+        initial={false}
+        animate={visible ? "shown" : "hidden"}
+        variants={{
+          shown: { y: 0, opacity: 1 },
+          hidden: { y: -120, opacity: 0 },
+        }}
+        transition={{ duration: 0.25, ease: "easeOut" }}
+        className="fixed left-0 right-0 top-0 z-[100] flex justify-center md:pl-40"
+      >
+        <div className="w-full max-w-5xl rounded-b-2xl rounded-t-none border-x border-b border-white/60 border-t-0 bg-[var(--background)]">
+          <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 text-white">
+
+            <div className="flex items-center gap-3 sm:gap-4">
+              <div className="text-sm sm:text-base font-bold tracking-tight text-white/90">Balance</div>
+              <div className="flex items-center gap-0.5 font-mono text-lg sm:text-xl font-bold tabular-nums tracking-tight text-white relative">
+                 <span className="text-emerald-400 select-none">$</span>
+                 <AnimatedBalance value={money.balance} className="text-base sm:text-lg" />
+                 <RewardPopup />
               </div>
             </div>
 
-            <nav className="ml-auto flex gap-6 text-base font-bold tracking-tight text-white/90">
-              <a href="/" className="hover:text-white transition-colors">Home</a>
-              <a href="/about" className="hover:text-white transition-colors">About Me</a>
-              <a href="/projects" className="hover:text-white transition-colors">Projects</a>
-              <a href="/resume" className="hover:text-white transition-colors">Resume</a>
+            {/* Desktop nav */}
+            <nav className="hidden md:flex gap-6 text-base font-bold tracking-tight text-white/90">
+              {navLinks.map((link) => (
+                <a key={link.href} href={link.href} className="hover:text-white transition-colors">{link.label}</a>
+              ))}
             </nav>
+
+            {/* Mobile hamburger */}
+            <button
+              type="button"
+              onClick={() => setMenuOpen(true)}
+              className="md:hidden flex items-center justify-center w-10 h-10 rounded-lg text-white/80 active:bg-white/10 transition-colors"
+              aria-label="Open menu"
+            >
+              <Menu className="w-6 h-6" />
+            </button>
           </div>
         </div>
-      </div>
-    </motion.header>
+      </motion.header>
+
+      {/* Full-screen mobile menu */}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[200] bg-[var(--background)] flex flex-col md:hidden"
+          >
+            {/* Close button */}
+            <div className="flex justify-end px-4 py-3">
+              <button
+                type="button"
+                onClick={() => setMenuOpen(false)}
+                className="flex items-center justify-center w-10 h-10 rounded-lg text-white/80 active:bg-white/10 transition-colors"
+                aria-label="Close menu"
+              >
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Nav links */}
+            <nav className="flex flex-col items-center justify-center flex-1 gap-8">
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMenuOpen(false)}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="text-3xl font-bold text-white/90 hover:text-primary transition-colors"
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
 
