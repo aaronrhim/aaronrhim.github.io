@@ -14,7 +14,7 @@ export default function Panel({
         {rightSlot ? <div className="text-white/60 text-sm">{rightSlot}</div> : null}
       </div>
 
-      <div className="mt-4 sm:mt-8 rounded-2xl sm:rounded-3xl border-0 md:border md:border-white/15 bg-black md:bg-white/5 p-3 sm:p-6 md:backdrop-blur">
+      <div className="mt-4 sm:mt-8 rounded-2xl sm:rounded-3xl border-0 md:border md:border-white/15 bg-black md:bg-white/5 p-1.5 sm:p-3 md:p-6 md:backdrop-blur">
         {children}
       </div>
     </div>

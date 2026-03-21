@@ -30,7 +30,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-black`}>
         <MoneyProvider>
           <Header />
-          <main className="mx-auto max-w-5xl px-6 pt-32">{children}</main>
+          <main className="mx-auto max-w-5xl px-2 sm:px-6 pt-32">{children}</main>
         </MoneyProvider>
       </body>
     </html>

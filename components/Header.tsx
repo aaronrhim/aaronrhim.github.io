@@ -83,9 +83,9 @@ export default function Header() {
           hidden: { y: -120, opacity: 0 },
         }}
         transition={{ duration: 0.25, ease: "easeOut" }}
-        className="fixed left-0 right-0 top-0 z-[100] flex justify-center"
+        className="fixed left-0 right-0 top-0 z-[100] flex justify-center px-3 md:px-0"
       >
-        <div className="w-full max-w-5xl rounded-b-2xl rounded-t-none border-x border-b border-white/60 border-t-0 bg-[var(--background)]">
+        <div className="w-full max-w-5xl rounded-2xl md:rounded-b-2xl md:rounded-t-none border border-white/60 md:border-x md:border-b md:border-t-0 bg-[var(--background)] mt-2 md:mt-0">
           <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 text-white">
 
             <div className="flex items-center gap-3 sm:gap-4">
