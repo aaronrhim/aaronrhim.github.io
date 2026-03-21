@@ -69,6 +69,12 @@ const EXPERIENCES: Experience[] = [
         "/images/rover1.png",
         "/images/rover2.jpeg",
         "/images/rover3.mp4",
+        "/images/rover4.mp4",
+        "/images/rover5.mp4",
+        "/images/rover6.png",
+        "/images/rover7.png",
+        "/images/rover8.png",
+        "/images/rover9.mp4"
     ],
     extendingImages: [
         "/images/rover1.png",
