@@ -83,7 +83,7 @@ export default function Header() {
           hidden: { y: -120, opacity: 0 },
         }}
         transition={{ duration: 0.25, ease: "easeOut" }}
-        className="fixed left-0 right-0 top-0 z-[100] flex justify-center md:pl-40"
+        className="fixed left-0 right-0 top-0 z-[100] flex justify-center"
       >
         <div className="w-full max-w-5xl rounded-b-2xl rounded-t-none border-x border-b border-white/60 border-t-0 bg-[var(--background)]">
           <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 text-white">
