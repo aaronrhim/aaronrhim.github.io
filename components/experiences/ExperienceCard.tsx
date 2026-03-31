@@ -10,6 +10,11 @@ export interface ExperienceLink {
   label: string; 
 }
 
+export interface ExperienceSection {
+  title: string;
+  body: string;
+}
+
 export interface Experience {
   id: string;
   role: string;
@@ -21,6 +26,7 @@ export interface Experience {
   thumbnail?: string;
   extendingImages?: string[];
   bullets: string[];
+  sections?: ExperienceSection[];
   gallery?: string[];
   skills?: string[];
   links?: ExperienceLink[];

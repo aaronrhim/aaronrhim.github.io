@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Experience, ExperienceLink } from "./ExperienceCard";
+import { Experience, ExperienceLink, ExperienceSection } from "./ExperienceCard";
 import { ExternalLink, Github, Globe, Linkedin, MapPin } from "lucide-react";
 import Image from "next/image";
 import { renderWithRedText } from "@/lib/formatting";
@@ -122,17 +122,28 @@ export default function ExperienceDetail({
             </p>
           </div>
 
-          {/* Bullets */}
+          {/* Sections or Bullets */}
           <div className="mb-6">
             <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-4">Key Achievements & Impact</h4>
-            <ul className="space-y-4">
-              {experience.bullets.map((b, i) => (
-                <li key={i} className="flex gap-3 text-muted-foreground group">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary/50 mt-2.5 group-hover:bg-primary transition-all"></span>
-                  <div className="leading-relaxed">{renderWithRedText(b)}</div>
-                </li>
-              ))}
-            </ul>
+            {experience.sections ? (
+              <div className="space-y-5">
+                {experience.sections.map((s, i) => (
+                  <div key={i}>
+                    <h5 className="text-sm font-semibold text-white/90 mb-1">{s.title}</h5>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{s.body}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <ul className="space-y-4">
+                {experience.bullets.map((b, i) => (
+                  <li key={i} className="flex gap-3 text-muted-foreground group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/50 mt-2.5 group-hover:bg-primary transition-all"></span>
+                    <div className="leading-relaxed">{renderWithRedText(b)}</div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           {/* Skills */}
@@ -223,17 +234,28 @@ export default function ExperienceDetail({
             </p>
           </div>
 
-          {/* Bullets */}
+          {/* Sections or Bullets */}
           <div className="mb-8">
             <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-4">Key Achievements & Impact</h4>
-            <ul className="space-y-4">
-              {experience.bullets.map((b, i) => (
-                <li key={i} className="flex gap-3 text-muted-foreground group">
-                  <span className="w-1.5 h-1.5 rounded-full bg-primary/50 mt-2.5 group-hover:bg-primary group-hover:shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)] transition-all"></span>
-                  <div className="leading-relaxed">{renderWithRedText(b)}</div>
-                </li>
-              ))}
-            </ul>
+            {experience.sections ? (
+              <div className="space-y-6">
+                {experience.sections.map((s, i) => (
+                  <div key={i}>
+                    <h5 className="text-base font-semibold text-white/90 mb-1.5">{s.title}</h5>
+                    <p className="text-sm leading-relaxed text-muted-foreground">{s.body}</p>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <ul className="space-y-4">
+                {experience.bullets.map((b, i) => (
+                  <li key={i} className="flex gap-3 text-muted-foreground group">
+                    <span className="w-1.5 h-1.5 rounded-full bg-primary/50 mt-2.5 group-hover:bg-primary group-hover:shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)] transition-all"></span>
+                    <div className="leading-relaxed">{renderWithRedText(b)}</div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
           {/* Skills */}
