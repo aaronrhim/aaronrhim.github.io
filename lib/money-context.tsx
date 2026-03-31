@@ -192,6 +192,23 @@ export function MoneyProvider({ children }: { children: React.ReactNode }) {
     return () => document.removeEventListener("click", handler);
   }, [awardOnce]);
 
+  // Shop purchase deduction handler
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const detail = (e as CustomEvent<{ price: number; itemId: string }>).detail;
+      if (!detail) return;
+      const deductId = `shop_deduct_${detail.itemId}`;
+      // Use a negative award to deduct
+      setClaims((c) => {
+        const next = { ...c, [deductId]: { claimed: true, amount: -(detail.price) } };
+        setBalance(computeBalanceFromClaims(next));
+        return next;
+      });
+    };
+    window.addEventListener("shop:purchase", handler);
+    return () => window.removeEventListener("shop:purchase", handler);
+  }, []);
+
   const value = useMemo(
     () => ({ balance, awardOnce, hasAward, claimedCount: Object.values(claims).filter((c) => c.claimed).length, overflowTick, underflowTick, leverPullTick, setBalance }),
     [balance, overflowTick, underflowTick, leverPullTick, claims],

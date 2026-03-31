@@ -2,13 +2,17 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingBag } from "lucide-react";
 import AnimatedBalance from "@/components/AnimatedBalance";
+import ShopPanel from "@/components/ShopPanel";
 import { useMoney } from "@/lib/money-context";
+import { useShop } from "@/lib/shop-context";
+import { formatVND } from "@/lib/currency";
 
 export default function Header() {
   const { scrollY } = useScroll();
   const money = useMoney();
+  const { shopOpen, setShopOpen } = useShop();
 
   const lastY = useRef(0);
   const accumulatedUp = useRef(0);
@@ -70,6 +74,7 @@ export default function Header() {
     { href: "/about", label: "About Me" },
     { href: "/experiences", label: "Experience" },
     { href: "/projects", label: "Projects" },
+    { href: "/blog", label: "Blog" },
     { href: "/resume", label: "Resume" },
   ];
 
@@ -88,12 +93,28 @@ export default function Header() {
         <div className="w-full max-w-5xl rounded-2xl md:rounded-b-2xl md:rounded-t-none border border-white/60 md:border-x md:border-b md:border-t-0 bg-[var(--background)] mt-2 md:mt-0">
           <div className="flex items-center justify-between px-4 sm:px-6 py-3 sm:py-4 text-white">
 
-            <div className="flex items-center gap-3 sm:gap-4">
-              <div className="text-sm sm:text-base font-bold tracking-tight text-white/90">Balance</div>
+            <div className="flex items-center gap-3 sm:gap-4 relative">
+              <div className="text-sm sm:text-base font-bold tracking-tight text-white/90">Số dư</div>
               <div className="flex items-center gap-0.5 font-mono text-lg sm:text-xl font-bold tabular-nums tracking-tight text-white relative">
-                 <span className="text-emerald-400 select-none">$</span>
                  <AnimatedBalance value={money.balance} className="text-base sm:text-lg" />
                  <RewardPopup />
+              </div>
+              {/* Shop button — desktop only */}
+              <button
+                onClick={() => setShopOpen(!shopOpen)}
+                className={`hidden md:flex items-center justify-center w-8 h-8 rounded-lg transition-all duration-150 ${
+                  shopOpen
+                    ? "bg-white/15 text-white"
+                    : "text-white/40 hover:text-white/80 hover:bg-white/8"
+                }`}
+                title="Cửa hàng"
+                aria-label="Open shop"
+              >
+                <ShoppingBag className="w-4 h-4" />
+              </button>
+              {/* Desktop shop dropdown */}
+              <div className="hidden md:block">
+                <ShopPanel />
               </div>
             </div>
 
@@ -140,7 +161,7 @@ export default function Header() {
             </div>
 
             {/* Nav links */}
-            <nav className="flex flex-col items-center justify-center flex-1 gap-8">
+            <nav className="flex flex-col items-center justify-center flex-1 gap-6">
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.href}
@@ -154,10 +175,31 @@ export default function Header() {
                   {link.label}
                 </motion.a>
               ))}
+
+              {/* Shop button in mobile menu */}
+              <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navLinks.length * 0.05 }}
+                onClick={() => {
+                  setMenuOpen(false);
+                  setTimeout(() => setShopOpen(true), 250);
+                }}
+                className="flex items-center gap-3 text-xl font-bold text-white/50 hover:text-white/80 transition-colors mt-2 border border-white/10 rounded-2xl px-6 py-3"
+              >
+                <ShoppingBag className="w-5 h-5" />
+                <span>Cửa hàng</span>
+                <span className="text-sm font-mono text-emerald-400">{formatVND(money.balance)}</span>
+              </motion.button>
             </nav>
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Mobile shop bottom sheet — rendered outside header so it covers full screen */}
+      <div className="md:hidden">
+        <ShopPanel />
+      </div>
     </>
   );
 }
@@ -183,18 +225,18 @@ function RewardPopup() {
   }, []);
 
   return (
-    <div className="absolute left-full ml-4 top-1/2 -translate-y-1/2 w-0 h-0 overflow-visible pointer-events-none">
+    <div className="absolute left-full ml-2 top-1/2 -translate-y-1/2 w-0 h-0 overflow-visible pointer-events-none">
       <AnimatePresence>
         {rewards.map((r) => (
            <motion.div
              key={r.id}
              initial={{ opacity: 0, y: 0, x: 0, scale: 0.5 }}
-             animate={{ opacity: 1, y: -25, x: 10, scale: 1.2 }}
-             exit={{ opacity: 0, y: -40, x: 15 }}
-             transition={{ duration: 0.8, ease: "easeOut" }}
-             className="absolute left-0 top-0 text-emerald-400 font-bold text-lg select-none whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+             animate={{ opacity: 1, y: -28, x: 8, scale: 1.15 }}
+             exit={{ opacity: 0, y: -44, x: 12 }}
+             transition={{ duration: 0.9, ease: "easeOut" }}
+             className="absolute left-0 top-0 text-emerald-400 font-bold text-sm select-none whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.6)]"
            >
-             +{r.amount.toFixed(2)}
+             +{formatVND(r.amount)}
            </motion.div>
         ))}
       </AnimatePresence>

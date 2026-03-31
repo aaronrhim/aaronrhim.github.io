@@ -4,6 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import RotatingNavText, { RotatingNavTextHandle } from "@/components/RotatingNavText";
 import { useMoney } from "@/lib/money-context";
+import { formatVND, formatVNDDelta } from "@/lib/currency";
 
 export default function AnimatedBalance({
   value,
@@ -24,7 +25,7 @@ export default function AnimatedBalance({
   const lastOverTickRef = useRef(0);
   const lastUnderTickRef = useRef(0);
   const prev = useRef(Number(value));
-  const format = (n: number) => Number(n).toFixed(2);
+  const format = (n: number) => formatVND(n);
 
   const [trio, setTrio] = useState([format(Number(value)), format(Number(value)), format(Number(value))]);
   const [leverAward, setLeverAward] = useState(false);
@@ -119,7 +120,7 @@ export default function AnimatedBalance({
 
       if (Number.isFinite(next) && Number.isFinite(prevVal) && next !== prevVal) {
         const delta = +(next - prevVal).toFixed(2);
-        const deltaStr = `${delta >= 0 ? "+" : "-"}${Math.abs(delta).toFixed(2)}`;
+        const deltaStr = formatVNDDelta(delta);
         const baseStr = format(next);
 
         if (delta > 40) {
@@ -127,7 +128,7 @@ export default function AnimatedBalance({
         } else {
           setDeltaColor("green");
         }
-        setTrio(["-5.00", deltaStr, baseStr]);
+        setTrio(["---", deltaStr, baseStr]);
         setRtKey((k) => k + 1);
 
         timers.current.push(
@@ -160,7 +161,7 @@ export default function AnimatedBalance({
 
       if (Number.isFinite(next) && Number.isFinite(prevVal) && next !== prevVal) {
         const delta = +(next - prevVal).toFixed(2);
-        const deltaStr = `${delta >= 0 ? "+" : "-"}${Math.abs(delta).toFixed(2)}`;
+        const deltaStr = formatVNDDelta(delta);
         const baseStr = format(next);
         const prevStr = format(prevVal);
 
