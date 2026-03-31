@@ -37,13 +37,13 @@ export default function ExperienceModal({ experience, onClose }: ExperienceModal
 
           {/* Modal - full screen on mobile, centered on desktop */}
           <motion.div
-            className="fixed inset-0 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-[90vw] md:max-w-6xl md:h-[85vh] z-50 md:rounded-3xl overflow-hidden shadow-2xl"
+            className="fixed inset-0 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:w-[90vw] md:max-w-6xl md:h-[85vh] z-50 md:rounded-3xl shadow-2xl overflow-hidden"
             initial={{ opacity: 0, scale: 0.95, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
           >
-            <div className="relative h-full w-full overflow-y-auto md:overflow-hidden">
+            <div className="relative h-full w-full overflow-y-auto md:overflow-hidden overflow-x-clip">
               {/* Close button */}
               <button
                 onClick={onClose}
