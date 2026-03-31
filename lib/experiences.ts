@@ -27,11 +27,11 @@ export const EXPERIENCES: Experience[] = [
       },
       {
         title: "Arm Hardware Interface (3)",
-        body: "Partnered with the mechanical sub-team to co-develop a simulation environment closely mirroring the physical rover, including detailed kinematic modeling. Our iterative tuning process achieved an 84% accuracy match to real-world behavior, giving the autonomy team a reliable testbed before hardware trials.",
+        body: "After attending a Tesla Optimus event and hearing of some of the most sought-after engineering specializations in the industry, I was inspired to learn more about low-level control, firmware, and hardware interfaces. While I initially only refactored the old arm hardware interface that was written for UBC Rover's old arm, I took it upon myself to rewrite the whole thing from scratch to understand it ground up. The old code used some hacky techniques to parse UART query frames and had serial control for the old stepper motors. I rewrote the whole package to use the new CAN-FD bus effectively which, when combined with the new Moteus drivers, allows much more cohesive data querying from the motor encoders with a much reduced overhead. Due to the 64-byte CAN frames, I was able to configure the interface to retrieve over 30 motor parameters in a single query.",
       },
       {
-        title: "Team Leadership & Project Management (4)",
-        body: "As Software Co-Lead, I manage project timelines, conduct code reviews, and host weekly stand-ups to maintain transparency across the software team. I'm preparing the team for both the University Rover Challenge (URC) and the Canadian International Rover Competition (CIRC) in 2026.",
+        title: "Human-Machine Interface (4)",
+        body: "Unsatisfied with the old HMI -- being written with Glade (a UI-based editting software for GTK) and hearing of constant complaints regarding modularity and adding to the old HMI, I took it this chance to learn about each and every sub-team's task in detail by implementing a full redesign of the HMI. With the assistance of Claude Code, I could easily reimagine what a QT-based HMI would look like. I modularized it to contain a selection feature in which the user can choose \"modules\" to be displayed in a dashboard-like interface. I also manually integrated Hyprland's Dwindle algorithm for panel management, making the UI overall very aesthetic and easy-to-use. Using very specific prompting techniques, I future-proofs the HMI so that it is not only easy to add to but also follows a strict set of Github actions workflows to prevent any breaking the core UI to the HMI which I can foresee myself constantly maintaining over the next many years to come.",
       },
     ],
     gallery: [

@@ -152,11 +152,23 @@ export default function ExperienceCard({ experience, onClick, index }: Experienc
                     )}
                 </div>
 
-                {/* Snippet */}
-                <div className="pt-1 sm:pt-2">
-                    <p className="text-sm sm:text-base text-gray-300 line-clamp-2 sm:line-clamp-3 leading-relaxed">
-                    {experience.description || (experience.bullets.length > 0 ? experience.bullets[0].replace(/\[\[.*?\|(.*?)\]\]/g, '$1') : "")}
-                    </p>
+                {/* Snippet + Bullet Preview */}
+                <div className="pt-1 sm:pt-2 space-y-2">
+                    {experience.description && (
+                      <p className="text-sm sm:text-base text-gray-400 line-clamp-1 leading-relaxed">
+                        {experience.description}
+                      </p>
+                    )}
+                    {experience.bullets.length > 0 && (
+                      <ul className="space-y-1.5">
+                        {experience.bullets.slice(0, 2).map((b, i) => (
+                          <li key={i} className="flex gap-2 text-sm text-muted-foreground">
+                            <span className="w-1 h-1 rounded-full bg-primary/50 mt-2 flex-shrink-0"></span>
+                            <span className="line-clamp-1 leading-relaxed">{b.replace(/\[\[.*?\|(.*?)\]\]/g, '$1')}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                 </div>
                 
                 {/* Skills */}

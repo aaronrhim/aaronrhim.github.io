@@ -122,29 +122,35 @@ export default function ExperienceDetail({
             </p>
           </div>
 
-          {/* Sections or Bullets */}
-          <div className="mb-6">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-4">Key Achievements & Impact</h4>
-            {experience.sections ? (
+          {/* Bullets - always shown */}
+          {experience.bullets.length > 0 && (
+            <div className="mb-6">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-4">Key Achievements & Impact</h4>
+              <ul className="space-y-3">
+                {experience.bullets.map((b, i) => (
+                  <li key={i} className="flex gap-3 text-muted-foreground group">
+                    <span className="w-2 h-2 rounded-full bg-white/70 mt-[0.4rem] flex-shrink-0"></span>
+                    <div className="leading-relaxed text-sm">{renderWithRedText(b)}</div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Sections - shown if they exist */}
+          {experience.sections && experience.sections.length > 0 && (
+            <div className="mb-6">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-4">Deep Dives</h4>
               <div className="space-y-5">
                 {experience.sections.map((s, i) => (
-                  <div key={i}>
+                  <div key={i} className="border-l-2 border-primary/20 pl-4 hover:border-primary/50 transition-colors">
                     <h5 className="text-sm font-semibold text-white/90 mb-1">{s.title}</h5>
                     <p className="text-sm leading-relaxed text-muted-foreground">{s.body}</p>
                   </div>
                 ))}
               </div>
-            ) : (
-              <ul className="space-y-4">
-                {experience.bullets.map((b, i) => (
-                  <li key={i} className="flex gap-3 text-muted-foreground group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary/50 mt-2.5 group-hover:bg-primary transition-all"></span>
-                    <div className="leading-relaxed">{renderWithRedText(b)}</div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Skills */}
           {experience.skills && (
@@ -234,29 +240,35 @@ export default function ExperienceDetail({
             </p>
           </div>
 
-          {/* Sections or Bullets */}
-          <div className="mb-8">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-4">Key Achievements & Impact</h4>
-            {experience.sections ? (
+          {/* Bullets - always shown */}
+          {experience.bullets.length > 0 && (
+            <div className="mb-8">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-4">Key Achievements & Impact</h4>
+              <ul className="space-y-4">
+                {experience.bullets.map((b, i) => (
+                  <li key={i} className="flex gap-3 text-muted-foreground group">
+                    <span className="w-2 h-2 rounded-full bg-white/70 mt-[0.4rem] flex-shrink-0"></span>
+                    <div className="leading-relaxed">{renderWithRedText(b)}</div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Sections - shown if they exist */}
+          {experience.sections && experience.sections.length > 0 && (
+            <div className="mb-8">
+              <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-4">Deep Dives</h4>
               <div className="space-y-6">
                 {experience.sections.map((s, i) => (
-                  <div key={i}>
+                  <div key={i} className="border-l-2 border-primary/20 pl-4 hover:border-primary/50 transition-colors">
                     <h5 className="text-base font-semibold text-white/90 mb-1.5">{s.title}</h5>
                     <p className="text-sm leading-relaxed text-muted-foreground">{s.body}</p>
                   </div>
                 ))}
               </div>
-            ) : (
-              <ul className="space-y-4">
-                {experience.bullets.map((b, i) => (
-                  <li key={i} className="flex gap-3 text-muted-foreground group">
-                    <span className="w-1.5 h-1.5 rounded-full bg-primary/50 mt-2.5 group-hover:bg-primary group-hover:shadow-[0_0_10px_rgba(var(--primary-rgb),0.5)] transition-all"></span>
-                    <div className="leading-relaxed">{renderWithRedText(b)}</div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+            </div>
+          )}
 
           {/* Skills */}
           {experience.skills && (
