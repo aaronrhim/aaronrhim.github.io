@@ -85,7 +85,7 @@ function ExperiencesContent() {
           transition={{ delay: 0.1 }}
           className="text-muted-foreground text-lg max-w-2xl"
         >
-          My professional journey across startups, robotics teams, and academia.
+          My professional journey across robotics teams, aerospace, and academia.
         </motion.p>
       </header>
 

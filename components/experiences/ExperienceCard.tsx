@@ -44,11 +44,12 @@ interface ExperienceCardProps {
 
 export default function ExperienceCard({ experience, onClick, index }: ExperienceCardProps) {
   const isEven = index % 2 === 0;
-  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+  const [lightboxState, setLightboxState] = useState<{ gallery: string[]; startIndex: number } | null>(null);
+  const extImages = experience.extendingImages ?? [];
 
   // Split extending images: even index → left, odd index → right
-  const leftImages = (experience.extendingImages ?? []).filter((_, i) => i % 2 === 0);
-  const rightImages = (experience.extendingImages ?? []).filter((_, i) => i % 2 !== 0);
+  const leftImages = extImages.filter((_, i) => i % 2 === 0);
+  const rightImages = extImages.filter((_, i) => i % 2 !== 0);
 
   const IMG_W = 176; // w-44
   const IMG_H = 132;
@@ -79,7 +80,7 @@ export default function ExperienceCard({ experience, onClick, index }: Experienc
         transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1], delay: idx * 0.08 }}
         whileHover={{ scale: 1.06, rotate: 0, zIndex: 60 }}
       >
-        <LightboxTrigger src={src} onOpen={setLightboxSrc}>
+        <LightboxTrigger src={src} gallery={extImages} onOpen={(s, g) => setLightboxState({ gallery: g, startIndex: g.indexOf(s) })}>
           {isVideo ? (
             <video src={src} autoPlay loop muted playsInline className="w-full h-full object-cover" style={{ width: IMG_W, height: IMG_H }} />
           ) : (
@@ -188,7 +189,7 @@ export default function ExperienceCard({ experience, onClick, index }: Experienc
       </motion.div>
 
       {/* Lightbox — rendered outside the card so it isn't clipped */}
-      <ImageLightbox src={lightboxSrc} onClose={() => setLightboxSrc(null)} />
+      <ImageLightbox gallery={lightboxState?.gallery ?? null} startIndex={lightboxState?.startIndex ?? 0} onClose={() => setLightboxState(null)} />
     </>
   );
 }

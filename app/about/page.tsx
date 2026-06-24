@@ -37,7 +37,7 @@ export default function AboutPage() {
             <div className="prose prose-invert text-white/70">
               <p>
                 My primary interests lie at the intersection of <RedText rewardId="about-robotics-yup">robotics, sociology, and music</RedText>. Stemming from an english class
-                my dad, sister, and I taught to underprivileged kids in Vietnam, I've developed a fascination on how <RedText rewardId="about-technology">technology can improve 
+                my dad, sister, and I taught to underprivileged kids in Vietnam, I've developed a fascination with how <RedText rewardId="about-technology">technology can improve
                 our daily lives</RedText>. I'm intrigued by the challenge of bringing digital intelligence into the physical world in ways that feel 
                 natural and responsive.
               </p>
@@ -66,7 +66,7 @@ export default function AboutPage() {
               </li>
               <li className="flex items-center gap-3">
                 <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span>☕ <RedText rewardId="about-coffee">Coffee:</RedText> Ice Cappucino from Tim Hortons 🤤</span>
+                <span>☕ <RedText rewardId="about-coffee">Coffee:</RedText> Iced Cappuccino from Tim Hortons 🤤</span>
               </li>
             </ul>
           </section>

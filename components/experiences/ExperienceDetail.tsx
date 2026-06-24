@@ -8,11 +8,13 @@ import { renderWithRedText } from "@/lib/formatting";
 import { motion } from "framer-motion";
 import ImageLightbox, { LightboxTrigger } from "@/components/ImageLightbox";
 
+type OnOpen = (src: string, gallery: string[]) => void;
+
 // ─── Simple Gallery Item ───────────────────────────────────────────────────────
-function GalleryItem({ src, index, onOpen }: { src: string; index: number; onOpen: (s: string) => void }) {
+function GalleryItem({ src, index, gallery, onOpen }: { src: string; index: number; gallery: string[]; onOpen: OnOpen }) {
   const isVideo = src.endsWith(".mp4");
   return (
-    <LightboxTrigger src={src} onOpen={onOpen}>
+    <LightboxTrigger src={src} gallery={gallery} onOpen={onOpen}>
       <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg border border-white/10 shrink-0">
         {isVideo ? (
           <video src={src} autoPlay loop muted playsInline className="w-full h-full object-cover object-[50%_25%]" />
@@ -25,10 +27,10 @@ function GalleryItem({ src, index, onOpen }: { src: string; index: number; onOpe
 }
 
 // ─── Section media item ────────────────────────────────────────────────────────
-function SectionMedia({ src, onOpen }: { src: string; onOpen: (s: string) => void }) {
+function SectionMedia({ src, gallery, onOpen }: { src: string; gallery: string[]; onOpen: OnOpen }) {
   const isVideo = src.endsWith(".mp4");
   return (
-    <LightboxTrigger src={src} onOpen={onOpen} className="w-full h-full">
+    <LightboxTrigger src={src} gallery={gallery} onOpen={onOpen} className="w-full h-full">
       <div className="w-full h-full rounded-xl overflow-hidden border border-white/10 shadow-xl">
         {isVideo ? (
           <video src={src} autoPlay loop muted playsInline className="w-full h-full object-cover" />
@@ -41,7 +43,7 @@ function SectionMedia({ src, onOpen }: { src: string; onOpen: (s: string) => voi
 }
 
 // ─── Mobile Section Row ────────────────────────────────────────────────────────
-function MobileSectionRow({ section, images, onOpen }: { section: ExperienceSection; images: string[]; onOpen: (s: string) => void }) {
+function MobileSectionRow({ section, images, onOpen }: { section: ExperienceSection; images: string[]; onOpen: OnOpen }) {
   return (
     <div>
       {images.length > 0 && (
@@ -55,7 +57,7 @@ function MobileSectionRow({ section, images, onOpen }: { section: ExperienceSect
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.05 }}
             >
-              <SectionMedia src={src} onOpen={onOpen} />
+              <SectionMedia src={src} gallery={images} onOpen={onOpen} />
             </motion.div>
           ))}
         </div>
@@ -75,7 +77,7 @@ function SectionImageGrid({
   tilt = 0,
 }: {
   images: string[];
-  onOpen: (s: string) => void;
+  onOpen: OnOpen;
   tilt?: number;
 }) {
   const MAX = 4;
@@ -86,7 +88,7 @@ function SectionImageGrid({
   const Cell = ({ src, className, badge }: { src: string; className?: string; badge?: boolean }) => {
     const isVideo = src.endsWith(".mp4");
     return (
-      <LightboxTrigger src={src} onOpen={onOpen} className={`relative rounded-lg overflow-hidden border border-white/10 shadow-md ${className ?? ""}`}>
+      <LightboxTrigger src={src} gallery={images} onOpen={onOpen} className={`relative rounded-lg overflow-hidden border border-white/10 shadow-md ${className ?? ""}`}>
         {isVideo ? (
           <video src={src} autoPlay loop muted playsInline className="w-full h-full object-cover" />
         ) : (
@@ -146,7 +148,7 @@ function DesktopSectionRow({
   section: ExperienceSection;
   images: string[];
   index: number;
-  onOpen: (s: string) => void;
+  onOpen: OnOpen;
 }) {
   const isLeft = index % 2 === 0;
   const hasImages = images.length > 0;
@@ -179,7 +181,7 @@ function DesktopSectionRow({
   ) : null;
 
   return (
-    <div className={`flex gap-5 items-start ${!isLeft ? "flex-row-reverse" : ""}`}>
+    <div className={`flex gap-5 items-center ${!isLeft ? "flex-row-reverse" : ""}`}>
       {textBlock}
       {imageBlock}
     </div>
@@ -190,7 +192,9 @@ function DesktopSectionRow({
 export default function ExperienceDetail({ experience }: { experience: Experience }) {
   const links = experience.links || [];
   const hasSections = !!(experience.sections && experience.sections.length > 0);
-  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
+  const [lightboxState, setLightboxState] = useState<{ gallery: string[]; startIndex: number } | null>(null);
+  const openLightbox: OnOpen = (src, gallery) =>
+    setLightboxState({ gallery, startIndex: gallery.indexOf(src) });
 
   return (
     <>
@@ -263,7 +267,7 @@ export default function ExperienceDetail({ experience }: { experience: Experienc
               <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-4">Deep Dives</h4>
               <div className="space-y-6">
                 {experience.sections!.map((s, i) => (
-                  <MobileSectionRow key={i} section={s} images={s.images ?? []} onOpen={setLightboxSrc} />
+                  <MobileSectionRow key={i} section={s} images={s.images ?? []} onOpen={openLightbox} />
                 ))}
               </div>
             </div>
@@ -362,7 +366,7 @@ export default function ExperienceDetail({ experience }: { experience: Experienc
                       section={s}
                       images={s.images ?? []}
                       index={i}
-                      onOpen={setLightboxSrc}
+                      onOpen={openLightbox}
                     />
                   ))}
                 </div>
@@ -385,7 +389,7 @@ export default function ExperienceDetail({ experience }: { experience: Experienc
         </div>
       </div>
 
-      <ImageLightbox src={lightboxSrc} onClose={() => setLightboxSrc(null)} />
+      <ImageLightbox gallery={lightboxState?.gallery ?? null} startIndex={lightboxState?.startIndex ?? 0} onClose={() => setLightboxState(null)} />
     </>
   );
 }
