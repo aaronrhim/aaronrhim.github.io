@@ -63,7 +63,7 @@ export default function ExperienceCard({ experience, onClick, index }: Experienc
     return (
       <motion.div
         key={key}
-        className="hidden md:block absolute z-20 rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
+        className="hidden md:block absolute z-20 rounded-2xl overflow-hidden border hairline shadow-lg"
         style={{
           width: IMG_W,
           height: IMG_H,
@@ -110,7 +110,7 @@ export default function ExperienceCard({ experience, onClick, index }: Experienc
         {rightImages.map((src, idx) => renderExtImage(src, `right-${idx}`, "right", idx))}
 
         {/* Card panel */}
-        <div className="relative z-10 w-full overflow-hidden rounded-xl border border-white/10 bg-card/10 p-0 backdrop-blur-sm transition-all duration-300 hover:bg-card/20 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5">
+        <div className="relative z-10 w-full overflow-hidden rounded-xl border bg-card p-0 transition-all duration-300 hover:border-border-strong hover:shadow-md">
           <div className={`flex flex-col md:flex-row min-h-[200px] md:min-h-[250px] ${!isEven ? 'md:flex-row-reverse' : ''}`}>
 
             {/* Thumbnail */}
@@ -118,37 +118,37 @@ export default function ExperienceCard({ experience, onClick, index }: Experienc
               {experience.thumbnail ? (
                 <Image src={experience.thumbnail} alt={experience.company} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
               ) : (
-                <div className="w-full h-full bg-white/5 flex items-center justify-center">
+                <div className="w-full h-full bg-muted flex items-center justify-center">
                   <Image src={experience.badge} alt="" width={64} height={64} className="opacity-20 grayscale" />
                 </div>
               )}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent md:bg-transparent" />
-              <div className={`absolute inset-0 pointer-events-none md:bg-gradient-to-r ${isEven ? 'from-transparent to-[#0a0a0a]/80' : 'from-[#0a0a0a]/80 to-transparent'} opacity-0 md:opacity-100 hidden md:block`} />
+              <div className={`absolute inset-0 pointer-events-none md:bg-gradient-to-r ${isEven ? 'from-transparent to-[var(--card)]' : 'from-[var(--card)] to-transparent'} opacity-0 md:opacity-100 hidden md:block`} />
             </div>
 
             {/* Content */}
             <div className="relative z-10 flex-1 flex flex-col justify-center gap-3 sm:gap-4 p-4 sm:p-6 md:p-8">
               <div className="flex items-start justify-between gap-3 sm:gap-4">
                 <div className="flex items-center gap-3 sm:gap-4">
-                  <div className="relative h-10 w-10 sm:h-14 sm:w-14 flex-shrink-0 overflow-hidden rounded-xl bg-white/5 p-1.5 sm:p-2 border border-white/10">
+                  <div className="relative h-10 w-10 sm:h-14 sm:w-14 flex-shrink-0 overflow-hidden rounded-xl bg-secondary p-1.5 sm:p-2 border">
                     <Image src={experience.badge} alt={experience.company} fill className="object-contain p-1" />
                   </div>
                   <div>
-                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground group-hover:text-primary transition-colors">
+                    <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-ink group-hover:text-amber transition-colors">
                       {experience.role}
                     </h3>
                     <div className="flex items-center gap-2 mt-0.5 sm:mt-1">
-                      <span className="text-sm sm:text-base font-medium text-white/80">{experience.company}</span>
+                      <span className="text-sm sm:text-base font-medium text-ink-dim">{experience.company}</span>
                     </div>
                   </div>
                 </div>
-                <div className="hidden sm:flex h-10 w-10 -translate-y-2 translate-x-2 items-center justify-center rounded-full bg-white/5 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 text-primary border border-white/10">
+                <div className="hidden sm:flex h-10 w-10 -translate-y-2 translate-x-2 items-center justify-center rounded-full bg-secondary opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 text-amber border">
                   <ArrowRight className="h-5 w-5" />
                 </div>
               </div>
 
-              <div className="flex items-center gap-4 text-xs text-muted-foreground/80 font-medium">
-                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 border border-white/5">
+              <div className="flex items-center gap-4 meta">
+                <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary border">
                   <Calendar className="w-3.5 h-3.5" />
                   <span>{experience.dates}</span>
                 </div>
@@ -157,14 +157,14 @@ export default function ExperienceCard({ experience, onClick, index }: Experienc
 
               <div className="pt-1 sm:pt-2 space-y-2">
                 {experience.description && (
-                  <p className="text-sm sm:text-base text-gray-400 line-clamp-1 leading-relaxed">{experience.description}</p>
+                  <p className="text-sm sm:text-base text-ink-dim line-clamp-1 leading-relaxed">{experience.description}</p>
                 )}
                 {experience.bullets.length > 0 && (
                   <ul className="space-y-1.5">
                     {experience.bullets.slice(0, 2).map((b, i) => (
                       <li key={i} className="flex gap-2 text-sm text-muted-foreground">
-                        <span className="w-1 h-1 rounded-full bg-primary/50 mt-2 flex-shrink-0" />
-                        <span className="line-clamp-1 leading-relaxed">{b.replace(/\[\[.*?\|(.*?)\]\]/g, '$1')}</span>
+                        <span className="w-1 h-1 rounded-full bg-amber/60 mt-2 flex-shrink-0" />
+                        <span className="line-clamp-1 leading-relaxed">{b}</span>
                       </li>
                     ))}
                   </ul>
@@ -174,12 +174,12 @@ export default function ExperienceCard({ experience, onClick, index }: Experienc
               {experience.skills && (
                 <div className="flex flex-wrap gap-2 mt-auto pt-2">
                   {experience.skills.slice(0, 4).map(skill => (
-                    <span key={skill} className="px-3 py-1 text-xs font-semibold uppercase tracking-wider rounded-lg bg-white/5 text-white/60 border border-white/5 backdrop-blur-md">
+                    <span key={skill} className="px-3 py-1 meta-caps rounded-md bg-secondary border">
                       {skill}
                     </span>
                   ))}
                   {experience.skills.length > 4 && (
-                    <span className="px-3 py-1 text-xs text-white/40">+{experience.skills.length - 4}</span>
+                    <span className="px-3 py-1 text-xs text-ink-dim/60">+{experience.skills.length - 4}</span>
                   )}
                 </div>
               )}

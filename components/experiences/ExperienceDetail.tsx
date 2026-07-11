@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { Experience, ExperienceSection } from "./ExperienceCard";
 import { ExternalLink, Github, Globe, MapPin } from "lucide-react";
 import Image from "next/image";
-import { renderWithRedText } from "@/lib/formatting";
 import { motion } from "framer-motion";
 import ImageLightbox, { LightboxTrigger } from "@/components/ImageLightbox";
 
@@ -15,7 +14,7 @@ function GalleryItem({ src, index, gallery, onOpen }: { src: string; index: numb
   const isVideo = src.endsWith(".mp4");
   return (
     <LightboxTrigger src={src} gallery={gallery} onOpen={onOpen}>
-      <div className="w-full aspect-video rounded-xl overflow-hidden shadow-lg border border-white/10 shrink-0">
+      <div className="w-full aspect-video rounded-xl overflow-hidden shadow-md border shrink-0">
         {isVideo ? (
           <video src={src} autoPlay loop muted playsInline className="w-full h-full object-cover object-[50%_25%]" />
         ) : (
@@ -31,7 +30,7 @@ function SectionMedia({ src, gallery, onOpen }: { src: string; gallery: string[]
   const isVideo = src.endsWith(".mp4");
   return (
     <LightboxTrigger src={src} gallery={gallery} onOpen={onOpen} className="w-full h-full">
-      <div className="w-full h-full rounded-xl overflow-hidden border border-white/10 shadow-xl">
+      <div className="w-full h-full rounded-xl overflow-hidden border shadow-md">
         {isVideo ? (
           <video src={src} autoPlay loop muted playsInline className="w-full h-full object-cover" />
         ) : (
@@ -51,7 +50,7 @@ function MobileSectionRow({ section, images, onOpen }: { section: ExperienceSect
           {images.map((src, i) => (
             <motion.div
               key={i}
-              className="aspect-video rounded-lg overflow-hidden border border-white/10 shadow-md"
+              className="aspect-video rounded-lg overflow-hidden border shadow-md"
               initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -62,8 +61,8 @@ function MobileSectionRow({ section, images, onOpen }: { section: ExperienceSect
           ))}
         </div>
       )}
-      <div className="border-l-2 border-primary/20 pl-4 hover:border-primary/50 transition-colors">
-        <h5 className="text-sm font-semibold text-white/90 mb-1">{section.title}</h5>
+      <div className="border-l-2 border-amber/30 pl-4 hover:border-amber/70 transition-colors">
+        <h5 className="text-sm font-semibold text-ink mb-1">{section.title}</h5>
         <p className="text-sm leading-relaxed text-muted-foreground">{section.body}</p>
       </div>
     </div>
@@ -88,7 +87,7 @@ function SectionImageGrid({
   const Cell = ({ src, className, badge }: { src: string; className?: string; badge?: boolean }) => {
     const isVideo = src.endsWith(".mp4");
     return (
-      <LightboxTrigger src={src} gallery={images} onOpen={onOpen} className={`relative rounded-lg overflow-hidden border border-white/10 shadow-md ${className ?? ""}`}>
+      <LightboxTrigger src={src} gallery={images} onOpen={onOpen} className={`relative rounded-lg overflow-hidden border shadow-md ${className ?? ""}`}>
         {isVideo ? (
           <video src={src} autoPlay loop muted playsInline className="w-full h-full object-cover" />
         ) : (
@@ -155,13 +154,13 @@ function DesktopSectionRow({
 
   const textBlock = (
     <motion.div
-      className="border-l-2 border-primary/20 pl-5 hover:border-primary/60 transition-colors duration-300 group flex-1 min-w-0"
+      className="border-l-2 border-amber/30 pl-5 hover:border-amber/70 transition-colors duration-300 group flex-1 min-w-0"
       initial={{ opacity: 0, y: 14 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-40px" }}
       transition={{ duration: 0.5 }}
     >
-      <h5 className="text-base font-semibold text-white/90 mb-2 group-hover:text-primary transition-colors">
+      <h5 className="text-base font-semibold text-ink mb-2 group-hover:text-amber transition-colors">
         {section.title}
       </h5>
       <p className="text-sm leading-relaxed text-muted-foreground">{section.body}</p>
@@ -201,17 +200,17 @@ export default function ExperienceDetail({ experience }: { experience: Experienc
       {/* ====================================================
           MOBILE LAYOUT
           ==================================================== */}
-      <div className="md:hidden bg-card/95 backdrop-blur-xl min-h-full">
+      <div className="md:hidden bg-card min-h-full">
         <div className="p-4 sm:p-6">
 
           {/* Header */}
-          <div className="mb-6 border-b border-white/10 pb-4">
+          <div className="mb-6 border-b pb-4">
             <div className="flex items-center gap-3 mb-3">
-              <div className="relative w-12 h-12 rounded-xl bg-white/5 p-1.5 border border-white/10">
+              <div className="relative w-12 h-12 rounded-xl bg-secondary p-1.5 border">
                 <Image src={experience.badge} alt={experience.company} fill className="object-contain p-1.5" />
               </div>
               <div>
-                <h2 className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-white glow-text">
+                <h2 className="text-xl glow-text">
                   {experience.company}
                 </h2>
                 {experience.location && (
@@ -222,8 +221,8 @@ export default function ExperienceDetail({ experience }: { experience: Experienc
               </div>
             </div>
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <div className="text-base font-medium text-white/90">{experience.role}</div>
-              <div className="px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold tracking-wide">
+              <div className="text-base font-medium text-ink">{experience.role}</div>
+              <div className="px-2.5 py-0.5 rounded-md bg-amber/10 border border-amber/30 text-amber text-xs font-bold tracking-wide mono">
                 {experience.dates}
               </div>
             </div>
@@ -231,7 +230,7 @@ export default function ExperienceDetail({ experience }: { experience: Experienc
               <div className="flex flex-wrap gap-2 mt-4">
                 {links.map((link, i) => (
                   <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-all text-xs font-medium text-white/70">
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary border hover:bg-muted transition-all text-xs font-medium text-ink-dim">
                     {link.type === "github" ? <Github className="w-3.5 h-3.5" /> : link.type === "website" ? <Globe className="w-3.5 h-3.5" /> : <ExternalLink className="w-3.5 h-3.5" />}
                     {link.label}
                   </a>
@@ -241,20 +240,20 @@ export default function ExperienceDetail({ experience }: { experience: Experienc
           </div>
 
           {/* Overview */}
-          <div className="prose prose-invert max-w-none mb-6">
-            <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-2">Overview</h4>
-            <p className="text-base leading-relaxed text-white/80">{experience.longDescription || experience.description}</p>
+          <div className="prose max-w-none mb-6">
+            <h4 className="eyebrow mb-2">Overview</h4>
+            <p className="text-base leading-relaxed text-ink/85">{experience.longDescription || experience.description}</p>
           </div>
 
           {/* Bullets */}
           {experience.bullets.length > 0 && (
             <div className="mb-6">
-              <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-4">Key Achievements &amp; Impact</h4>
+              <h4 className="eyebrow mb-4">Key Achievements &amp; Impact</h4>
               <ul className="space-y-3">
                 {experience.bullets.map((b, i) => (
                   <li key={i} className="flex gap-3 text-muted-foreground">
-                    <span className="w-2 h-2 rounded-full bg-white/70 mt-[0.4rem] flex-shrink-0" />
-                    <div className="leading-relaxed text-sm">{renderWithRedText(b)}</div>
+                    <span className="w-2 h-2 rounded-full bg-amber/70 mt-[0.4rem] flex-shrink-0" />
+                    <div className="leading-relaxed text-sm">{b}</div>
                   </li>
                 ))}
               </ul>
@@ -264,7 +263,7 @@ export default function ExperienceDetail({ experience }: { experience: Experienc
           {/* Deep Dives */}
           {hasSections && (
             <div className="mb-6">
-              <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-4">Deep Dives</h4>
+              <h4 className="eyebrow mb-4">Deep Dives</h4>
               <div className="space-y-6">
                 {experience.sections!.map((s, i) => (
                   <MobileSectionRow key={i} section={s} images={s.images ?? []} onOpen={openLightbox} />
@@ -275,11 +274,11 @@ export default function ExperienceDetail({ experience }: { experience: Experienc
 
           {/* Skills */}
           {experience.skills && (
-            <div className="pt-6 border-t border-white/10">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60 mb-3">Core Competencies</h4>
+            <div className="pt-6 border-t">
+              <h4 className="eyebrow mb-3">Core Competencies</h4>
               <div className="flex flex-wrap gap-2">
                 {experience.skills.map((skill) => (
-                  <span key={skill} className="px-2.5 py-1 rounded bg-white/5 border border-white/5 text-xs text-white/60 font-mono">{skill}</span>
+                  <span key={skill} className="px-2.5 py-1 rounded bg-secondary border meta">{skill}</span>
                 ))}
               </div>
             </div>
@@ -296,18 +295,18 @@ export default function ExperienceDetail({ experience }: { experience: Experienc
           not on top of it, alternating sides each section.
           No horizontal overflow at all.
           ==================================================== */}
-      <div className="hidden md:block h-full bg-card/95 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden">
+      <div className="hidden md:block h-full bg-card border rounded-2xl overflow-hidden">
         <div className="h-full overflow-y-auto overflow-x-hidden scrollbar-hide">
           <div className="px-10 xl:px-14 py-10">
 
             {/* Header */}
-            <div className="mb-8 border-b border-white/10 pb-6">
+            <div className="mb-8 border-b pb-6">
               <div className="flex items-center gap-4 mb-4">
-                <div className="relative w-16 h-16 rounded-xl bg-white/5 p-2 border border-white/10">
+                <div className="relative w-16 h-16 rounded-xl bg-secondary p-2 border">
                   <Image src={experience.badge} alt={experience.company} fill className="object-contain p-2" />
                 </div>
                 <div>
-                  <h2 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-white glow-text">
+                  <h2 className="text-3xl glow-text">
                     {experience.company}
                   </h2>
                   {experience.location && (
@@ -318,14 +317,14 @@ export default function ExperienceDetail({ experience }: { experience: Experienc
                 </div>
               </div>
               <div className="flex flex-wrap items-center justify-between gap-4">
-                <div className="text-xl font-medium text-white/90">{experience.role}</div>
-                <div className="px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm font-bold tracking-wide">{experience.dates}</div>
+                <div className="text-xl font-medium text-ink">{experience.role}</div>
+                <div className="px-3 py-1 rounded-md bg-amber/10 border border-amber/30 text-amber text-sm font-bold tracking-wide mono">{experience.dates}</div>
               </div>
               {links.length > 0 && (
                 <div className="flex gap-3 mt-4">
                   {links.map((link, i) => (
                     <a key={i} href={link.url} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all text-xs font-medium text-white/70 hover:text-white">
+                      className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-secondary border hover:bg-muted hover:hairline transition-all text-xs font-medium text-ink-dim hover:text-ink">
                       {link.type === "github" ? <Github className="w-3.5 h-3.5" /> : link.type === "website" ? <Globe className="w-3.5 h-3.5" /> : <ExternalLink className="w-3.5 h-3.5" />}
                       {link.label}
                     </a>
@@ -335,20 +334,20 @@ export default function ExperienceDetail({ experience }: { experience: Experienc
             </div>
 
             {/* Overview */}
-            <motion.div className="prose prose-invert max-w-none mb-8" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
-              <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-2">Overview</h4>
-              <p className="text-lg leading-relaxed text-white/80">{experience.longDescription || experience.description}</p>
+            <motion.div className="prose max-w-none mb-8" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.05 }}>
+              <h4 className="eyebrow mb-2">Overview</h4>
+              <p className="text-lg leading-relaxed text-ink/85">{experience.longDescription || experience.description}</p>
             </motion.div>
 
             {/* Bullets */}
             {experience.bullets.length > 0 && (
               <motion.div className="mb-8" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-                <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-4">Key Achievements &amp; Impact</h4>
+                <h4 className="eyebrow mb-4">Key Achievements &amp; Impact</h4>
                 <ul className="space-y-4">
                   {experience.bullets.map((b, i) => (
                     <li key={i} className="flex gap-3 text-muted-foreground">
-                      <span className="w-2 h-2 rounded-full bg-white/70 mt-[0.4rem] flex-shrink-0" />
-                      <div className="leading-relaxed">{renderWithRedText(b)}</div>
+                      <span className="w-2 h-2 rounded-full bg-amber/70 mt-[0.4rem] flex-shrink-0" />
+                      <div className="leading-relaxed">{b}</div>
                     </li>
                   ))}
                 </ul>
@@ -358,7 +357,7 @@ export default function ExperienceDetail({ experience }: { experience: Experienc
             {/* ── Deep Dives: text + images side by side per section ── */}
             {hasSections && (
               <div className="mb-8">
-                <h4 className="text-sm font-bold uppercase tracking-wider text-muted-foreground/60 mb-6">Deep Dives</h4>
+                <h4 className="eyebrow mb-6">Deep Dives</h4>
                 <div className="space-y-10">
                   {experience.sections!.map((s, i) => (
                     <DesktopSectionRow
@@ -375,11 +374,11 @@ export default function ExperienceDetail({ experience }: { experience: Experienc
 
             {/* Skills */}
             {experience.skills && (
-              <motion.div className="pt-6 border-t border-white/10" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.4 }}>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-muted-foreground/60 mb-3">Core Competencies</h4>
+              <motion.div className="pt-6 border-t" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.4 }}>
+                <h4 className="eyebrow mb-3">Core Competencies</h4>
                 <div className="flex flex-wrap gap-2">
                   {experience.skills.map((skill) => (
-                    <span key={skill} className="px-2.5 py-1 rounded bg-white/5 border border-white/5 text-xs text-white/60 font-mono hover:bg-white/10 transition-colors">{skill}</span>
+                    <span key={skill} className="px-2.5 py-1 rounded bg-secondary border meta hover:bg-muted transition-colors">{skill}</span>
                   ))}
                 </div>
               </motion.div>

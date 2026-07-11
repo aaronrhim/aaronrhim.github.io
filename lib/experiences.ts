@@ -80,9 +80,9 @@ export const EXPERIENCES: Experience[] = [
     description: "Developed advanced computer vision models for aerial object detection and image denoising.",
     longDescription: "As a member of the UBC ARRC software team, I focused on improving the image quality and detection capabilities of our aerial drones, though I also worked on the ZeroMQ pipeline to facilitate efficient communication between all systems on the JellyfishV2. My work on an autoencoding denoiser and YOLOv8 transfer learning directly contributed to our 2nd place victory at the AEAC competition.",
     bullets: [
-      "Achieved [[red:exp-second:2.5|2nd place]] out of over 40 teams at the Aerial Evolution Association of Canada (AEAC) in 2025, demonstrating strong performance against top Canadian universities",
+      "Achieved 2nd place out of over 40 teams at the Aerial Evolution Association of Canada (AEAC) in 2025, demonstrating strong performance against top Canadian universities",
       "Developed an autoencoding denoiser based on the RRDBNet architecture using the GAN framework, which enhanced image quality for the DL/CV model below",
-      "Applied transfer learning to the YOLOv8 object detection model to isolate IR emission in a live setting, improving detection accuracy by an estimated [[red:exp-perc:2.5|27%]]",
+      "Applied transfer learning to the YOLOv8 object detection model to isolate IR emission in a live setting, improving detection accuracy by an estimated 27%",
     ],
     gallery: [
       "/images/thumbnails/arrc.png",

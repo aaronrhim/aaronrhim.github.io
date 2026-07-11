@@ -131,7 +131,7 @@ export default function ImageLightbox({ gallery, startIndex = 0, onClose }: Imag
                       onClick={() => setIndex(i)}
                       className={`flex-shrink-0 w-14 h-10 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
                         i === index
-                          ? "border-primary shadow-[0_0_8px_rgba(255,255,255,0.3)]"
+                          ? "border-amber shadow-[0_0_8px_rgba(196,123,42,0.5)]"
                           : "border-white/10 opacity-50 hover:opacity-80"
                       }`}
                     >

@@ -62,7 +62,7 @@ export default function ProjectCard({ project, onClick, index = 0 }: ProjectCard
         return (
          <motion.div
            key={`ext-${idx}`}
-           className="absolute z-0 w-40 h-28 rounded-xl overflow-hidden border-2 border-white/20 shadow-2xl hidden md:block" // Increased size and border
+           className="absolute z-0 w-40 h-28 rounded-xl overflow-hidden border-2 hairline shadow-lg hidden md:block" // Increased size and border
            style={{
              ...sideStyle,
              // Ensure it's not covered by the card completely, but z-0 puts it behind z-10 card.
@@ -84,7 +84,7 @@ export default function ProjectCard({ project, onClick, index = 0 }: ProjectCard
       })}
 
       <motion.div
-        className="relative z-10 h-full cursor-pointer overflow-hidden rounded-2xl border border-white/10 bg-card/30 backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/10"
+        className="relative z-10 h-full cursor-pointer overflow-hidden rounded-2xl border bg-card transition-all duration-300 hover:border-border-strong hover:shadow-md"
         whileHover={{ y: -5 }}
         whileTap={{ scale: 0.98 }}
       >
@@ -95,11 +95,11 @@ export default function ProjectCard({ project, onClick, index = 0 }: ProjectCard
           alt={project.title}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
         
         {/* Arrow indicator */}
-        <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-primary/20 backdrop-blur-md flex items-center justify-center border border-primary/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          <ArrowUpRight className="w-6 h-6 text-primary" />
+        <div className="absolute top-4 right-4 w-12 h-12 rounded-full bg-paper/80 backdrop-blur-md flex items-center justify-center border hairline opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <ArrowUpRight className="w-6 h-6 text-amber" />
         </div>
 
         {/* Floating Tags over image */}
@@ -107,7 +107,7 @@ export default function ProjectCard({ project, onClick, index = 0 }: ProjectCard
           {project.tags.map((tag) => (
             <span
               key={tag}
-              className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-full bg-black/60 text-white border border-white/20 backdrop-blur-md shadow-sm"
+              className="px-3 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md bg-paper/85 text-ink border backdrop-blur-md shadow-sm"
             >
               {tag}
             </span>
@@ -117,10 +117,10 @@ export default function ProjectCard({ project, onClick, index = 0 }: ProjectCard
 
       {/* Content */}
       <div className="p-6 flex flex-col flex-1">
-        <h3 className="text-2xl font-bold text-foreground mb-3 transition-colors group-hover:text-primary">
+        <h3 className="text-2xl text-ink mb-3 transition-colors group-hover:text-amber">
           {project.title}
         </h3>
-        <p className="text-muted-foreground/90 text-sm leading-relaxed mb-4">
+        <p className="text-ink-dim text-sm leading-relaxed mb-4">
           {project.description}
         </p>
       </div>

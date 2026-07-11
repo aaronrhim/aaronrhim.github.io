@@ -1,50 +1,171 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: 4px;
+  --radius-xl: 6px;
+  --radius-2xl: 10px;
+  --radius-3xl: 12px;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ink: var(--ink);
+  --color-ink-dim: var(--ink-dim);
+  --color-amber: var(--amber);
+  --font-serif: var(--font-eb-garamond), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --highlight: #ff6b6b; /* slightly lighter in dark mode */
-    --highlight-rgb: 255 107 107;
-  }
-}
-
-/* Highlight color token and utility classes */
 :root {
-  --highlight: #ef4444; /* Tailwind red-500 */
-  --highlight-rgb: 239 68 68;
-}
-
-.text-highlight-color {
-  color: var(--highlight) !important;
-}
-
-/* Matching Tailwind-like opacity utility class name (contains slash) */
-.text-highlight-color\/60 {
-  color: rgba(var(--highlight-rgb), 0.6) !important;
-}
-
-.bg-highlight-color {
-  background-color: var(--highlight) !important;
+  --radius: 4px;
+  --paper: oklch(0.952 0.025 85);
+  --background: oklch(0.952 0.025 85);
+  --foreground: oklch(0.18 0.018 60);
+  --ink: oklch(0.18 0.018 60);
+  --ink-dim: oklch(0.42 0.025 70);
+  --card: oklch(0.975 0.018 85);
+  --card-foreground: oklch(0.18 0.018 60);
+  --popover: oklch(0.975 0.018 85);
+  --popover-foreground: oklch(0.18 0.018 60);
+  --primary: oklch(0.18 0.018 60);
+  --primary-foreground: oklch(0.97 0.018 85);
+  --secondary: oklch(0.92 0.022 80);
+  --secondary-foreground: oklch(0.22 0.02 60);
+  --muted: oklch(0.92 0.02 82);
+  --muted-foreground: oklch(0.5 0.025 70);
+  --accent: oklch(0.62 0.13 65);
+  --accent-foreground: oklch(0.98 0 0);
+  --amber: oklch(0.62 0.13 65);
+  --destructive: oklch(0.48 0.16 30);
+  --destructive-foreground: oklch(0.98 0 0);
+  --success: oklch(0.5 0.09 145);
+  --border: oklch(0.86 0.025 80);
+  --border-strong: oklch(0.74 0.035 75);
+  --input: oklch(0.88 0.022 80);
+  --ring: oklch(0.62 0.13 65);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
   overflow-x: clip; /* allow abs-positioned elements to overflow without horizontal scrollbar */
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+* {
+  border-color: var(--border);
+}
+
+::selection {
+  background-color: var(--amber);
+  color: white;
+}
+
+::placeholder {
+  color: var(--ink-dim);
+  opacity: 1;
+}
+
+:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Legacy classes from the dark theme, restyled for paper/ink */
+.glow-text {
+  font-family: var(--font-serif);
+  color: var(--ink);
+  text-shadow: none;
+}
+
+.icon-glow {
+  filter: none;
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink-dim);
+}
+
+/* Non-interactive metadata register: mono, 12px floor. */
+@utility meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  color: var(--color-ink-dim);
+  font-feature-settings: "tnum", "zero";
+}
+
+/* Caps variant for chips / micro-labels. */
+@utility meta-caps {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-dim);
+  font-feature-settings: "tnum", "zero";
+}
+
+@utility hairline {
+  border-color: var(--color-border-strong);
+}
+
+@utility mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum", "zero";
+}
+
+@utility paper-grain {
+  background-image:
+    radial-gradient(oklch(0.85 0.04 75 / 0.18) 1px, transparent 1px),
+    radial-gradient(oklch(0.85 0.04 75 / 0.12) 1px, transparent 1px);
+  background-position: 0 0, 12px 12px;
+  background-size: 24px 24px, 24px 24px;
 }
 
 /* Custom Scrollbar Styling */
@@ -57,8 +178,7 @@ body {
   display: none;
 }
 
-/* Global Scrollbar Theme - Thin & Dark */
-/* WebKit (Chrome, Safari, Edge) */
+/* Global Scrollbar Theme - Thin & Warm */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -69,18 +189,18 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: rgba(120, 120, 120, 0.3); /* Subtle dark scrollbar */
+  background-color: oklch(0.74 0.035 75 / 0.5);
   border-radius: 9999px;
-  border: 1px solid transparent; /* Pushes content inside for cleaner look */
+  border: 1px solid transparent;
   background-clip: content-box;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(120, 120, 120, 0.5);
+  background-color: oklch(0.74 0.035 75 / 0.8);
 }
 
 /* Firefox fallback */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(120, 120, 120, 0.3) transparent;
+  scrollbar-color: oklch(0.74 0.035 75 / 0.5) transparent;
 }

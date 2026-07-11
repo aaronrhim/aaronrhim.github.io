@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import Panel from "@/components/Panel";
 import Section from "@/components/Section";
 import { PROJECTS } from "@/lib/projects";
-import { useMoney } from "@/lib/money-context";
 import ProjectCard, { Project } from "@/components/projects/ProjectCard";
 
 export default function FeaturedProjectsSection() {

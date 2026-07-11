@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Section from "@/components/Section";
-import RedText from "@/components/RedText";
 
 export default function AboutPage() {
   return (
@@ -33,16 +32,16 @@ export default function AboutPage() {
         >
           {/* Interests Section */}
           <section className="space-y-4">
-            <h2 className="text-2xl font-semibold text-white">Interests</h2>
-            <div className="prose prose-invert text-white/70">
+            <h2 className="text-2xl text-ink">Interests</h2>
+            <div className="prose text-ink-dim">
               <p>
-                My primary interests lie at the intersection of <RedText rewardId="about-robotics-yup">robotics, sociology, and music</RedText>. Stemming from an english class
-                my dad, sister, and I taught to underprivileged kids in Vietnam, I've developed a fascination with how <RedText rewardId="about-technology">technology can improve
-                our daily lives</RedText>. I'm intrigued by the challenge of bringing digital intelligence into the physical world in ways that feel 
+                My primary interests lie at the intersection of robotics, sociology, and music. Stemming from an english class
+                my dad, sister, and I taught to underprivileged kids in Vietnam, I've developed a fascination with how technology can improve
+                our daily lives. I'm intrigued by the challenge of bringing digital intelligence into the physical world in ways that feel 
                 natural and responsive.
               </p>
               <p className="mt-4">
-                I also love exploring <RedText rewardId="about-art">music</RedText> and <RedText rewardId="about-design">sports</RedText>, believing that engineering works best 
+                I also love exploring music and sports, believing that engineering works best 
                 when its creator has a creative and healthy mind.
               </p>
             </div>
@@ -50,23 +49,23 @@ export default function AboutPage() {
 
           {/* Hobbies Section */}
           <section className="space-y-4">
-            <h2 className="text-2xl font-semibold text-white">Hobbies</h2>
-            <ul className="space-y-3 text-white/70">
+            <h2 className="text-2xl text-ink">Hobbies</h2>
+            <ul className="space-y-3 text-ink-dim">
               <li className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span>🎹 <RedText rewardId="about-piano">Piano:</RedText> Classical & Anime improvisation</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-amber" />
+                <span>🎹 Piano: Classical & Anime improvisation</span>
               </li>
               <li className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span>📷 <RedText rewardId="about-tennis">Tennis:</RedText> Playing doubles with my dad</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-amber" />
+                <span>📷 Tennis: Playing doubles with my dad</span>
               </li>
               <li className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span>⛷️ <RedText rewardId="about-skiing">Skiing:</RedText> Hitting the double-blacks in the winter</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-amber" />
+                <span>⛷️ Skiing: Hitting the double-blacks in the winter</span>
               </li>
               <li className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-primary" />
-                <span>☕ <RedText rewardId="about-coffee">Coffee:</RedText> Iced Cappuccino from Tim Hortons 🤤</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-amber" />
+                <span>☕ Coffee: Iced Cappuccino from Tim Hortons 🤤</span>
               </li>
             </ul>
           </section>
@@ -80,24 +79,24 @@ export default function AboutPage() {
           className="grid grid-cols-2 gap-4 h-min"
         >
           {/* Photo 1 */}
-          <div className="col-span-2 aspect-video rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-white/5 relative group">
+          <div className="col-span-2 aspect-video rounded-2xl overflow-hidden border hairline shadow-md bg-card relative group">
              {/* Replace with your image */}
-            <div className="absolute inset-0 bg-neutral-800 flex items-center justify-center text-white/20 font-mono text-sm group-hover:bg-neutral-700 transition-colors">
-              <img src="/images/profile/family.jpeg" alt="Family picture" className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-muted flex items-center justify-center text-ink-dim/40 font-mono text-sm group-hover:bg-secondary transition-colors">
+              <img src="/images/profile/family.jpeg" alt="Family picture" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
             </div>
           </div>
           {/* Photo 2 */}
-          <div className="aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-white/5 relative group">
+          <div className="aspect-square rounded-2xl overflow-hidden border hairline shadow-md bg-card relative group">
              {/* Replace with your image */}
-            <div className="absolute inset-0 bg-neutral-800 flex items-center justify-center text-white/20 font-mono text-sm group-hover:bg-neutral-700 transition-colors">
-               <img src="/images/profile/megroup.jpeg" alt="Group" className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-muted flex items-center justify-center text-ink-dim/40 font-mono text-sm group-hover:bg-secondary transition-colors">
+               <img src="/images/profile/megroup.jpeg" alt="Group" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
             </div>
           </div>
            {/* Photo 3 */}
-           <div className="aspect-square rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-white/5 relative group">
+           <div className="aspect-square rounded-2xl overflow-hidden border hairline shadow-md bg-card relative group">
              {/* Replace with your image */}
-            <div className="absolute inset-0 bg-neutral-800 flex items-center justify-center text-white/20 font-mono text-sm group-hover:bg-neutral-700 transition-colors">
-               <img src="/images/profile/skiing.jpeg" alt="Skiing" className="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" />
+            <div className="absolute inset-0 bg-muted flex items-center justify-center text-ink-dim/40 font-mono text-sm group-hover:bg-secondary transition-colors">
+               <img src="/images/profile/skiing.jpeg" alt="Skiing" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
             </div>
           </div>
         </motion.div>
@@ -108,15 +107,15 @@ export default function AboutPage() {
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
-        className="space-y-6 pt-12 border-t border-white/10"
+        className="space-y-6 pt-12 border-t"
       >
-        <h2 className="text-3xl font-bold text-white">Piano Performances</h2>
-        <p className="text-white/60">Music has always been a huge part of my life. Here are a few selected pieces.</p>
+        <h2 className="text-3xl text-ink">Piano Performances</h2>
+        <p className="text-ink-dim">Music has always been a huge part of my life. Here are a few selected pieces.</p>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Video 1 */}
           <div className="space-y-2">
-            <div className="aspect-video w-full rounded-xl overflow-hidden border border-white/10 bg-black/50">
+            <div className="aspect-video w-full rounded-xl overflow-hidden border bg-card">
               <iframe 
                 width="100%" 
                 height="100%" 
@@ -127,12 +126,12 @@ export default function AboutPage() {
                 allowFullScreen
               ></iframe>
             </div>
-            <h3 className="text-lg font-medium text-white/90">La Campanella - Jun 23, 2024</h3>
+            <h3 className="text-lg font-medium text-ink">La Campanella - Jun 23, 2024</h3>
           </div>
 
           {/* Video 2 */}
           <div className="space-y-2">
-            <div className="aspect-video w-full rounded-xl overflow-hidden border border-white/10 bg-black/50">
+            <div className="aspect-video w-full rounded-xl overflow-hidden border bg-card">
               <iframe 
                 width="100%" 
                 height="100%" 
@@ -143,7 +142,7 @@ export default function AboutPage() {
                 allowFullScreen
               ></iframe>
             </div>
-             <h3 className="text-lg font-medium text-white/90">Animenz Unravel Adaptation - Dec 24, 2024</h3>
+             <h3 className="text-lg font-medium text-ink">Animenz Unravel Adaptation - Dec 24, 2024</h3>
           </div>
         </div>
       </motion.div>

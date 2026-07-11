@@ -98,8 +98,8 @@ function ExperiencesContent() {
             onClick={() => setActiveTab(tab.id)}
             className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 sm:text-base ${
               activeTab === tab.id
-                ? "bg-primary text-white shadow-[0_5px_30px_rgba(255,255,255,0.2)] icon-glow"
-                : "cursor-pointer text-white md:hover:bg-white/5"
+                ? "bg-primary text-primary-foreground"
+                : "cursor-pointer text-ink-dim md:hover:bg-secondary"
             }`}
           >
             {tab.label}

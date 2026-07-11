@@ -9,7 +9,7 @@ export default function Section({
   variant?: "default" | "muted";
   className?: string;
 }) {
-  const bg = variant === "muted" ? "bg-white/2" : "";
+  const bg = variant === "muted" ? "bg-muted/40" : "";
 
   return (
     <section id={id} className={`w-full ${bg} py-16 ${className}`}>
