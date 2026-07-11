@@ -1,10 +1,10 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Panel from "@/components/Panel";
 import Section from "@/components/Section";
 import { PROJECTS } from "@/lib/projects";
-import ProjectCard, { Project } from "@/components/projects/ProjectCard";
+import { Project } from "@/components/projects/ProjectCard";
+import ProjectManifestRow from "@/components/projects/ProjectManifestRow";
 
 export default function FeaturedProjectsSection() {
   const router = useRouter();
@@ -13,17 +13,36 @@ export default function FeaturedProjectsSection() {
     router.push(`/projects?project=${project.id}`);
   };
 
+  const highlighted = PROJECTS.filter((p) => p.highlight);
+
   return (
     <Section id="projects">
-      <Panel title="Highlighted Projects">
-        <div className="grid gap-6 sm:grid-cols-2">
-          {PROJECTS.filter((p) => p.highlight).map((p, index) => (
-            <div key={p.id} className="h-full">
-              <ProjectCard project={p as Project} onClick={() => handleProjectClick(p as Project)} index={index} />
-            </div>
-          ))}
+      <div className="flex items-end justify-between border-b pb-4">
+        <div>
+          <p className="meta-caps mb-2">Mission data · 02</p>
+          <h2 className="text-2xl tracking-tight sm:text-4xl">
+            Highlighted projects
+          </h2>
         </div>
-      </Panel>
+        <a
+          href="/projects"
+          className="meta-caps pb-1 transition-colors hover:text-amber"
+        >
+          Full index →
+        </a>
+      </div>
+
+      <ul className="m-0 p-0">
+        {highlighted.map((p, index) => (
+          <li key={p.id} className="list-none">
+            <ProjectManifestRow
+              project={p as Project}
+              index={index}
+              onClick={() => handleProjectClick(p as Project)}
+            />
+          </li>
+        ))}
+      </ul>
     </Section>
   );
 }

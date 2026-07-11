@@ -54,7 +54,7 @@ function PianoKeys() {
   const WHITES = 14;
   const blackAfter = [0, 1, 3, 4, 5];
   return (
-    <div aria-hidden className="relative flex h-14 overflow-hidden rounded-b-2xl border-t hairline">
+    <div aria-hidden className="relative flex h-11 overflow-hidden rounded-b-2xl border-t hairline">
       {Array.from({ length: WHITES }).map((_, i) => (
         <div key={i} className="flex-1 border-r bg-card last:border-r-0" />
       ))}
@@ -62,7 +62,7 @@ function PianoKeys() {
         blackAfter.includes(i % 7) ? (
           <div
             key={`b${i}`}
-            className="absolute top-0 h-8 rounded-b-[2px] bg-ink"
+            className="absolute top-0 h-6 rounded-b-[2px] bg-ink"
             style={{ left: `calc(${((i + 1) / WHITES) * 100}% - 1.1%)`, width: "2.2%" }}
           />
         ) : null,
@@ -92,7 +92,7 @@ function CourtDiagram() {
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col gap-20 pb-24">
+    <div className="flex flex-col gap-10 pb-16">
       {/* ── Header ─────────────────────────────────────────── */}
       <motion.header
         initial={{ opacity: 0, y: 20 }}
@@ -100,13 +100,13 @@ export default function AboutPage() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="pt-4"
       >
-        <p className="meta-caps mb-5">About me</p>
-        <h1 className="max-w-3xl text-5xl leading-[1.05] tracking-tight md:text-7xl">
+        <p className="meta-caps mb-3">About me</p>
+        <h1 className="max-w-3xl text-4xl leading-[1.05] tracking-tight md:text-6xl">
           Two hands,
           <br />
           two <span className="italic text-amber">disciplines</span>.
         </h1>
-        <p className="mt-6 max-w-2xl text-lg leading-8 text-ink-dim">
+        <p className="mt-4 max-w-2xl text-base leading-7 text-ink-dim">
           Engineering is what I do. Piano and tennis are how I stay sharp — one
           trains the hands and the ear, the other trains the feet and the
           nerve. Here's who I am when I'm not debugging robots or training
@@ -117,18 +117,18 @@ export default function AboutPage() {
       {/* ── Piano ──────────────────────────────────────────── */}
       <motion.section {...fadeUp} className="relative overflow-hidden rounded-2xl border bg-card">
         <FloatingNotes />
-        <div className="relative p-6 sm:p-10 md:p-14">
+        <div className="relative p-6 sm:p-8 md:p-10">
           <p className="meta-caps mb-4">Discipline 01 — Piano</p>
-          <h2 className="max-w-2xl text-3xl leading-tight md:text-5xl">
+          <h2 className="max-w-2xl text-2xl leading-tight md:text-4xl">
             Classical training. <span className="italic">Anime heart.</span>
           </h2>
-          <p className="mt-5 max-w-2xl leading-8 text-ink-dim">
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-ink-dim">
             Years of classical repertoire, happily derailed by improvisation —
             mostly anime scores reimagined at the keys. Music taught me the
             patience and the ear that engineering borrows every day.
           </p>
 
-          <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
+          <div className="mt-7 grid grid-cols-1 gap-6 md:grid-cols-2">
             <figure>
               <div className="aspect-video w-full overflow-hidden rounded-xl border bg-muted">
                 <iframe
@@ -169,13 +169,13 @@ export default function AboutPage() {
 
       {/* ── Tennis ─────────────────────────────────────────── */}
       <motion.section {...fadeUp} className="rounded-2xl border bg-card">
-        <div className="grid grid-cols-1 items-center gap-10 p-6 sm:p-10 md:grid-cols-2 md:p-14">
+        <div className="grid grid-cols-1 items-center gap-8 p-6 sm:p-8 md:grid-cols-2 md:p-10">
           <div>
             <p className="meta-caps mb-4">Discipline 02 — Tennis</p>
-            <h2 className="text-3xl leading-tight md:text-5xl">
+            <h2 className="text-2xl leading-tight md:text-4xl">
               Doubles, <span className="italic">with my dad.</span>
             </h2>
-            <p className="mt-5 max-w-xl leading-8 text-ink-dim">
+            <p className="mt-3 max-w-xl text-sm leading-7 text-ink-dim">
               Weekend doubles are a standing appointment. He holds down the
               deuce court; I cover the ad side. The scoreboard is disputed.
               The rivalry is not.
@@ -186,20 +186,20 @@ export default function AboutPage() {
       </motion.section>
 
       {/* ── Footnotes ──────────────────────────────────────── */}
-      <motion.div {...fadeUp} className="flex flex-wrap items-center gap-x-8 gap-y-3 border-y py-5">
+      <motion.div {...fadeUp} className="flex flex-wrap items-center gap-x-8 gap-y-3 border-y py-4">
         <span className="meta-caps">Also in rotation</span>
         <span className="meta">⛷️ DOUBLE-BLACKS IN WINTER</span>
         <span className="meta">☕ ICED CAPP — TIM HORTONS</span>
       </motion.div>
 
       {/* ── Roots ──────────────────────────────────────────── */}
-      <motion.section {...fadeUp} className="grid grid-cols-1 gap-12 md:grid-cols-2">
+      <motion.section {...fadeUp} className="grid grid-cols-1 gap-10 md:grid-cols-2">
         <div>
-          <p className="meta-caps mb-4">Where it started</p>
-          <h2 className="text-3xl leading-tight md:text-4xl">
+          <p className="meta-caps mb-3">Where it started</p>
+          <h2 className="text-2xl leading-tight md:text-3xl">
             Robotics, sociology, <span className="italic">and music.</span>
           </h2>
-          <p className="mt-5 leading-8 text-ink-dim">
+          <p className="mt-3 text-sm leading-7 text-ink-dim">
             It started with an English class my dad, sister, and I taught to
             underprivileged kids in Vietnam. That experience left me with a
             lasting fascination: how technology can quietly improve daily

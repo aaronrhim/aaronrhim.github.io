@@ -4,7 +4,7 @@ import FeaturedProjectsSection from "@/sections/HighlightedProjects";
 
 export default function Page() {
   return (
-    <div className="flex flex-col gap-12">
+    <div className="flex flex-col">
       <HeroSection />
       <CurrentWorkSection />
       <FeaturedProjectsSection />

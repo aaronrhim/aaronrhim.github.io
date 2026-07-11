@@ -4,7 +4,8 @@ import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { useRouter, useSearchParams } from "next/navigation";
 import { EXPERIENCES, EDUCATION } from "@/lib/experiences";
-import ExperienceCard, { Experience } from "@/components/experiences/ExperienceCard";
+import { Experience } from "@/components/experiences/ExperienceCard";
+import ExperienceManifestRow from "@/components/experiences/ExperienceManifestRow";
 import ExperienceModal from "@/components/experiences/ExperienceModal";
 
 const tabs = [
@@ -17,20 +18,20 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
+      staggerChildren: 0.06,
     },
   },
 };
 
 const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
+  hidden: { y: 14, opacity: 0 },
   visible: {
     y: 0,
     opacity: 1,
     transition: {
       type: "spring" as const,
-      stiffness: 100,
-      damping: 15,
+      stiffness: 110,
+      damping: 16,
     },
   },
 };
@@ -70,33 +71,47 @@ function ExperiencesContent() {
   };
 
   return (
-    <div className="pb-20">
-      <header className="mb-12">
-        <motion.h1
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          className="text-4xl md:text-6xl font-bold mb-4 glow-text"
+    <div className="pb-16">
+      <header className="mb-8">
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="meta-caps mb-3"
         >
-          Experience
+          Service record · UBC · Vancouver
+        </motion.p>
+        <motion.h1
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+          className="text-4xl tracking-tight md:text-6xl"
+        >
+          Experience<span className="text-amber">.</span>
         </motion.h1>
         <motion.p
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="text-muted-foreground text-lg max-w-2xl"
+          className="mt-3 max-w-2xl text-base leading-7 text-ink-dim"
         >
-          My professional journey across robotics teams, aerospace, and academia.
+          My professional journey across robotics teams, aerospace, and
+          academia. Select an entry for the full report.
         </motion.p>
       </header>
 
       {/* Tabs */}
-      <div className="flex gap-2 mb-8">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.12 }}
+        className="mb-6 flex gap-2"
+      >
         {tabs.map((tab) => (
           <button
             key={tab.id}
             type="button"
             onClick={() => setActiveTab(tab.id)}
-            className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors duration-200 sm:text-base ${
+            className={`rounded-md px-4 py-2 text-sm font-semibold transition-colors duration-200 sm:text-base ${
               activeTab === tab.id
                 ? "bg-primary text-primary-foreground"
                 : "cursor-pointer text-ink-dim md:hover:bg-secondary"
@@ -105,25 +120,37 @@ function ExperiencesContent() {
             {tab.label}
           </button>
         ))}
-      </div>
+      </motion.div>
 
       <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.15 }}
+        className="flex items-baseline justify-between border-b pb-3"
+      >
+        <span className="eyebrow">Manifest</span>
+        <span className="meta">
+          {String(items.length).padStart(2, "0")} ENTRIES
+        </span>
+      </motion.div>
+
+      <motion.ul
         key={activeTab}
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="flex flex-col gap-5 sm:gap-8 md:gap-12"
+        className="m-0 p-0"
       >
         {items.map((item, index) => (
-          <motion.div key={item.id} variants={itemVariants} className="w-full">
-            <ExperienceCard
+          <motion.li key={item.id} variants={itemVariants} className="list-none">
+            <ExperienceManifestRow
               experience={item}
               index={index}
               onClick={() => handleClick(item)}
             />
-          </motion.div>
+          </motion.li>
         ))}
-      </motion.div>
+      </motion.ul>
 
       <ExperienceModal
         experience={selectedExperience}

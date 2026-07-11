@@ -3,6 +3,7 @@ export const PROJECTS = [
   {
     id: "vennu",
     title: "Vennu",
+    achievements: "Hackathon Award Winner",
     description: "An autonomous agent that scrapes live booking availability from venue websites that don't expose a public API.",
     longDescription: "Vennu is an agentic web-scraping tool I built at a hackathon to solve a simple but stubborn problem: most venues publish their booking availability only on their own sites, with no public API to query against. Vennu automates that lookup end to end. Orchestrated on n8n cloud, it runs threaded, multi-step agents that drive a headless Playwright browser through each venue's booking flow, then hand the raw page content to the OpenAI API to turn messy, unstructured listings into clean, structured availability. Normalized results are persisted to Supabase so they can be queried instantly instead of re-scraped on every request.",
     features: [
@@ -132,6 +133,7 @@ export const PROJECTS = [
   {
     id: "lecruiter",
     title: "LeCruiter AI",
+    achievements: "Hackathon Award Winner",
     description: "AI-driven interview preparation platform with generative prompts, real-time feedback, and automated scoring.",
     longDescription: "LeCruiter AI is a full-stack platform designed to help candidates prepare for both behavioral and technical interviews. Built at an AWS-hosted hackathon, the application uses AWS Bedrock to generate contextual interview questions, analyze candidate responses in real time, and provide actionable feedback with automated scoring. The platform also includes tone and sentiment analysis to evaluate delivery alongside content quality. A FastAPI backend powers a React and TypeScript frontend, creating a responsive and intuitive practice environment.",
     features: [
