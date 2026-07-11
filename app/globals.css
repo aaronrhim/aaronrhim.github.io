@@ -168,6 +168,30 @@ h1, h2, h3, h4, h5 {
   background-size: 24px 24px, 24px 24px;
 }
 
+/* About page: drifting piano notes */
+@keyframes note-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-16px) rotate(5deg);
+  }
+}
+
+/* Hero orbit diagram */
+@keyframes orbit-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit-spin-reverse {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
 /* Custom Scrollbar Styling */
 .scrollbar-hide {
   -ms-overflow-style: none; /* IE and Edge */

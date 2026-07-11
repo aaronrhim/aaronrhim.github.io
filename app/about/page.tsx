@@ -1,151 +1,239 @@
 "use client";
 
 import { motion } from "framer-motion";
-import Section from "@/components/Section";
+
+const fadeUp = {
+  initial: { opacity: 0, y: 18 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: "-60px" },
+  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as const },
+};
+
+// Drifting note glyphs for the piano section. Sparse and quiet on purpose.
+const NOTES: Array<{
+  glyph: string;
+  size: string;
+  duration: string;
+  delay: string;
+  top?: string;
+  left?: string;
+  right?: string;
+  bottom?: string;
+}> = [
+  { glyph: "♪", top: "10%", left: "4%", size: "text-2xl", duration: "9s", delay: "0s" },
+  { glyph: "♫", top: "22%", right: "6%", size: "text-3xl", duration: "12s", delay: "1.2s" },
+  { glyph: "♩", bottom: "34%", left: "10%", size: "text-xl", duration: "10s", delay: "0.6s" },
+  { glyph: "♬", top: "48%", right: "14%", size: "text-2xl", duration: "11s", delay: "2s" },
+  { glyph: "♪", bottom: "28%", right: "30%", size: "text-lg", duration: "13s", delay: "0.3s" },
+];
+
+function FloatingNotes() {
+  return (
+    <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
+      {NOTES.map((n, i) => (
+        <span
+          key={i}
+          className={`absolute ${n.size} text-amber/25 select-none`}
+          style={{
+            top: n.top,
+            left: n.left,
+            right: n.right,
+            bottom: n.bottom,
+            animation: `note-float ${n.duration} ease-in-out ${n.delay} infinite`,
+          }}
+        >
+          {n.glyph}
+        </span>
+      ))}
+    </div>
+  );
+}
+
+// Two-octave ink keyboard strip. Black keys sit after white keys 1, 2, 4, 5, 6.
+function PianoKeys() {
+  const WHITES = 14;
+  const blackAfter = [0, 1, 3, 4, 5];
+  return (
+    <div aria-hidden className="relative flex h-14 overflow-hidden rounded-b-2xl border-t hairline">
+      {Array.from({ length: WHITES }).map((_, i) => (
+        <div key={i} className="flex-1 border-r bg-card last:border-r-0" />
+      ))}
+      {Array.from({ length: WHITES }).map((_, i) =>
+        blackAfter.includes(i % 7) ? (
+          <div
+            key={`b${i}`}
+            className="absolute top-0 h-8 rounded-b-[2px] bg-ink"
+            style={{ left: `calc(${((i + 1) / WHITES) * 100}% - 1.1%)`, width: "2.2%" }}
+          />
+        ) : null,
+      )}
+    </div>
+  );
+}
+
+function CourtDiagram() {
+  return (
+    <div aria-hidden className="relative aspect-[2/1] w-full rounded-xl border-2 hairline bg-card/60">
+      {/* net */}
+      <div className="absolute inset-y-0 left-1/2 border-l border-dashed hairline" />
+      {/* singles sidelines */}
+      <div className="absolute inset-x-0 top-[13%] border-t hairline" />
+      <div className="absolute inset-x-0 bottom-[13%] border-t hairline" />
+      {/* service boxes */}
+      <div className="absolute inset-y-[13%] left-[26%] right-[26%] border-x hairline">
+        <div className="absolute inset-x-0 top-1/2 border-t hairline" />
+      </div>
+      {/* labels */}
+      <span className="meta-caps absolute left-3 top-3">Deuce court — dad</span>
+      <span className="meta-caps absolute bottom-3 right-3">Ad court — A. Rhim</span>
+    </div>
+  );
+}
 
 export default function AboutPage() {
   return (
-    <div className="flex flex-col gap-12 pb-20">
-      {/* Header Section */}
-      <motion.div
+    <div className="flex flex-col gap-20 pb-24">
+      {/* ── Header ─────────────────────────────────────────── */}
+      <motion.header
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="flex flex-col gap-6"
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="pt-4"
       >
-        <h1 className="text-4xl md:text-6xl font-bold glow-text">About Me</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl leading-relaxed">
-          Beyond the code and circuits, I'm a person with a deep curiosity for how things work—and how to make them beautiful. 
-          I love to explore new interests and hobbies that challenge me to think differently.
-          Here's a glimpse into who I am when I'm not debugging robots or training models.
+        <p className="meta-caps mb-5">About me</p>
+        <h1 className="max-w-3xl text-5xl leading-[1.05] tracking-tight md:text-7xl">
+          Two hands,
+          <br />
+          two <span className="italic text-amber">disciplines</span>.
+        </h1>
+        <p className="mt-6 max-w-2xl text-lg leading-8 text-ink-dim">
+          Engineering is what I do. Piano and tennis are how I stay sharp — one
+          trains the hands and the ear, the other trains the feet and the
+          nerve. Here's who I am when I'm not debugging robots or training
+          models.
         </p>
-      </motion.div>
+      </motion.header>
 
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-        
-        {/* Left Column: Interests & Hobbies */}
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.2 }}
-          className="space-y-12"
-        >
-          {/* Interests Section */}
-          <section className="space-y-4">
-            <h2 className="text-2xl text-ink">Interests</h2>
-            <div className="prose text-ink-dim">
-              <p>
-                My primary interests lie at the intersection of robotics, sociology, and music. Stemming from an english class
-                my dad, sister, and I taught to underprivileged kids in Vietnam, I've developed a fascination with how technology can improve
-                our daily lives. I'm intrigued by the challenge of bringing digital intelligence into the physical world in ways that feel 
-                natural and responsive.
-              </p>
-              <p className="mt-4">
-                I also love exploring music and sports, believing that engineering works best 
-                when its creator has a creative and healthy mind.
-              </p>
-            </div>
-          </section>
+      {/* ── Piano ──────────────────────────────────────────── */}
+      <motion.section {...fadeUp} className="relative overflow-hidden rounded-2xl border bg-card">
+        <FloatingNotes />
+        <div className="relative p-6 sm:p-10 md:p-14">
+          <p className="meta-caps mb-4">Discipline 01 — Piano</p>
+          <h2 className="max-w-2xl text-3xl leading-tight md:text-5xl">
+            Classical training. <span className="italic">Anime heart.</span>
+          </h2>
+          <p className="mt-5 max-w-2xl leading-8 text-ink-dim">
+            Years of classical repertoire, happily derailed by improvisation —
+            mostly anime scores reimagined at the keys. Music taught me the
+            patience and the ear that engineering borrows every day.
+          </p>
 
-          {/* Hobbies Section */}
-          <section className="space-y-4">
-            <h2 className="text-2xl text-ink">Hobbies</h2>
-            <ul className="space-y-3 text-ink-dim">
-              <li className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber" />
-                <span>🎹 Piano: Classical & Anime improvisation</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber" />
-                <span>📷 Tennis: Playing doubles with my dad</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber" />
-                <span>⛷️ Skiing: Hitting the double-blacks in the winter</span>
-              </li>
-              <li className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 rounded-full bg-amber" />
-                <span>☕ Coffee: Iced Cappuccino from Tim Hortons 🤤</span>
-              </li>
-            </ul>
-          </section>
-        </motion.div>
+          <div className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-2">
+            <figure>
+              <div className="aspect-video w-full overflow-hidden rounded-xl border bg-muted">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src="https://www.youtube.com/embed/JRo3_ib7wmE?si=g0b_wMl4EHW3MIvN"
+                  title="La Campanella — senior recital"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <figcaption className="meta mt-3">
+                LA CAMPANELLA — SENIOR RECITAL · JUN 2024
+              </figcaption>
+            </figure>
 
-        {/* Right Column: Key Photos */}
-        <motion.div 
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.3 }}
-          className="grid grid-cols-2 gap-4 h-min"
-        >
-          {/* Photo 1 */}
-          <div className="col-span-2 aspect-video rounded-2xl overflow-hidden border hairline shadow-md bg-card relative group">
-             {/* Replace with your image */}
-            <div className="absolute inset-0 bg-muted flex items-center justify-center text-ink-dim/40 font-mono text-sm group-hover:bg-secondary transition-colors">
-              <img src="/images/profile/family.jpeg" alt="Family picture" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
-            </div>
-          </div>
-          {/* Photo 2 */}
-          <div className="aspect-square rounded-2xl overflow-hidden border hairline shadow-md bg-card relative group">
-             {/* Replace with your image */}
-            <div className="absolute inset-0 bg-muted flex items-center justify-center text-ink-dim/40 font-mono text-sm group-hover:bg-secondary transition-colors">
-               <img src="/images/profile/megroup.jpeg" alt="Group" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
-            </div>
-          </div>
-           {/* Photo 3 */}
-           <div className="aspect-square rounded-2xl overflow-hidden border hairline shadow-md bg-card relative group">
-             {/* Replace with your image */}
-            <div className="absolute inset-0 bg-muted flex items-center justify-center text-ink-dim/40 font-mono text-sm group-hover:bg-secondary transition-colors">
-               <img src="/images/profile/skiing.jpeg" alt="Skiing" className="w-full h-full object-cover opacity-90 group-hover:opacity-100 transition-opacity" />
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Piano / Music Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="space-y-6 pt-12 border-t"
-      >
-        <h2 className="text-3xl text-ink">Piano Performances</h2>
-        <p className="text-ink-dim">Music has always been a huge part of my life. Here are a few selected pieces.</p>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Video 1 */}
-          <div className="space-y-2">
-            <div className="aspect-video w-full rounded-xl overflow-hidden border bg-card">
-              <iframe 
-                width="100%" 
-                height="100%" 
-                src="https://www.youtube.com/embed/JRo3_ib7wmE?si=g0b_wMl4EHW3MIvN" 
-                title="YouTube video player" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                allowFullScreen
-              ></iframe>
-            </div>
-            <h3 className="text-lg font-medium text-ink">La Campanella - Jun 23, 2024</h3>
-          </div>
-
-          {/* Video 2 */}
-          <div className="space-y-2">
-            <div className="aspect-video w-full rounded-xl overflow-hidden border bg-card">
-              <iframe 
-                width="100%" 
-                height="100%" 
-                src="https://www.youtube.com/embed/NHhUY5PsC7A?si=Kd0NyYxRtpEr2Acm" 
-                title="YouTube video player" 
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                allowFullScreen
-              ></iframe>
-            </div>
-             <h3 className="text-lg font-medium text-ink">Animenz Unravel Adaptation - Dec 24, 2024</h3>
+            <figure>
+              <div className="aspect-video w-full overflow-hidden rounded-xl border bg-muted">
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src="https://www.youtube.com/embed/NHhUY5PsC7A?si=Kd0NyYxRtpEr2Acm"
+                  title="Unravel — Animenz adaptation"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                ></iframe>
+              </div>
+              <figcaption className="meta mt-3">
+                UNRAVEL — ANIMENZ ADAPTATION · DEC 2024
+              </figcaption>
+            </figure>
           </div>
         </div>
+        <PianoKeys />
+      </motion.section>
+
+      {/* ── Tennis ─────────────────────────────────────────── */}
+      <motion.section {...fadeUp} className="rounded-2xl border bg-card">
+        <div className="grid grid-cols-1 items-center gap-10 p-6 sm:p-10 md:grid-cols-2 md:p-14">
+          <div>
+            <p className="meta-caps mb-4">Discipline 02 — Tennis</p>
+            <h2 className="text-3xl leading-tight md:text-5xl">
+              Doubles, <span className="italic">with my dad.</span>
+            </h2>
+            <p className="mt-5 max-w-xl leading-8 text-ink-dim">
+              Weekend doubles are a standing appointment. He holds down the
+              deuce court; I cover the ad side. The scoreboard is disputed.
+              The rivalry is not.
+            </p>
+          </div>
+          <CourtDiagram />
+        </div>
+      </motion.section>
+
+      {/* ── Footnotes ──────────────────────────────────────── */}
+      <motion.div {...fadeUp} className="flex flex-wrap items-center gap-x-8 gap-y-3 border-y py-5">
+        <span className="meta-caps">Also in rotation</span>
+        <span className="meta">⛷️ DOUBLE-BLACKS IN WINTER</span>
+        <span className="meta">☕ ICED CAPP — TIM HORTONS</span>
       </motion.div>
+
+      {/* ── Roots ──────────────────────────────────────────── */}
+      <motion.section {...fadeUp} className="grid grid-cols-1 gap-12 md:grid-cols-2">
+        <div>
+          <p className="meta-caps mb-4">Where it started</p>
+          <h2 className="text-3xl leading-tight md:text-4xl">
+            Robotics, sociology, <span className="italic">and music.</span>
+          </h2>
+          <p className="mt-5 leading-8 text-ink-dim">
+            It started with an English class my dad, sister, and I taught to
+            underprivileged kids in Vietnam. That experience left me with a
+            lasting fascination: how technology can quietly improve daily
+            life. It's why I'm drawn to bringing digital intelligence into
+            the physical world in ways that feel natural and responsive —
+            and why I believe engineering works best when its maker has a
+            creative, healthy mind.
+          </p>
+        </div>
+
+        <div className="grid h-min grid-cols-2 gap-4">
+          <div className="col-span-2 aspect-video overflow-hidden rounded-2xl border hairline shadow-md">
+            <img
+              src="/images/profile/family.jpeg"
+              alt="Family picture"
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="aspect-square overflow-hidden rounded-2xl border hairline shadow-md">
+            <img
+              src="/images/profile/megroup.jpeg"
+              alt="With friends"
+              className="h-full w-full object-cover"
+            />
+          </div>
+          <div className="aspect-square overflow-hidden rounded-2xl border hairline shadow-md">
+            <img
+              src="/images/profile/skiing.jpeg"
+              alt="Skiing"
+              className="h-full w-full object-cover"
+            />
+          </div>
+        </div>
+      </motion.section>
     </div>
   );
 }
