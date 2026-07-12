@@ -12,7 +12,7 @@ export default function Section({
   const bg = variant === "muted" ? "bg-muted/40" : "";
 
   return (
-    <section id={id} className={`w-full ${bg} py-10 ${className}`}>
+    <section id={id} className={`w-full ${bg} scroll-mt-24 py-10 ${className}`}>
       <div className="mx-auto max-w-5xl px-2 sm:px-6">
         {children}
       </div>
