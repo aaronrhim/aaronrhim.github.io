@@ -1,0 +1,513 @@
+/**
+ * Every fact on this site lives here.
+ *
+ * FACT DISCIPLINE - carried over from the UBC Rover site, which is the reason
+ * its copy reads like a team wrote it rather than a copywriter:
+ *
+ *   Anything presented as a statement about Aaron must come from the resume
+ *   (~/Downloads/jobs/AaronsResume.pdf), from prose he wrote himself, or from
+ *   a repository that can be opened and checked. Where a number is claimed it
+ *   is a number he measured. Do not quietly replace a value here with a
+ *   plausible-sounding invention - an unverifiable claim on a portfolio is a
+ *   claim someone will ask about in an interview.
+ *
+ * VOICE - three rules, all of them subtractive:
+ *
+ *   1. Numbers instead of adjectives. "9.8 cm mean joint error" does the work
+ *      that "highly accurate" only gestures at, and it survives scrutiny.
+ *   2. A spaced hyphen in rendered copy, never an em dash. Em dashes belong in
+ *      source comments like this one. It is the cheapest single edit that
+ *      removes the machine cadence from a paragraph.
+ *   3. No "passionate", "innovative", "cutting-edge", "seamless", "leveraging",
+ *      "journey", and no "Whether you are X or Y" construction.
+ *
+ * Deliberately NOT here: the phone number and street address that appear on
+ * the resume. A resume is handed to a named recipient; a portfolio is indexed.
+ * Email is contact enough.
+ */
+
+export const PROFILE = {
+  name: "Aaron Rhim",
+  /** One line. It goes under the name and has to survive being read first. */
+  role: "Robotics and machine learning at UBC",
+  location: "Vancouver, British Columbia",
+  email: "rhimaaron@gmail.com",
+  resume: "/AaronRhim-Resume.pdf",
+  portrait: "/images/profile/me.jpg",
+} as const;
+
+export const LINKS = [
+  { label: "GitHub", href: "https://github.com/aaronrhim" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/aaronrhim" },
+  { label: "Email", href: "mailto:rhimaaron@gmail.com" },
+  { label: "Resume", href: "/AaronRhim-Resume.pdf" },
+] as const;
+
+/**
+ * The masthead figures.
+ *
+ * Four, because five wrapped badly and three looked like an accident. Each one
+ * is a measurement from the work below it, and each `note` names where it came
+ * from so the number is checkable rather than decorative.
+ */
+export const FIGURES = [
+  { value: "9.8", unit: "cm", note: "Mean joint error, half-body pose from egocentric video" },
+  { value: "100", unit: "Hz", note: "Arm control loop after the CAN-FD rewrite, up from 10" },
+  { value: "98", unit: "%", note: "Task completion, keyboard typing learned in simulation" },
+  { value: "2nd", unit: "/ 40+", note: "Aerial Evolution Association of Canada, 2025" },
+] as const;
+
+/** The home page's two paragraphs. Kept here so the page file stays layout. */
+export const INTRO = [
+  "I am in my third year at UBC, in the combined Computer Science, Mathematics and Physics major. Most of what I do is robotics: teaching arms to move, getting sensors to agree with each other, and building the interfaces people use to drive both.",
+  "Right now I am building Eithelmir, where I work on recovering human pose from wearables people already own, and co-leading software on UBC Rover's Mars rover team.",
+] as const;
+
+/**
+ * One image.
+ *
+ * `alt` is required, and it is per image rather than per gallery. An earlier
+ * version passed a single string for a whole set, which meant four images on
+ * the rover page all announced themselves as "UBC Rover" - technically alt
+ * text, practically silence. Describe what is visible and specific: a reader
+ * should be able to tell two images from the same project apart from their alt
+ * text alone.
+ */
+export type Shot = { src: string; alt: string };
+
+export type Link = {
+  url: string;
+  label: string;
+  type: "website" | "github";
+};
+
+export type Role = {
+  slug: string;
+  org: string;
+  title: string;
+  dates: string;
+  /** Present tense for current roles. Used for ordering and the "now" marker. */
+  current: boolean;
+  location: string;
+  logo?: string;
+  /**
+   * Six or seven words. This is a label, not a summary - it says what the role
+   * is, and the page behind it does the explaining. Longer versions read as
+   * filler the moment three of them stack up in a list.
+   */
+  blurb: string;
+  /** Sets the scene in two or three sentences. No bullet may repeat it. */
+  summary: string;
+  /** Each one leads with what changed and carries the number that proves it. */
+  bullets: string[];
+  stack: string[];
+  links: Link[];
+  /** Long-form, first person. Only where there is genuinely more to say. */
+  sections?: { title: string; body: string; images?: Shot[] }[];
+  images?: Shot[];
+};
+
+export const ROLES: Role[] = [
+  {
+    slug: "eithelmir",
+    org: "Eithelmir",
+    title: "Founder",
+    dates: "May 2026 - Present",
+    current: true,
+    location: "Vancouver, BC",
+    blurb: "Human motion capture from consumer wearables",
+    summary:
+      "Eithelmir is a marketplace for the human demonstration data that humanoid robots train on. Labs post a task they need recorded and fund it; people record it with the glasses, watch and phone they already own. I built the pose pipeline underneath it and the web infrastructure around it.",
+    bullets: [
+      "Built a multi-modal pipeline that predicts half-body pose from egocentric video and two wrist IMUs, reaching 9.8 cm mean joint error against multi-view RGB triangulation",
+      "Designed a development interface for visualising 3D limb localisation and reconstruction, combining SMPL avatars, MANO hand rigs and controlled recording sessions",
+      "Built and shipped app.eithelmir.com: the bounty board, the contributor wallet, and the upload API the iOS capture apps post to, along with the payment handling behind it",
+    ],
+    stack: [
+      "Python",
+      "PyTorch",
+      "Sensor fusion",
+      "SMPL",
+      "MANO",
+      "TypeScript",
+      "React",
+      "Supabase",
+    ],
+    links: [{ url: "https://app.eithelmir.com", type: "website", label: "app.eithelmir.com" }],
+    sections: [
+      {
+        title: "Why wearables instead of a capture suit",
+        body: "Motion capture that works already exists, and it lives in a room with markers on the walls and a suit you have to be fitted into. That constraint is the reason there is so little of this data: nobody can record someone folding laundry in their own kitchen if the recording requires a lab. Eithelmir's bet is that the sensors are already part of the outfit. A pair of Ray-Ban Meta glasses gives an egocentric camera at roughly eye height, and an IMU on each wrist tracks the hands through everything that camera cannot see. Neither is a motion capture rig on its own. The 9.8 cm figure is the answer to whether the pair is.",
+      },
+      {
+        title: "Getting the clocks to agree",
+        body: "The hard part turned out not to be the model, it was time. Independent consumer devices drift against each other over a session, and a pose estimate assembled from streams that disagree by 80 ms is worse than one built from video alone. The fix is deliberately low-tech. Every session opens with a clap, whose transient is sharp in both wrist accelerometers and loud in the audio track, so a single event lines every stream up to the frame.",
+      },
+      {
+        title: "Marking what was measured and what was guessed",
+        body: "A pose pipeline produces a number for every joint whether or not it had any evidence for that joint. If both hands leave the camera frame, the model still returns hand positions, and they still look plausible. That is the failure mode that makes a dataset worthless to a lab, because they cannot tell which frames to trust. So every field that ships carries a flag saying whether it was measured or inferred, and every contact event records whether it came from IMU alone or from IMU and video together. It makes the numbers look worse and the dataset actually usable.",
+      },
+    ],
+  },
+  {
+    slug: "ubc-rover",
+    org: "UBC Rover",
+    title: "Software Co-Lead",
+    dates: "Sep 2025 - Present",
+    current: true,
+    location: "University of British Columbia",
+    logo: "/logo/roverlogo.png",
+    blurb: "Arm control and driver interfaces, Mars rover",
+    summary:
+      "UBC Rover is a 64-student team that designs and builds a semi-autonomous rover for the University Rover Challenge in Utah and the Canadian International Rover Challenge in Alberta. I co-lead software, which in practice means the 6-DOF arm and everything the drivers touch.",
+    bullets: [
+      "Rewrote the arm hardware interface from UART serial to a CAN-FD bus with Moteus drivers, taking the control loop from 10 Hz to 100 Hz and fitting over 30 motor parameters into a single 64-byte query",
+      "Implemented singularity-aware inverse kinematics from inverse Jacobian transformations after MoveIt 2 Servo proved unreliable on a fully custom manipulator",
+      "Built a reinforcement learning pipeline in MuJoCo and RoboSuite that reached 98% completion on a keyboard-typing task, and 32% once the environment was randomised",
+      "Rebuilt the Human-Machine Interface as selectable modules on a tiling dashboard, replacing a Glade layout the team could not extend",
+      "Wrote the GNSS mapping and the digital twin visualisation the operators navigate from",
+      "Traced a competition arm failure to a concentric error in a high-load motor, and helped design the CAD fix",
+      "Designed and built the team website at ubcrover.com",
+    ],
+    stack: [
+      "C++",
+      "ROS 2",
+      "MoveIt 2",
+      "RViz2",
+      "CAN-FD",
+      "Moteus",
+      "Python",
+      "MuJoCo",
+      "RoboSuite",
+      "Qt",
+    ],
+    links: [
+      { url: "https://www.ubcrover.com", type: "website", label: "Team site" },
+      { url: "https://github.com/UBC-Snowbots/RoverFlake2", type: "github", label: "RoverFlake2" },
+      { url: "https://github.com/UBC-Snowbots/LearnFlake", type: "github", label: "LearnFlake" },
+    ],
+    /* Deliberately excludes rover1 and rover6 - both already appear inside the
+       reinforcement learning section below, and showing them twice on one page
+       made the trailing gallery read as a mistake. */
+    images: [
+      {
+        src: "/images/thumbnails/rover.jpg",
+        alt: "Six-wheeled rover with its arm raised, parked on cracked badlands hardpan",
+      },
+    ],
+    sections: [
+      {
+        title: "Reinforcement learning",
+        body: "I started by porting Rover's custom 6-DOF manipulator into MJCF so MuJoCo could load it, which meant learning the whole stack at once and hand-modelling collision geometries, visual geometries and kinematic chains for motors that have no one-to-one simulation equivalent. Then a basic Soft Actor-Critic agent on a reach-and-lift task, mostly as a way to get familiar with configuring environments, shaping rewards and reading MuJoCo's failures. The real target was typing a string of characters on a physical keyboard. I used a hierarchical setup: a high-level policy sequencing low-level skills - reaching, hovering, pressing - each trained separately with its own reward. That reached 98%. Adding domain randomisation, where the keyboard position and the arm's initial orientation move every episode, dropped it to about 32%, which is the honest number and the more interesting one.",
+        images: [
+          {
+            src: "/images/rover1.png",
+            alt: "MuJoCo scene of the rover arm above a table, beside the training notebook",
+          },
+          {
+            src: "/images/rover6.png",
+            alt: "Reward curve for run SAC_6 peaking near 18,600 at 187,200 steps",
+          },
+        ],
+      },
+      {
+        title: "Inverse kinematics",
+        body: "Rover already had MoveIt 2 configured for the old arm, so I migrated it into a new ROS 2 package for the new one and expected the IK to come free. It did not. MoveIt 2 Servo's solver is not well tuned for fully custom manipulators, and I hit packet loss and visible jitter even in simulation. So I wrote the solver instead, using inverse Jacobian transformations and operational space control. The part I care about is singularity handling: when the arm reaches a configuration where it loses a degree of freedom and the Jacobian stops being invertible, the controller detects it and hands the operator forward kinematics so they can drive back out, rather than fighting a solver that no longer has an answer.",
+      },
+      {
+        title: "The hardware interface",
+        body: "After a Tesla Optimus event where I heard which specialisations the industry is actually short of, I got interested in the layer below the one I had been working at. I started out only refactoring the old arm's hardware interface and ended up rewriting it. The previous version parsed UART query frames with some fragile string handling and drove stepper motors over serial. The new one uses the CAN-FD bus properly with Moteus drivers, and because a CAN-FD frame carries 64 bytes rather than 8, a single query now returns over 30 motor parameters instead of a handful. The control loop went from 10 Hz to 100 Hz.",
+      },
+      {
+        title: "The interface the drivers actually use",
+        body: "The old HMI was built in Glade, and the complaints about it were always the same: nobody could add to it. Rewriting it was an excuse to learn what every sub-team actually needs to see. It is Qt now, built as selectable modules the driver arranges on a dashboard, with panel management borrowed from Hyprland's dwindle algorithm so the layout stays sane as modules are added. I put GitHub Actions around the core UI so a future contributor cannot break the parts everything else depends on - I expect to be maintaining this for a few years.",
+      },
+    ],
+  },
+  {
+    slug: "ubc-arrc",
+    org: "UBC Aerial Robotics and Rocketry Club",
+    title: "Computer Vision and Telemetry",
+    dates: "Sep 2024 - Aug 2025",
+    current: false,
+    location: "University of British Columbia",
+    logo: "/logo/arrc.png",
+    blurb: "Detection and denoising for competition drones",
+    summary:
+      "ARRC builds autonomous aerial vehicles for the Aerial Evolution Association of Canada competition. I worked on the vision stack for the JellyfishV2 airframe, plus the ZeroMQ transport that carried messages between its onboard systems.",
+    bullets: [
+      "Placed 2nd of more than 40 teams at the Aerial Evolution Association of Canada, 2025",
+      "Built an autoencoding denoiser on an RRDBNet backbone trained adversarially, feeding cleaner frames into the detection model downstream",
+      "Applied transfer learning to YOLOv8 to isolate infrared emission in live flight, improving detection accuracy by an estimated 27%",
+      "Worked on the ZeroMQ messaging pipeline connecting the airframe's onboard systems",
+    ],
+    stack: ["Python", "PyTorch", "YOLOv8", "GANs", "OpenCV", "ZeroMQ"],
+    links: [{ url: "https://ubcoaerospace.ca/", type: "website", label: "Team site" }],
+    sections: [
+      {
+        title: "Cleaning the frame before detecting anything",
+        body: "A detector is only ever as good as the frames handed to it, and ours came off a camera bolted to a vibrating airframe in whatever light the day provided. So before touching the detector I put a denoiser in front of it: an autoencoder on an RRDBNet backbone, trained adversarially rather than on reconstruction loss alone. That distinction is the whole point. Optimising for pixel distance gets you a frame that scores well and looks smeared, because the cheapest way to be close to the truth everywhere is to blur; the adversarial term pushes the output toward frames that look real, which is what preserves the edges the detector downstream is actually keying on.",
+      },
+      {
+        title: "Finding heat instead of shapes",
+        body: "The target emits in infrared, so the useful signal is not an outline that a model pretrained on everyday photographs has ever been rewarded for noticing. Training from scratch was not an option with the amount of labelled flight footage we had, so I took YOLOv8 and applied transfer learning to move it onto the emission rather than the silhouette. That put detection roughly 27% higher. It is worth being precise about what that number is: it is measured against our own competition footage, not a public benchmark, and the test set is small enough that I would call it an estimate rather than a result.",
+      },
+    ],
+    images: [
+      {
+        src: "/images/thumbnails/arrc.jpg",
+        alt: "Orange-topped hexacopter hovering, lowering a sampling tube toward a barrel",
+      },
+      {
+        src: "/images/arrc-field.jpg",
+        alt: "Four students in UBC Engineering gear assembling the hexacopter in snow",
+      },
+      {
+        src: "/images/arrc1.png",
+        alt: "Flight plan over the competition site with boundary polygon and landing marker",
+      },
+    ],
+  },
+];
+
+export type Project = {
+  slug: string;
+  title: string;
+  year: string;
+  /** Five or six words. A label, not a summary. The page does the explaining. */
+  blurb: string;
+  /** Two or three sentences of what it is and what was hard. */
+  body: string;
+  award?: string;
+  stack: string[];
+  links: Link[];
+  cover?: string;
+  images?: Shot[];
+  /** Shown on the home page. Keep this to four. */
+  featured: boolean;
+};
+
+export const PROJECTS: Project[] = [
+  {
+    slug: "render-engine",
+    title: "3D Rendering Engine",
+    year: "2025",
+    blurb: "Gradient descent, rendered without a library",
+    body: "A 3D rendering engine written from scratch in Java, with no graphics library underneath it - the linear algebra for object transforms, projection and camera movement is all implemented directly. On top of the renderer sit visualisation modules for neural networks, including gradient descent demos that let you watch a model move across a scalar field rather than reading its loss curve afterwards. Rendering runs multithreaded, which is where most of the debugging went.",
+    stack: ["Java", "Multithreading", "Linear algebra"],
+    links: [
+      {
+        url: "https://github.com/aaronrhim/CPSC210-Final-Project",
+        type: "github",
+        label: "Source",
+      },
+    ],
+    cover: "/images/thumbnails/3dengine.png",
+    images: [
+      {
+        src: "/images/cpsc210.png",
+        alt: "Scalar field editor showing x^2 + y^2 as a paraboloid with gradient descent vectors",
+      },
+    ],
+    featured: true,
+  },
+  {
+    slug: "job-finder",
+    title: "An actually good job finder",
+    year: "2026",
+    blurb: "Watches companies, notifies on new postings",
+    body: "A platform that watches the careers pages of companies you have saved and notifies you the moment an internship listing appears, rather than when an aggregator gets around to indexing it. It also builds a forward-looking calendar of when postings are likely to open, trained on each company's own posting history with an RNN.",
+    stack: ["Web", "RNNs", "Python"],
+    links: [{ url: "https://github.com/aaronrhim", type: "github", label: "GitHub" }],
+    featured: true,
+  },
+  {
+    slug: "vennu",
+    title: "Vennu",
+    year: "2026",
+    award: "Kickstart, 3rd place",
+    blurb: "Scrapes venue availability without an API",
+    body: "Most venues publish booking availability only on their own site, with no API to query. Vennu automates the lookup end to end: threaded multi-step agents orchestrated on n8n drive a headless Playwright browser through each venue's booking flow, then hand the page content to an LLM to turn messy listings into structured availability. Results are normalised into Supabase so a query hits a table instead of re-scraping.",
+    stack: ["n8n", "Playwright", "OpenAI API", "Supabase", "Node.js"],
+    links: [],
+    /* Deliberately the n8n workflow, not the laptop mockup that used to sit
+       here. That mockup was an AI-generated stock photograph of a product
+       called "Connections", complete with a generated-image sparkle watermark
+       in the corner - a picture of something that does not exist standing in
+       for something that does. The workflow graph is the actual system. */
+    cover: "/images/connectionsworkflow.png",
+    images: [],
+    featured: true,
+  },
+  {
+    slug: "remember-me",
+    title: "Remember Me",
+    year: "2026",
+    award: "StormHacks, Best Hardware",
+    blurb: "Names the faces it recognises aloud",
+    body: "A camera that clips to a pair of glasses and helps someone with Alzheimer's recognise the people around them. When it identifies a face it has been shown before, it says the person's name and how they are related through a small speaker. Recognition runs on AWS Rekognition, speech on ElevenLabs, and family members manage who the device knows through a React Native companion app.",
+    stack: ["React Native", "Expo", "AWS Rekognition", "ElevenLabs", "DynamoDB", "Firebase"],
+    links: [
+      { url: "https://www.youtube.com/watch?v=H-2SR8Qk0QQ", type: "website", label: "Demo" },
+      { url: "https://github.com/LeCruitUsPls/AlzheimerCamera", type: "github", label: "Source" },
+    ],
+    cover: "/images/thumbnails/rememberme.png",
+    /* Two of the three images that used to be here carried the same
+       AI-generation watermark as the cover that was removed. */
+    images: [
+      {
+        src: "/images/rememberme1.png",
+        alt: "Architecture diagram linking the React Native app, Flask backend and AWS Rekognition",
+      },
+    ],
+    featured: true,
+  },
+  {
+    slug: "get-swole",
+    title: "Get Swole",
+    year: "2025",
+    award: "CS6 Hacks, Best Solo Hacker",
+    blurb: "Checks lifting form from a webcam",
+    body: "A form checker for weight training, built solo at my first hackathon. MediaPipe handles pose estimation from a webcam feed, and a model on top of it decides whether a repetition was clean and counts it. A FastAPI service does the vision work and a React front end returns corrections while you are still lifting, which is the only time they are useful.",
+    stack: ["MediaPipe", "Python", "FastAPI", "React"],
+    links: [{ url: "https://github.com/aaronrhim/HackathonCS6", type: "github", label: "Source" }],
+    cover: "/images/thumbnails/get-swole.jpg",
+    images: [
+      {
+        src: "/images/getswole3.png",
+        alt: "Deadlift landmark modal tracking a webcam pose, confidence 1.00",
+      },
+      {
+        src: "/images/getswole1.png",
+        alt: "Personal Gym Visualizer landing page with a Go to Models button",
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: "fact",
+    title: "F.A.C.T",
+    year: "2025",
+    blurb: "Fabric patterns mapped onto live video",
+    body: "An augmented reality try-on built with three others from UBC's Aerial Robotics and Rocketry Club. MediaPipe estimates body pose from a webcam and OpenCV maps a fabric pattern onto the wearer, handling the scaling, tiling and positioning so a swatch reads as a garment rather than a texture pasted over a person. Flask and SocketIO keep the video round trip short enough to feel live.",
+    stack: ["Python", "Flask", "OpenCV", "MediaPipe", "SocketIO"],
+    links: [
+      { url: "https://www.youtube.com/watch?v=SJ7GUdQnaD4", type: "website", label: "Demo" },
+      { url: "https://github.com/aaronrhim/F.A.C.T", type: "github", label: "Source" },
+    ],
+    cover: "/images/thumbnails/fact.jpg",
+    images: [
+      {
+        src: "/images/fact1.png",
+        alt: "Pink F.A.C.T landing page with Custom Design and Try On buttons",
+      },
+      {
+        src: "/images/fact2.png",
+        alt: "Cartoon wardrobe screen with a dress form and pattern tiling sliders",
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: "granny-ai",
+    title: "Granny AI",
+    year: "2026",
+    blurb: "Drives a desktop by voice",
+    body: "A desktop agent for people who find a computer hard to operate. You say what you want and it does it: ElevenLabs handles speech, Gemini works out the intent, and Playwright carries out the navigation. It started out driving the mouse directly, which was unreliable in exactly the situations that mattered, so it was rebuilt around browser automation and application launching instead.",
+    stack: ["Electron", "Gemini API", "ElevenLabs", "Playwright", "React", "TypeScript"],
+    links: [
+      { url: "https://github.com/Alhwyn/nw-hacks-sub", type: "github", label: "Source" },
+      { url: "https://www.youtube.com/watch?v=0IL0ZjVr7gI", type: "website", label: "Demo" },
+    ],
+    cover: "/images/thumbnails/grandbuddy.png",
+    images: [
+      {
+        src: "/images/granny1.png",
+        alt: "Slide listing three usability problems beside an illustrated older woman at a computer",
+      },
+      {
+        src: "/images/granny3.png",
+        alt: "Slide introducing GrandBuddy AI with four feature cards including voice chat",
+      },
+    ],
+    featured: false,
+  },
+  {
+    slug: "lecruiter",
+    title: "LeCruiter AI",
+    year: "2025",
+    blurb: "Interview practice with scored feedback",
+    body: "An interview practice tool built at an AWS hackathon. Bedrock generates questions in context, then scores the answer on content while a separate pass reads tone and sentiment, so the feedback covers delivery as well as what was said. FastAPI behind a React front end.",
+    stack: ["React", "AWS Bedrock", "Python", "FastAPI"],
+    links: [
+      {
+        url: "https://github.com/R0yZh3ng/CIC-GenAI-Hackathon",
+        type: "github",
+        label: "Source",
+      },
+    ],
+    cover: "/images/thumbnails/lecruiter.png",
+    images: [
+      {
+        src: "/images/lecruiter1.png",
+        alt: "Behavioural question prompt about a difficult teammate, with a Start Recording button",
+      },
+      {
+        src: "/images/lecruiter2.png",
+        alt: "Binary tree traversal problem beside an empty C++ solution editor",
+      },
+    ],
+    featured: false,
+  },
+];
+
+export const EDUCATION = {
+  school: "University of British Columbia",
+  degree: "Combined Major in Computer Science, Mathematics and Physics",
+  dates: "Sep 2024 - Apr 2028",
+  location: "Vancouver, BC",
+  coursework: [
+    "Machine Learning",
+    "Data Structures and Algorithms",
+    "Computer Systems",
+    "Computer Hardware and Operating Systems",
+    "Linear Algebra (Honours)",
+    "Discrete Mathematics",
+  ],
+};
+
+export const AWARDS = [
+  { what: "Top 10% of applicants", where: "Y Combinator", when: "F26" },
+  { what: "Best Solo Hacker", where: "CS6 Hacks", when: "2025" },
+  { what: "3rd place", where: "Kickstart", when: "2026" },
+  { what: "Best Hardware", where: "StormHacks", when: "2026" },
+];
+
+export const SKILLS = [
+  {
+    group: "Languages",
+    items: ["Python", "Java", "C++", "C", "JavaScript", "TypeScript", "HTML/CSS", "Assembly (Y86)"],
+  },
+  {
+    group: "Robotics",
+    items: ["ROS 2", "MoveIt 2", "RViz2", "MuJoCo", "RoboSuite", "CAN-FD", "Moteus", "Fusion 360"],
+  },
+  {
+    group: "Machine learning",
+    items: ["PyTorch", "TensorFlow", "YOLOv8", "MediaPipe", "SMPL", "GANs"],
+  },
+  {
+    group: "Web and infrastructure",
+    items: ["React", "Next.js", "Node.js", "Flask", "FastAPI", "PostgreSQL", "Supabase", "Docker"],
+  },
+  {
+    group: "Platforms",
+    items: ["Git", "Linux (Arch, Ubuntu)", "AWS (EC2, S3, DynamoDB, Bedrock)"],
+  },
+];
+
+export const NAV = [
+  { label: "Work", href: "/work" },
+  { label: "Projects", href: "/projects" },
+  { label: "CV", href: "/cv" },
+];
