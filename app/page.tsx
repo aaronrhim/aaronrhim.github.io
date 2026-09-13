@@ -1,167 +1,178 @@
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/Container";
-import Figures from "@/components/Figures";
 import ProjectCard from "@/components/ProjectCard";
-import Whisper from "@/components/Whisper";
-import Em from "@/components/Em";
-import { INTRO, LINKS, PROFILE, PROJECTS, ROLES } from "@/lib/content";
+import { LINKS, PROFILE, PROJECTS, ROLES } from "@/lib/content";
 
-/**
- * The home page.
- *
- * Heading budget: one h1 and three h2s, all of them one word. Everything that
- * would otherwise have been a subheading is carried by a whisper label, a
- * ground step, or the card title itself doing double duty as the link.
- */
 export default function Home() {
-  const featured = PROJECTS.filter((p) => p.featured);
-  const current = ROLES.filter((r) => r.current);
-
+  const selected = ["render-engine", "remember-me", "vennu", "get-swole"];
   return (
     <>
-      <Container className="pt-12 pb-16 sm:pt-16">
-        {/**
-         * al-folio's about hero is a genuine CSS float, not a two-column grid:
-         * the portrait sits at 30% on the right and the bio TEXT WRAPS AROUND
-         * it. That wrap is the whole character of the layout - a grid puts the
-         * text in a fixed column beside the photo, which is a different and
-         * colder thing.
-         *
-         * The float starts at `sm` and not before, which is al-folio's own
-         * rule (`.profile { width: 100% }`, and only `30%` above 576px). A
-         * float that survives to phone widths leaves roughly 200px of column
-         * for the text, and a paragraph two or three words wide is worse than
-         * no wrap at all.
-         */}
-        <div className="mb-7 w-full max-w-[240px] sm:float-right sm:mb-4 sm:ml-6 sm:w-[30%]">
-          <Image
-            src={PROFILE.portrait}
-            alt={PROFILE.name}
-            width={480}
-            height={480}
-            priority
-            /* The source is a phone photograph in portrait orientation. A
-               square crop biased to the top keeps the face centred instead of
-               letting `object-cover` centre on the collar. */
-            className="border-rule aspect-square w-full rounded border object-cover object-[50%_22%]"
-          />
-        </div>
-
-        <h1
-          className="rise text-5xl leading-[1.05] sm:text-6xl"
-          style={{ letterSpacing: "-0.02em" }}
-        >
-          <span className="font-semibold">Aaron</span> <span className="font-light">Rhim</span>
-        </h1>
-
-        <p
-          className="rise text-text-dim mt-3 text-lg font-light"
-          style={{ "--rise-delay": "70ms" } as React.CSSProperties}
-        >
-          {PROFILE.role}
-        </p>
-
-        <div
-          className="rise measure mt-7 space-y-4"
-          style={{ "--rise-delay": "140ms" } as React.CSSProperties}
-        >
-          {INTRO.map((para) => (
-            <p key={para.slice(0, 24)} className="text-[1.05rem] leading-relaxed font-light">
-              {para}
+      <Container>
+        <section className="hero">
+          <div className="rise">
+            <p className="label flex items-center gap-2">
+              <span className="bg-accent h-2 w-2 rounded-full" /> UBC · Computer Science,
+              Mathematics & Physics
             </p>
-          ))}
-        </div>
-
-        <ul
-          className="rise mt-8 flex flex-wrap gap-x-5 gap-y-2"
-          style={{ "--rise-delay": "210ms" } as React.CSSProperties}
-        >
-          {LINKS.map((link) => (
-            <li key={link.label}>
-              <a
-                href={link.href}
-                className="label hover:text-accent transition-colors duration-200 hover:no-underline"
-                {...(link.href.startsWith("http")
-                  ? { target: "_blank", rel: "noreferrer noopener" }
-                  : {})}
-              >
-                {link.label}
+            <h1>
+              Hey, I’m Aaron<span className="text-accent">.</span>
+            </h1>
+            <p className="max-w-[440px] text-xl leading-relaxed">
+              I build robots, write their software, and figure things out along the way.
+            </p>
+            <p className="text-text-dim mt-5 max-w-[440px] leading-relaxed">
+              Third-year student in Vancouver. Currently working on robot learning, rover controls,
+              and human motion capture.
+            </p>
+            <div className="mt-8 flex flex-wrap items-center gap-6">
+              <a href="#selected-work" className="button-primary">
+                Explore my work <span aria-hidden>↓</span>
               </a>
-            </li>
-          ))}
-        </ul>
-
-        {/* clear-both, because the float above is still in effect. Without it
-            the figures grid would tuck itself alongside the portrait. */}
-        <div className="clear-both" />
-      </Container>
-
-      {/**
-       * The ground step, doing the work of a divider and a subheading at once.
-       * The band owns its own padding so the colour change lands in empty
-       * space rather than cutting across the grid inside it.
-       */}
-      {/* No aria-label. An earlier version named this band "Selected
-          measurements", which existed only for assistive tech and matched no
-          visible text - a name half the audience could not hear and the other
-          half could not see. Four large numbers under the intro do not need
-          announcing. */}
-      <section className="raised border-rule border-y">
-        <Container className="py-12 sm:py-14">
-          <Figures />
-        </Container>
-      </section>
-
-      <Container className="pt-14">
-        <Whisper>Now</Whisper>
-        <ul className="space-y-8">
-          {current.map((role) => (
-            <li key={role.slug}>
-              <h3 className="text-2xl font-light">
-                <Link
-                  href={`/work/${role.slug}`}
-                  className="text-text hover:text-accent transition-colors duration-200 hover:no-underline"
-                >
-                  {role.title}, {role.org}
-                </Link>
+              <a href={PROFILE.resume} className="text-sm">
+                Resume <span aria-hidden>↗</span>
+              </a>
+            </div>
+          </div>
+          <figure
+            className="hero-photo rise"
+            style={{ "--rise-delay": "120ms" } as React.CSSProperties}
+          >
+            <Image
+              src="/images/thumbnails/rover.jpg"
+              alt="Our UBC rover with its arm raised during outdoor testing in the badlands"
+              width={800}
+              height={667}
+              priority
+              sizes="(max-width: 760px) 90vw, 460px"
+            />
+            <figcaption className="label flex justify-between gap-3 pt-3">
+              <span>Out of the simulator, into the field.</span>
+              <span aria-hidden>↗</span>
+            </figcaption>
+          </figure>
+        </section>
+        <div className="border-rule flex flex-wrap items-center gap-x-8 gap-y-3 border-y py-5">
+          <span className="label">CURRENTLY</span>
+          <Link href="/work/ubc-rover" className="text-text text-sm">
+            Software Co-Lead <span className="text-text-dim">/ UBC Rover</span> ↗
+          </Link>
+          <Link href="/work/eithelmir" className="text-text text-sm">
+            Founder <span className="text-text-dim">/ Eithelmir</span> ↗
+          </Link>
+        </div>
+        <section id="selected-work" className="pt-16">
+          <div className="section-heading border-t-0">
+            <h2>Selected work</h2>
+            <span className="label">Robotics, software & a few experiments</span>
+          </div>
+          <article className="project-feature">
+            <Link href="/work/ubc-rover" className="feature-photo" aria-label="Explore UBC Rover">
+              <Image
+                src="/images/rover-model.png"
+                alt="CAD model of the UBC rover and its robotic arm"
+                fill
+                sizes="(max-width: 760px) 95vw, 610px"
+                className="bg-bg-raised object-contain p-4"
+              />
+            </Link>
+            <div className="feature-copy">
+              <p className="label">01 / UBC ROVER · 2025–PRESENT</p>
+              <h3>
+                From motor commands
+                <br />
+                to a moving rover.
               </h3>
-              <p className="measure text-text-dim mt-2 leading-relaxed font-light">
-                {role.summary}
+              <p className="text-text-dim leading-relaxed">
+                The software behind our 6-DOF arm: a faster hardware interface, inverse kinematics,
+                reinforcement learning, and an HMI built around what the driver needs.
               </p>
-            </li>
-          ))}
-        </ul>
-        <p className="mt-8">
-          <Link href="/work" className="btn-ghost">
-            All experience
-          </Link>
-        </p>
-      </Container>
-
-      <Container className="pt-16">
-        <Whisper>Projects</Whisper>
-        <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-          {featured.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
-          ))}
-        </ul>
-        <p className="mt-8">
-          <Link href="/projects" className="btn-ghost">
-            All projects
-          </Link>
-        </p>
-      </Container>
-
-      <Container className="pt-20">
-        <p className="measure-tight text-2xl leading-snug font-light sm:text-3xl">
-          I am looking for internships in <Em>robotics and machine learning</Em> for 2027.
-        </p>
-        <p className="mt-4">
-          <a href={`mailto:${PROFILE.email}`} className="text-lg">
-            {PROFILE.email}
-          </a>
-        </p>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {["C++", "ROS 2", "CAN-FD", "MuJoCo", "Qt"].map((s) => (
+                  <span className="tag" key={s}>
+                    {s}
+                  </span>
+                ))}
+              </div>
+              <Link href="/work/ubc-rover" className="mt-8 text-sm">
+                Read the build notes <span aria-hidden>↗</span>
+              </Link>
+            </div>
+          </article>
+          <ul className="mt-6 grid gap-6 sm:grid-cols-2">
+            {selected.map((slug) => (
+              <ProjectCard key={slug} project={PROJECTS.find((p) => p.slug === slug)!} />
+            ))}
+          </ul>
+          <div className="mt-7 text-right">
+            <Link href="/projects" className="text-sm">
+              All projects <span aria-hidden>→</span>
+            </Link>
+          </div>
+        </section>
+        <section className="pt-16">
+          <div className="section-heading">
+            <h2>Beyond the rover</h2>
+            <Link href="/work" className="text-sm">
+              All experience ↗
+            </Link>
+          </div>
+          <div className="grid gap-8 sm:grid-cols-2">
+            {ROLES.filter((r) => r.slug !== "ubc-rover").map((role) => (
+              <article key={role.slug} className="border-rule border-l-2 pl-6">
+                <p className="label">{role.dates}</p>
+                <h3 className="mt-3 text-2xl">
+                  <Link href={`/work/${role.slug}`} className="text-text">
+                    {role.org} ↗
+                  </Link>
+                </h3>
+                <p className="mt-2 text-sm">{role.title}</p>
+                <p className="text-text-dim mt-4 leading-relaxed">{role.blurb}.</p>
+              </article>
+            ))}
+          </div>
+        </section>
+        <section
+          id="about"
+          className="border-rule mt-20 grid gap-8 border-t pt-10 sm:grid-cols-[180px_1fr]"
+        >
+          <div>
+            <Image
+              src={PROFILE.portrait}
+              alt="Aaron Rhim"
+              width={150}
+              height={165}
+              className="aspect-square rounded-sm object-cover object-[50%_22%]"
+            />
+            <p className="label mt-3">Vancouver, BC</p>
+          </div>
+          <div>
+            <h2 className="text-3xl">A little about me</h2>
+            <p className="measure text-text-dim mt-5 leading-relaxed">
+              I’m studying Computer Science, Mathematics and Physics at UBC. I like working where
+              software meets the physical world: teaching an arm to press a key, making sense of
+              noisy sensor data, or building a tool that makes debugging a little less painful.
+            </p>
+            <p className="measure text-text-dim mt-4 leading-relaxed">
+              Outside of that, you’ll find me skiing or spending time with friends and family. I’m
+              looking for robotics and machine learning internships for 2027.
+            </p>
+            <div className="mt-6 flex flex-wrap gap-6">
+              {LINKS.filter((l) => l.label !== "Resume").map((l) => (
+                <a
+                  key={l.label}
+                  href={l.href}
+                  className="text-sm"
+                  {...(l.href.startsWith("http")
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
+                >
+                  {l.label} ↗
+                </a>
+              ))}
+            </div>
+          </div>
+        </section>
       </Container>
     </>
   );

@@ -14,14 +14,10 @@ export default function ProjectsPage() {
     <>
       <PageHeader
         title="Projects"
-        lede="Eight of them. Five had a deadline at the end and three of those placed."
+        lede="Things I’ve built to learn something, solve a problem, or see an idea through a hackathon."
       />
       <Container>
-        {/* One flat grid, deliberately not split into "featured" and "other".
-            A grid divided into two labelled halves needs two subheadings to
-            explain a distinction the reader did not ask about, and it quietly
-            tells them which half is the disappointing one. */}
-        <ul className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {PROJECTS.map((project) => (
             <ProjectCard key={project.slug} project={project} level={2} />
           ))}

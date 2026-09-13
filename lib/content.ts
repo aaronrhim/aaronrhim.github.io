@@ -1,5 +1,5 @@
 /**
- * Every fact on this site lives here.
+ * Core portfolio facts. Extended write-ups live in project-notes.ts and HmiStudy.tsx.
  *
  * FACT DISCIPLINE - carried over from the UBC Rover site, which is the reason
  * its copy reads like a team wrote it rather than a copywriter:
@@ -198,7 +198,7 @@ export const ROLES: Role[] = [
     sections: [
       {
         title: "Reinforcement learning",
-        body: "I started by porting Rover's custom 6-DOF manipulator into MJCF so MuJoCo could load it, which meant learning the whole stack at once and hand-modelling collision geometries, visual geometries and kinematic chains for motors that have no one-to-one simulation equivalent. Then a basic Soft Actor-Critic agent on a reach-and-lift task, mostly as a way to get familiar with configuring environments, shaping rewards and reading MuJoCo's failures. The real target was typing a string of characters on a physical keyboard. I used a hierarchical setup: a high-level policy sequencing low-level skills - reaching, hovering, pressing - each trained separately with its own reward. That reached 98%. Adding domain randomisation, where the keyboard position and the arm's initial orientation move every episode, dropped it to about 32%, which is the honest number and the more interesting one.",
+        body: "I started by porting Rover's custom 6-DOF manipulator into MJCF so MuJoCo could load it, which meant learning the whole stack at once and hand-modelling collision geometries, visual geometries and kinematic chains for motors that have no one-to-one simulation equivalent. I then trained a basic Soft Actor-Critic agent on a reach-and-lift task, mostly as a way to get familiar with configuring environments, shaping rewards and reading MuJoCo's failures. \n\nThe real target was typing a string of characters on a physical keyboard. I used a hierarchical setup: a high-level policy sequencing low-level skills - reaching, hovering, pressing - each trained separately with its own reward. That reached 98%. \n\nAdding domain randomisation, where the keyboard position and the arm's initial orientation move every episode, dropped it to about 32%, which is the honest number and the more interesting one.",
         images: [
           {
             src: "/images/rover1.png",
@@ -212,11 +212,11 @@ export const ROLES: Role[] = [
       },
       {
         title: "Inverse kinematics",
-        body: "Rover already had MoveIt 2 configured for the old arm, so I migrated it into a new ROS 2 package for the new one and expected the IK to come free. It did not. MoveIt 2 Servo's solver is not well tuned for fully custom manipulators, and I hit packet loss and visible jitter even in simulation. So I wrote the solver instead, using inverse Jacobian transformations and operational space control. The part I care about is singularity handling: when the arm reaches a configuration where it loses a degree of freedom and the Jacobian stops being invertible, the controller detects it and hands the operator forward kinematics so they can drive back out, rather than fighting a solver that no longer has an answer.",
+        body: "Rover already had MoveIt 2 configured for the old arm, so I migrated it into a new ROS 2 package for the new one and expected the IK to come free. It did not. MoveIt 2 Servo's solver is not well tuned for fully custom manipulators, and I hit packet loss and visible jitter even in simulation. \n\nSo I wrote the solver instead, using inverse Jacobian transformations and operational space control. The part I care about is singularity handling: when the arm reaches a configuration where it loses a degree of freedom and the Jacobian stops being invertible, the controller detects it and hands the operator forward kinematics so they can drive back out, rather than fighting a solver that no longer has an answer.",
       },
       {
         title: "The hardware interface",
-        body: "After a Tesla Optimus event where I heard which specialisations the industry is actually short of, I got interested in the layer below the one I had been working at. I started out only refactoring the old arm's hardware interface and ended up rewriting it. The previous version parsed UART query frames with some fragile string handling and drove stepper motors over serial. The new one uses the CAN-FD bus properly with Moteus drivers, and because a CAN-FD frame carries 64 bytes rather than 8, a single query now returns over 30 motor parameters instead of a handful. The control loop went from 10 Hz to 100 Hz.",
+        body: "After a Tesla Optimus event where I heard which specialisations the industry is actually short of, I got interested in the layer below the one I had been working at. I started out only refactoring the old arm's hardware interface and ended up rewriting it. The previous version parsed UART query frames with some fragile string handling and drove stepper motors over serial. \n\nThe new one uses the CAN-FD bus properly with Moteus drivers, and because a CAN-FD frame carries 64 bytes rather than 8, a single query now returns over 30 motor parameters instead of a handful. The control loop went from 10 Hz to 100 Hz.",
       },
       {
         title: "The interface the drivers actually use",
@@ -274,7 +274,7 @@ export type Project = {
   slug: string;
   title: string;
   year: string;
-  /** Five or six words. A label, not a summary. The page does the explaining. */
+  /** One sentence describing the project for the index. */
   blurb: string;
   /** Two or three sentences of what it is and what was hard. */
   body: string;
@@ -283,7 +283,7 @@ export type Project = {
   links: Link[];
   cover?: string;
   images?: Shot[];
-  /** Shown on the home page. Keep this to four. */
+  /** Available for curated project selections. */
   featured: boolean;
 };
 
@@ -292,8 +292,9 @@ export const PROJECTS: Project[] = [
     slug: "render-engine",
     title: "3D Rendering Engine",
     year: "2025",
-    blurb: "Gradient descent, rendered without a library",
-    body: "A 3D rendering engine written from scratch in Java, with no graphics library underneath it - the linear algebra for object transforms, projection and camera movement is all implemented directly. On top of the renderer sit visualisation modules for neural networks, including gradient descent demos that let you watch a model move across a scalar field rather than reading its loss curve afterwards. Rendering runs multithreaded, which is where most of the debugging went.",
+    blurb:
+      "A Java renderer built from the linear algebra up, with interactive gradient-descent visualisations.",
+    body: "I wanted to understand the math behind a 3D renderer by building one. This Java project grew into a way to visualise scalar fields, neural networks, and gradient descent without a graphics library underneath.",
     stack: ["Java", "Multithreading", "Linear algebra"],
     links: [
       {
@@ -315,8 +316,9 @@ export const PROJECTS: Project[] = [
     slug: "job-finder",
     title: "An actually good job finder",
     year: "2026",
-    blurb: "Watches companies, notifies on new postings",
-    body: "A platform that watches the careers pages of companies you have saved and notifies you the moment an internship listing appears, rather than when an aggregator gets around to indexing it. It also builds a forward-looking calendar of when postings are likely to open, trained on each company's own posting history with an RNN.",
+    blurb:
+      "Internship alerts from company careers pages, plus a calendar of predicted opening dates.",
+    body: "A tool for keeping up with internships at companies you actually want to work for. It watches saved careers pages for new listings and uses posting history to estimate when the next opportunities might open.",
     stack: ["Web", "RNNs", "Python"],
     links: [{ url: "https://github.com/aaronrhim", type: "github", label: "GitHub" }],
     featured: true,
@@ -326,8 +328,8 @@ export const PROJECTS: Project[] = [
     title: "Vennu",
     year: "2026",
     award: "Kickstart, 3rd place",
-    blurb: "Scrapes venue availability without an API",
-    body: "Most venues publish booking availability only on their own site, with no API to query. Vennu automates the lookup end to end: threaded multi-step agents orchestrated on n8n drive a headless Playwright browser through each venue's booking flow, then hand the page content to an LLM to turn messy listings into structured availability. Results are normalised into Supabase so a query hits a table instead of re-scraping.",
+    blurb: "Browser agents that turn multi-step venue booking flows into searchable availability.",
+    body: "We built Vennu to bring venue availability into one searchable place, even when the booking sites had no API. The project placed third at Kickstart.",
     stack: ["n8n", "Playwright", "OpenAI API", "Supabase", "Node.js"],
     links: [],
     /* Deliberately the n8n workflow, not the laptop mockup that used to sit
@@ -344,8 +346,8 @@ export const PROJECTS: Project[] = [
     title: "Remember Me",
     year: "2026",
     award: "StormHacks, Best Hardware",
-    blurb: "Names the faces it recognises aloud",
-    body: "A camera that clips to a pair of glasses and helps someone with Alzheimer's recognise the people around them. When it identifies a face it has been shown before, it says the person's name and how they are related through a small speaker. Recognition runs on AWS Rekognition, speech on ElevenLabs, and family members manage who the device knows through a React Native companion app.",
+    blurb: "A glasses-mounted camera that recognises familiar faces and speaks their names.",
+    body: "A hackathon prototype to help someone recognise the people around them: a camera on their glasses identifies familiar faces and speaks a name and relationship. We won Best Hardware at StormHacks.",
     stack: ["React Native", "Expo", "AWS Rekognition", "ElevenLabs", "DynamoDB", "Firebase"],
     links: [
       { url: "https://www.youtube.com/watch?v=H-2SR8Qk0QQ", type: "website", label: "Demo" },
@@ -367,8 +369,8 @@ export const PROJECTS: Project[] = [
     title: "Get Swole",
     year: "2025",
     award: "CS6 Hacks, Best Solo Hacker",
-    blurb: "Checks lifting form from a webcam",
-    body: "A form checker for weight training, built solo at my first hackathon. MediaPipe handles pose estimation from a webcam feed, and a model on top of it decides whether a repetition was clean and counts it. A FastAPI service does the vision work and a React front end returns corrections while you are still lifting, which is the only time they are useful.",
+    blurb: "A webcam-based form checker that tracks body landmarks and counts repetitions.",
+    body: "My first hackathon, built solo: a webcam-based form checker for weight training. It tracks repetitions and returns feedback while you’re lifting. The project won Best Solo Hacker at CS6 Hacks.",
     stack: ["MediaPipe", "Python", "FastAPI", "React"],
     links: [{ url: "https://github.com/aaronrhim/HackathonCS6", type: "github", label: "Source" }],
     cover: "/images/thumbnails/get-swole.jpg",
@@ -388,8 +390,9 @@ export const PROJECTS: Project[] = [
     slug: "fact",
     title: "F.A.C.T",
     year: "2025",
-    blurb: "Fabric patterns mapped onto live video",
-    body: "An augmented reality try-on built with three others from UBC's Aerial Robotics and Rocketry Club. MediaPipe estimates body pose from a webcam and OpenCV maps a fabric pattern onto the wearer, handling the scaling, tiling and positioning so a swatch reads as a garment rather than a texture pasted over a person. Flask and SocketIO keep the video round trip short enough to feel live.",
+    blurb:
+      "An augmented reality fabric preview, with pose tracking and adjustable pattern mapping.",
+    body: "An augmented reality fabric try-on built with three others from UBC’s Aerial Robotics and Rocketry Club. We used a webcam and body tracking to let someone preview a pattern on themselves.",
     stack: ["Python", "Flask", "OpenCV", "MediaPipe", "SocketIO"],
     links: [
       { url: "https://www.youtube.com/watch?v=SJ7GUdQnaD4", type: "website", label: "Demo" },
@@ -412,8 +415,9 @@ export const PROJECTS: Project[] = [
     slug: "granny-ai",
     title: "Granny AI",
     year: "2026",
-    blurb: "Drives a desktop by voice",
-    body: "A desktop agent for people who find a computer hard to operate. You say what you want and it does it: ElevenLabs handles speech, Gemini works out the intent, and Playwright carries out the navigation. It started out driving the mouse directly, which was unreliable in exactly the situations that mattered, so it was rebuilt around browser automation and application launching instead.",
+    blurb:
+      "A voice-controlled desktop agent, rebuilt around browser automation after mouse control proved unreliable.",
+    body: "A voice-controlled desktop agent for people who find computers difficult to use. You describe what you want, and the app interprets the request and carries out the navigation.",
     stack: ["Electron", "Gemini API", "ElevenLabs", "Playwright", "React", "TypeScript"],
     links: [
       { url: "https://github.com/Alhwyn/nw-hacks-sub", type: "github", label: "Source" },
@@ -436,8 +440,8 @@ export const PROJECTS: Project[] = [
     slug: "lecruiter",
     title: "LeCruiter AI",
     year: "2025",
-    blurb: "Interview practice with scored feedback",
-    body: "An interview practice tool built at an AWS hackathon. Bedrock generates questions in context, then scores the answer on content while a separate pass reads tone and sentiment, so the feedback covers delivery as well as what was said. FastAPI behind a React front end.",
+    blurb: "An interview-practice tool that gives feedback on both answer content and delivery.",
+    body: "An interview-practice tool we built at an AWS hackathon. It generates contextual questions and returns feedback on what you said and how you delivered it.",
     stack: ["React", "AWS Bedrock", "Python", "FastAPI"],
     links: [
       {
@@ -507,7 +511,7 @@ export const SKILLS = [
 ];
 
 export const NAV = [
-  { label: "Work", href: "/work" },
+  { label: "Experience", href: "/work" },
   { label: "Projects", href: "/projects" },
-  { label: "CV", href: "/cv" },
+  { label: "About & CV", href: "/cv" },
 ];

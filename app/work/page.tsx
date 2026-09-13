@@ -13,14 +13,10 @@ export default function WorkPage() {
   return (
     <>
       <PageHeader
-        title="Work"
-        lede="Three teams, all of them robotics. Two of the three pages below are mostly about what broke."
+        title="Experience"
+        lede="Building with teams, from competition robots to human motion capture. Here’s what I’ve worked on and how it came together."
       />
       <Container>
-        {/* No section headings inside the list. Each entry's own title is the
-            only heading it needs, and the hairline between rows is the only
-            separator - three bordered cards would read as three unrelated
-            things rather than one history. */}
         <ul>
           {ROLES.map((role) => (
             <RoleRow key={role.slug} role={role} />

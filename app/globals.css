@@ -1,81 +1,40 @@
 @import "tailwindcss";
 
-/* ============================================================================
-   TOKENS
-
-   The variable structure is al-folio's: a small set of slots that every
-   component reads, redefined wholesale under [data-theme="dark"]. Nothing else
-   in this stylesheet knows a hex value, so re-skinning the site is an edit to
-   this block alone.
-
-   The values are not al-folio's defaults. Its light accent is #b509ac magenta,
-   which fights with photographs of a rover in a desert. The accent here is an
-   oxide amber carrying the gold that runs through both of the things this site
-   is mostly about - UBC Rover's #DA9C3E stripe and Eithelmir's #bb731b - moved
-   dark enough to clear 4.5:1 on white (5.02:1), because al-folio gives its
-   accent exactly one job and that job is colouring body links.
-
-   One deliberate divergence: al-folio changes the accent HUE between modes,
-   purple in light and cyan in dark. That works for a theme meant to be
-   personalised by strangers. Here the accent is one colour at two lightnesses,
-   because it is a person's, and it should be the same colour in both.
-   ========================================================================= */
 @theme {
-  --font-sans: var(--font-archivo), "Archivo", system-ui, sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, "JetBrains Mono", monospace;
-
-  /* al-folio's container: a flat 930px at every width, with no responsive
-     ladder behind it. That fixed measure is most of why the theme reads like a
-     printed page rather than an app. */
-  --container-content: 930px;
-
-  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --font-sans: var(--font-archivo), "Archivo", sans-serif;
+  --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
+  --container-content: 1120px;
 }
-
 :root {
   color-scheme: light;
-
-  --bg: #ffffff;
-  --bg-raised: #f6f6f4;
-  --text: #101010;
-  --text-dim: #6f6f6f;
-  --accent: #b4530a;
-  --accent-wash: rgba(180, 83, 10, 0.06);
-  --rule: rgba(0, 0, 0, 0.12);
-  --rule-strong: rgba(0, 0, 0, 0.28);
-  --card: #ffffff;
-  --shadow-lift: 0 8px 17px 0 rgba(0, 0, 0, 0.12), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
-  --grain: rgba(0, 0, 0, 0.05);
-
-  /* Inverted strip, al-folio's footer trick: dark bar under a white page. */
-  --footer-bg: #1c1c1d;
-  --footer-text: #b9b9b9;
-  --footer-link: #ffffff;
+  --bg: #f7f7f0;
+  --bg-raised: #eeeee5;
+  --text: #252d29;
+  --text-dim: #626b63;
+  --accent: #38634b;
+  --accent-wash: #e7eddf;
+  --rule: #d9ddd1;
+  --rule-strong: #a6af9e;
+  --card: #fbfbf5;
+  --footer-bg: #22392e;
+  --footer-text: #bfcbbd;
+  --footer-link: #f7f7f0;
 }
-
 html[data-theme="dark"] {
   color-scheme: dark;
-
-  /* al-folio's own dark ground and card - the one place where taking its
-     literal values was simply correct. Note text is #e8e8e8 on #1c1c1d, never
-     pure white on pure black. */
-  --bg: #1c1c1d;
-  --bg-raised: #212529;
-  --text: #e8e8e8;
-  --text-dim: #9a9a9a;
-  --accent: #e0973f;
-  --accent-wash: rgba(224, 151, 63, 0.09);
-  --rule: #33333a;
-  --rule-strong: #4e4e57;
-  --card: #212529;
-  --shadow-lift: 0 8px 17px 0 rgba(0, 0, 0, 0.5), 0 6px 20px 0 rgba(0, 0, 0, 0.4);
-  --grain: rgba(255, 255, 255, 0.05);
-
-  --footer-bg: #e8e8e8;
-  --footer-text: #4a4a4a;
-  --footer-link: #000000;
+  --bg: #1b231f;
+  --bg-raised: #252f28;
+  --text: #ecede1;
+  --text-dim: #b0bbac;
+  --accent: #b2d390;
+  --accent-wash: #303e2b;
+  --rule: #3b473b;
+  --rule-strong: #75836d;
+  --card: #202a23;
+  --footer-bg: #131d17;
+  --footer-text: #bfcbbd;
+  --footer-link: #f7f7f0;
 }
-
 @theme inline {
   --color-bg: var(--bg);
   --color-bg-raised: var(--bg-raised);
@@ -90,305 +49,401 @@ html[data-theme="dark"] {
   --color-footer-text: var(--footer-text);
   --color-footer-link: var(--footer-link);
 }
-
-/* ============================================================================
-   Base
-   ========================================================================= */
 @layer base {
   html {
-    scroll-padding-top: 5rem;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
     -webkit-tap-highlight-color: transparent;
   }
-
   body {
-    background-color: var(--bg);
+    background: var(--bg);
     color: var(--text);
     font-family: var(--font-sans);
-    font-synthesis-weight: none;
-    text-rendering: optimizeLegibility;
-    /* Archivo ships proportional figures, which makes a column of measurements
-       ragged. Every number on this site sits in a column of other numbers. */
     font-variant-numeric: tabular-nums;
   }
-
-  /**
-   * Headings are LARGE, never LOUD.
-   *
-   * This is the single declaration al-folio's whole character rests on. Its
-   * bundled MDB sets `h1..h6 { font-weight: 300 }` on top of `body { 300 }`,
-   * so headings and body share a weight and a 2.5rem h1 reads as a change of
-   * scale rather than a change of volume. Reaching for bold to mark a heading
-   * is what makes a page shout.
-   *
-   * Weight 400 rather than 300 because Archivo is a grotesque with a smaller
-   * x-height than Roboto and goes papery below 400 at body sizes; the point is
-   * that headings match body weight, not that the number is 300.
-   *
-   * Bold is spent, not sprayed. It appears in exactly three places site-wide:
-   * the first name in the wordmark, the current nav item, and <Em>.
-   */
   h1,
   h2,
   h3,
   h4 {
-    font-weight: 400;
-    line-height: 1.15;
+    line-height: 1.12;
     text-wrap: balance;
+    font-weight: 500;
+    letter-spacing: -0.035em;
   }
-
-  /* No letter-spacing rule anywhere - deliberately.
-     Grepping al-folio's fifteen SCSS partials for `letter-spacing` returns
-     zero hits. The airiness is a property of the weight, and tightening the
-     tracking to compensate for a heavy face is the move that makes display
-     type look like a logo. The one exception is the masthead, which is large
-     enough that default tracking opens visible gaps; it sets its own. */
-
   p {
     text-wrap: pretty;
   }
-
-  /**
-   * al-folio's signature link rule.
-   *
-   * Accent-coloured with no underline at rest, and on hover THE COLOUR DOES
-   * NOT CHANGE - only the underline arrives. Colour is the permanent state,
-   * decoration is the interaction. It is why a paragraph dense with links
-   * still reads as a paragraph.
-   */
   a {
     color: var(--accent);
     text-decoration: none;
   }
-
   a:hover {
     text-decoration: underline;
-    text-underline-offset: 0.18em;
-    text-decoration-thickness: 1px;
+    text-underline-offset: 0.25em;
   }
-
-  hr {
-    border: 0;
-    border-top: 1px solid var(--rule);
+  button {
+    cursor: pointer;
   }
-
-  /* 5px accent bar and a size bump. No background wash, no italics, no quote
-     glyph - al-folio's blockquote exactly. */
-  blockquote {
-    border-left: 5px solid var(--accent);
-    margin: 1.5rem 0;
-    padding: 0.25rem 0 0.25rem 1.25rem;
-    font-size: 1.2rem;
-    line-height: 1.55;
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
   }
-
-  code {
-    font-family: var(--font-mono);
-    font-size: 0.875em;
-    color: var(--accent);
-    background-color: var(--accent-wash);
-    border-radius: 3px;
-    padding: 2px 5px;
-  }
-
   ::selection {
-    background-color: var(--accent);
+    background: var(--accent);
     color: var(--bg);
   }
-
   :focus-visible {
     outline: 2px solid var(--accent);
-    outline-offset: 3px;
-    border-radius: 1px;
+    outline-offset: 5px;
+  }
+  code {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    background: var(--accent-wash);
+    padding: 0.1em 0.3em;
   }
 }
-
-/* ============================================================================
-   Utilities
-   ========================================================================= */
 @layer utilities {
-  /**
-   * The label register: mono, 12px, SENTENCE CASE.
-   *
-   * Deliberately not uppercase with 0.18em tracking. A tracked-out all-caps
-   * label above every block is the most over-used piece of template chrome
-   * there is, and Eithelmir's own stylesheet records abandoning it - "the
-   * lowercase chrome experiment is over - no transform, proper nouns keep
-   * their capitals". Sentence case also lets a label carry a real proper noun
-   * (ROS 2, CAN-FD, MuJoCo) without shouting it.
-   */
   .label {
     font-family: var(--font-mono);
-    font-size: 0.75rem;
-    line-height: 1.4;
+    font-size: 0.7rem;
+    line-height: 1.6;
     color: var(--text-dim);
   }
-
-  /* Figures: tabular by inheritance, slashed zero so 0 never reads as O. */
   .figure {
     font-family: var(--font-mono);
     font-feature-settings: "zero";
-    letter-spacing: -0.03em;
   }
-
-  /**
-   * The whisper label - al-folio's `.projects h2.category`, and the single
-   * best answer to "how do I separate sections without stacking subheadings".
-   *
-   * A section name set IN THE DIVIDER COLOUR, right-aligned, sitting on its
-   * own hairline. It is barely more than a tint against the rule. You do not
-   * read it on the way down the page; you find it when you go looking for
-   * where you are. That is exactly the right amount of presence for a label
-   * whose content already explains itself.
-   */
-  .whisper {
-    /* --text-dim, not --rule-strong.
-       Setting the label in the literal divider colour is what al-folio does
-       (`.projects h2.category` is `var(--global-divider-color)`), and measured
-       it is 1.99:1 on white and 2.07:1 on the dark ground - below the 3:1 that
-       large text needs, so a low-vision reader cannot find the label at all.
-       Since every whisper is also the accessible NAME of its section, that made
-       the section nameless rather than quiet. --text-dim measures 5.02:1 light
-       and 6.05:1 dark, and the whisper still reads as a whisper: the work is
-       done by the right alignment, the light weight and the hairline, which is
-       where it should have been coming from in the first place. */
-    color: var(--text-dim);
-    border-bottom: 1px solid var(--rule);
-    text-align: right;
-    font-size: 1.5rem;
-    padding-top: 0.5rem;
-    padding-bottom: 0.15rem;
-    margin-bottom: 1.75rem;
-  }
-
-  /**
-   * The section ground step - Rover's `.section-raised`.
-   *
-   * Separate two sections by changing the ground rather than by drawing a rule
-   * and captioning it. One declaration replaces a divider and a subheading,
-   * and nothing inside the band changes: text, rules and accent all stay put.
-   * Every band owns its own vertical padding so the colour change always lands
-   * in empty space - a boundary cutting through a card reads as a rendering
-   * fault rather than a division.
-   */
-  .raised {
-    background-color: var(--bg-raised);
-  }
-
-  /**
-   * Dotted ground, from Eithelmir's `paper-grain`. Two offset grids rather
-   * than one so it never resolves into a regular lattice, tinted from a theme
-   * variable so it inverts with dark mode instead of needing a second rule.
-   */
-  .grain {
-    background-image:
-      radial-gradient(var(--grain) 1px, transparent 1px),
-      radial-gradient(var(--grain) 1px, transparent 1px);
-    background-position:
-      0 0,
-      12px 12px;
-    background-size:
-      24px 24px,
-      24px 24px;
-  }
-
-  /**
-   * The only button idiom on the site - al-folio's `a.btncv`.
-   *
-   * A tiny uppercase ghost: 1px border in the text colour, a 2px radius, and
-   * on hover both the text and the border turn accent together. There is no
-   * filled button anywhere in al-folio and there is none here. This is the one
-   * place uppercase survives, because at 0.7rem it is a control, not a label.
-   */
-  .btn-ghost {
-    display: inline-block;
-    color: var(--text);
-    border: 1px solid var(--text);
-    border-radius: 2px;
-    padding: 0.3rem 1rem;
-    font-size: 0.7rem;
-    font-weight: 400;
-    text-transform: uppercase;
-    white-space: nowrap;
-    transition:
-      color 0.2s ease-in-out,
-      border-color 0.2s ease-in-out;
-  }
-
-  .btn-ghost:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-    text-decoration: none;
-  }
-
-  /**
-   * The card. Flat at rest, lifting into a shadow on hover over 0.55s.
-   *
-   * al-folio cancels MDB's resting shadow with `.hoverable` and only restores
-   * elevation on hover, so depth is purely an interaction affordance and a
-   * grid of cards reads as a flat plane. Note it lifts WITHOUT MOVING - no
-   * translate, no scale. Only the shadow changes.
-   */
-  .card-lift {
-    background-color: var(--card);
-    border: 1px solid var(--rule);
-    border-radius: 0.25rem;
-    transition:
-      box-shadow 0.55s ease-in-out,
-      border-color 0.55s ease-in-out;
-  }
-
-  .card-lift:hover {
-    box-shadow: var(--shadow-lift);
-    border-color: transparent;
-  }
-
-  /**
-   * Reading measure. 68 characters - long enough that a sentence carrying a
-   * unit does not break twice, short enough that the eye finds the next line.
-   */
   .measure {
     max-width: 68ch;
   }
-
   .measure-tight {
-    max-width: 54ch;
+    max-width: 40ch;
+  }
+  .raised {
+    background: var(--bg-raised);
+  }
+  .whisper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.65rem;
+    margin-bottom: 2rem;
+  }
+  .whisper::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+  .btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    border: 1px solid var(--rule-strong);
+    border-radius: 4px;
+    padding: 0.75rem 1.1rem;
+    color: var(--text);
+    font-size: 0.8rem;
+    transition: background 0.2s;
+  }
+  .btn-ghost:hover {
+    background: var(--accent-wash);
+    text-decoration: none;
+  }
+  .button-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 0.9rem 1.2rem;
+    background: var(--accent);
+    color: var(--bg);
+    border-radius: 4px;
+    font-size: 0.85rem;
+  }
+  .button-primary:hover {
+    text-decoration: none;
+    filter: brightness(1.12);
+  }
+  .card-lift {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    border-radius: 5px;
+    transition:
+      border-color 0.2s,
+      transform 0.2s;
+  }
+  .card-lift:hover {
+    border-color: var(--accent);
+    transform: translateY(-3px);
+  }
+  .grain {
+    background-image: radial-gradient(var(--rule-strong) 0.6px, transparent 0.6px);
+    background-size: 14px 14px;
+  }
+  .rise {
+    animation: rise 0.6s both;
+    animation-delay: var(--rise-delay, 0ms);
   }
 }
-
-/* ============================================================================
-   Motion
-
-   There is deliberately no scroll-reveal system here.
-
-   Both reference sites have one, and a staggered fade-and-slide on every
-   section as it enters the viewport is the most recognisable tell of a
-   generated page. It also means nothing can be read until it has finished
-   arriving. The only non-interactive motion on this site is one load sequence
-   on the home masthead; everything else moves because someone pointed at it.
-   ========================================================================= */
+.hero {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  align-items: center;
+  gap: 5rem;
+  padding-top: 5rem;
+  padding-bottom: 4.5rem;
+}
+.hero h1 {
+  font-size: clamp(3.8rem, 6.8vw, 6rem);
+  letter-spacing: -0.065em;
+  line-height: 1;
+  margin: 1.5rem 0;
+}
+.hero-photo {
+  position: relative;
+  padding: 12px;
+  border: 1px solid var(--rule);
+  background: var(--card);
+  transform: rotate(2deg);
+}
+.hero-photo::before {
+  content: "";
+  position: absolute;
+  top: -12px;
+  left: 38%;
+  width: 100px;
+  height: 26px;
+  background: #c8cfb8a6;
+  transform: rotate(-5deg);
+  z-index: 1;
+}
+.hero-photo img {
+  aspect-ratio: 1.2;
+  object-fit: cover;
+}
+.section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  border-top: 1px solid var(--rule);
+  padding-top: 1.3rem;
+  margin-bottom: 2rem;
+}
+.section-heading h2 {
+  font-size: 1.8rem;
+}
+.project-feature {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  border: 1px solid var(--rule);
+  border-radius: 5px;
+  overflow: hidden;
+  background: var(--card);
+}
+.feature-photo {
+  position: relative;
+  min-height: 360px;
+  overflow: hidden;
+}
+.feature-photo img {
+  transition: transform 0.6s;
+}
+.project-feature:hover .feature-photo img {
+  transform: scale(1.025);
+}
+.feature-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding: 2.4rem;
+}
+.feature-copy h3 {
+  font-size: 2.2rem;
+  margin: 1rem 0;
+}
+.tag {
+  display: inline-block;
+  border: 1px solid var(--rule);
+  padding: 0.3rem 0.55rem;
+  font: 0.65rem var(--font-mono);
+  color: var(--text-dim);
+  border-radius: 3px;
+}
+.case-layout {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 4rem;
+}
+.case-nav {
+  position: sticky;
+  top: 6rem;
+  align-self: start;
+}
+.case-nav a {
+  display: block;
+  padding: 0.55rem 0;
+  color: var(--text-dim);
+  font-size: 0.78rem;
+}
+.case-section {
+  padding-top: 2rem;
+  margin-bottom: 3.5rem;
+  border-top: 1px solid var(--rule);
+}
+.case-section h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1.2rem;
+}
+.case-section > p:not(.label) {
+  font-size: 1rem;
+  line-height: 1.85;
+  max-width: 68ch;
+}
+.case-section > p + p {
+  margin-top: 1rem;
+}
+.hmi-shell {
+  border: 1px solid var(--rule-strong);
+  border-radius: 6px;
+  padding: 12px;
+  background: var(--bg-raised);
+}
+.hmi-toolbar {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.hmi-toolbar button {
+  font: 0.65rem var(--font-mono);
+  border: 1px solid var(--rule-strong);
+  background: var(--card);
+  padding: 0.55rem 0.7rem;
+  border-radius: 3px;
+}
+.hmi-canvas {
+  position: relative;
+  height: 340px;
+}
+.hmi-panel {
+  position: absolute;
+  padding: 4px;
+}
+.hmi-panel-inner {
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--rule-strong);
+  border-radius: 3px;
+  background: var(--card);
+}
+.hmi-panel-inner[data-selected="true"] {
+  border: 2px solid var(--accent);
+}
+.hmi-panel-head {
+  display: flex;
+  border-bottom: 1px solid var(--rule);
+  background: var(--bg-raised);
+}
+.hmi-panel-head button {
+  padding: 0.4rem 0.5rem;
+  font: 0.62rem var(--font-mono);
+  text-align: left;
+}
+.hmi-panel-head button:first-child {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.hmi-panel-content {
+  padding: 0.65rem;
+  font: 0.65rem/1.8 var(--font-mono);
+  color: var(--text-dim);
+}
+.pipeline {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.8rem;
+  margin: 1.5rem 0;
+}
+.pipeline > div {
+  border: 1px solid var(--rule);
+  padding: 1rem;
+  background: var(--card);
+}
+.pipeline strong {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+.pipeline span {
+  font: 0.65rem/1.7 var(--font-mono);
+  color: var(--text-dim);
+}
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translate3d(0, 10px, 0);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
-    transform: none;
+    transform: translateY(0);
   }
 }
-
-.rise {
-  animation: rise 0.62s var(--ease-out-quart) both;
-  animation-delay: var(--rise-delay, 0ms);
+@media (max-width: 760px) {
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  .hero-photo {
+    max-width: 460px;
+    margin: 0 0.5rem;
+  }
+  .project-feature {
+    grid-template-columns: 1fr;
+  }
+  .feature-photo {
+    min-height: 280px;
+  }
+  .feature-copy {
+    padding: 1.5rem;
+  }
+  .case-layout {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .case-nav {
+    position: static;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1rem;
+  }
+  .case-nav > p {
+    width: 100%;
+  }
+  .pipeline {
+    grid-template-columns: 1fr;
+  }
+  .hmi-canvas {
+    height: 320px;
+  }
 }
-
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
   }
 }

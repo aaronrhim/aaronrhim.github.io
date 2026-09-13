@@ -5,18 +5,6 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { PROFILE } from "@/lib/content";
 
-/**
- * Two families, and they do genuinely different jobs.
- *
- * Archivo is a grotesque drawn for both display and text, so one family covers
- * the masthead and the body without the usual serif-display-over-sans-body
- * pairing, which has become the default look of a generated page. JetBrains
- * Mono is not decoration: it carries every number and every label, and its
- * tabular figures are why a column of measurements lines up.
- *
- * Both are self-hosted by next/font at build time, so the static export makes
- * no request to Google and there is no layout shift while a webfont arrives.
- */
 const archivo = Archivo({
   variable: "--font-archivo",
   subsets: ["latin"],
@@ -47,16 +35,6 @@ export const metadata: Metadata = {
   },
 };
 
-/**
- * Runs before first paint, which is the only way to avoid a flash of the wrong
- * theme. It reads the persisted SETTING and writes both attributes the
- * stylesheet and the toggle depend on - `data-theme-setting` for the raw
- * choice, `data-theme` for the resolved one.
- *
- * Everything is inside try/catch because localStorage throws outright in some
- * contexts (private windows, embedded previews, storage blocked by policy) and
- * a theme preference is never worth a blank page.
- */
 const themeScript = `
 (function () {
   try {
@@ -73,10 +51,6 @@ const themeScript = `
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    /* The font variables go on <html>, not <body>. @theme resolves
-       `--font-sans: var(--font-archivo)` at :root, so if next/font declares
-       --font-archivo further down the tree the reference is unset where it is
-       read and the whole stack silently falls back to system-ui. */
     <html
       lang="en"
       className={`${archivo.variable} ${jetbrains.variable}`}
@@ -93,9 +67,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <SiteHeader />
-        {/* Clears the 56px fixed header, the way al-folio's
-            `body.fixed-top-nav { padding-top: 57px }` does. */}
-        <main id="main" className="pt-14">
+
+        <main id="main" className="pt-18">
           {children}
         </main>
         <SiteFooter />
