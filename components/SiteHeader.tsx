@@ -24,12 +24,7 @@ export default function SiteHeader() {
             className="text-text hover:text-text text-[1.05rem] hover:no-underline"
             aria-label={`${PROFILE.name} - home`}
           >
-            <span className="flex items-center gap-3">
-              <span className="bg-accent text-bg flex h-8 w-8 items-center justify-center rounded-sm font-mono text-xs">
-                ar.
-              </span>
-              <span className="font-medium">Aaron Rhim</span>
-            </span>
+            <span className="font-medium">Aaron Rhim</span>
           </Link>
 
           <div className="flex items-center gap-1">
