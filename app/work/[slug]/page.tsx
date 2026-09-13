@@ -64,6 +64,9 @@ export default async function RolePage({ params }: Params) {
                   <a className="nav-child" href="#hmi-architecture">
                     Architecture
                   </a>
+                  <a className="nav-child" href="#hmi-try-it">
+                    Try the HMI
+                  </a>
                   <a className="nav-child" href="#panel-layout">
                     Dwindle walkthrough
                   </a>
@@ -110,20 +113,6 @@ export default async function RolePage({ params }: Params) {
           <div>
             {rover ? (
               <>
-                <div className="rover-project-index" aria-label="Primary Rover projects">
-                  <a href="#hmi">
-                    <span className="label">01 / PROJECT OWNER</span>
-                    <strong>Human–machine interface ↗</strong>
-                    <p>A modular operator workspace, from bench debugging to rover-wide tools.</p>
-                  </a>
-                  <a href="#reinforcement-learning">
-                    <span className="label">02 / PROJECT OWNER</span>
-                    <strong>Reinforcement learning ↗</strong>
-                    <p>
-                      A custom arm simulation and learning pipeline for keyboard task completion.
-                    </p>
-                  </a>
-                </div>
                 <HmiStudy />
                 <RlStudy />
                 <RoverSupportingWork />

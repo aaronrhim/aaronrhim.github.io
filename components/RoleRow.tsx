@@ -54,13 +54,13 @@ export default function RoleRow({ role, level = 2 }: { role: Role; level?: 2 | 3
             </div>
           </div>
 
-          <p className="measure text-text mt-4 leading-relaxed font-light">{role.summary}</p>
+          <p className="measure text-text mt-4 leading-relaxed font-medium">{role.summary}</p>
 
           <ul className="mt-4 space-y-2">
             {role.bullets.slice(0, 3).map((b) => (
               <li
                 key={b}
-                className="measure text-text-dim relative pl-4 text-[0.95rem] leading-relaxed font-light"
+                className="measure text-text-dim relative pl-4 text-[0.95rem] leading-relaxed font-medium"
               >
                 <span
                   className="bg-rule-strong absolute top-[0.65em] left-0 h-px w-2"

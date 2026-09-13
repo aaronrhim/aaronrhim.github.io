@@ -5,3 +5,4 @@
 - HMI and reinforcement learning are Aaron's two main Rover projects, which he owns. Give them the majority of the content; other contributions are supporting work.
 - Validate completed changes and push them. Aaron has explicitly requested automatic pushes when work is done.
 - Keep site copy free of unsolicited framework, analytics, cookie, or other implementation boilerplate. The footer text should contain only “2026 Aaron Rhim”, with Aaron’s supplied clickable cat image at the bottom right.
+- Keep numbered project headings simple, such as “1) Human-Machine Interface (HMI)”. Do not add “project owner” or “primary project” labels. Preserve the HMI try-it feature; connect the native application rather than replacing its interface.

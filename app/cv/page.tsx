@@ -42,8 +42,8 @@ export default function CVPage() {
         <Whisper>Education</Whisper>
         <Row dates={EDUCATION.dates}>
           <p className="text-xl">{EDUCATION.school}</p>
-          <p className="text-text-dim mt-1 font-light">{EDUCATION.degree}</p>
-          <p className="measure text-text-dim mt-3 text-[0.95rem] leading-relaxed font-light">
+          <p className="text-text-dim mt-1 font-medium">{EDUCATION.degree}</p>
+          <p className="measure text-text-dim mt-3 text-[0.95rem] leading-relaxed font-medium">
             <span className="label">Coursework </span>
             {EDUCATION.coursework.join(", ")}
           </p>
@@ -62,7 +62,7 @@ export default function CVPage() {
                 {role.bullets.map((b) => (
                   <li
                     key={b}
-                    className="measure relative pl-4 text-[0.95rem] leading-relaxed font-light"
+                    className="measure relative pl-4 text-[0.95rem] leading-relaxed font-medium"
                   >
                     <span
                       className="bg-rule-strong absolute top-[0.7em] left-0 h-px w-2"
@@ -90,7 +90,7 @@ export default function CVPage() {
                 <th scope="row" className="label figure w-24 py-1.5 pr-4 text-left font-normal">
                   {a.when}
                 </th>
-                <td className="py-1.5 font-light">
+                <td className="py-1.5 font-medium">
                   {a.what}
                   <span className="text-text-dim"> · {a.where}</span>
                 </td>
@@ -106,7 +106,7 @@ export default function CVPage() {
           {SKILLS.map((group) => (
             <div key={group.group} className="sm:grid sm:grid-cols-[9rem_minmax(0,1fr)] sm:gap-8">
               <dt className="label sm:pt-1">{group.group}</dt>
-              <dd className="mt-1 font-light sm:mt-0">{group.items.join(", ")}</dd>
+              <dd className="mt-1 font-medium sm:mt-0">{group.items.join(", ")}</dd>
             </div>
           ))}
         </dl>

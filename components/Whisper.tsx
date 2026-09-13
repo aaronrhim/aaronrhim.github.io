@@ -28,7 +28,7 @@ export default function Whisper({
 }) {
   const Tag = level === 2 ? "h2" : "h3";
   return (
-    <Tag id={id} className="whisper font-light">
+    <Tag id={id} className="whisper font-medium">
       {children}
     </Tag>
   );

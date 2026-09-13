@@ -18,8 +18,7 @@ const steps = [
 export default function RlStudy() {
   return (
     <section id="reinforcement-learning" className="case-section rover-study">
-      <p className="label mb-3">02 / PRIMARY PROJECT · PROJECT OWNER</p>
-      <h2>Reinforcement learning for the rover arm</h2>
+      <h2>2) Reinforcement Learning (RL)</h2>
       <div className="study-prose">
         <p>
           A proper engineering design team (EDT) is driven by an ensemble of self-motivated

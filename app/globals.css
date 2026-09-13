@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-archivo), "Archivo", sans-serif;
+  --font-sans: var(--font-plex), "IBM Plex Sans", sans-serif;
   --font-mono: var(--font-jetbrains), "JetBrains Mono", monospace;
   --container-content: 1120px;
 }
@@ -59,6 +59,7 @@ html[data-theme="dark"] {
     background: var(--bg);
     color: var(--text);
     font-family: var(--font-sans);
+    font-weight: 500;
     font-variant-numeric: tabular-nums;
   }
   h1,
@@ -67,8 +68,9 @@ html[data-theme="dark"] {
   h4 {
     line-height: 1.12;
     text-wrap: balance;
-    font-weight: 500;
-    letter-spacing: -0.035em;
+    font-family: var(--font-barlow), "Barlow Condensed", sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.015em;
   }
   p {
     text-wrap: pretty;
@@ -185,7 +187,7 @@ html[data-theme="dark"] {
 }
 .hero h1 {
   font-size: clamp(3.8rem, 6.8vw, 6rem);
-  letter-spacing: -0.065em;
+  letter-spacing: -0.02em;
   line-height: 1;
   margin: 1.5rem 0;
 }
@@ -416,30 +418,6 @@ html[data-theme="dark"] {
   font: 2.4rem var(--font-mono);
   color: var(--accent);
 }
-.rover-project-index {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 3rem;
-}
-.rover-project-index a {
-  padding: 1.25rem;
-  border: 1px solid var(--rule);
-  border-radius: 0;
-  background: var(--card);
-  color: var(--text);
-}
-.rover-project-index strong {
-  display: block;
-  font-weight: 500;
-  margin: 0.5rem 0;
-  font-size: 1.25rem;
-}
-.rover-project-index p {
-  color: var(--text-dim);
-  font-size: 0.85rem;
-  line-height: 1.6;
-}
 .case-nav .nav-child {
   padding-left: 0.8rem;
   font-size: 0.7rem;
@@ -450,9 +428,6 @@ html[data-theme="dark"] {
   margin-top: 0.6rem;
 }
 @media (max-width: 640px) {
-  .rover-project-index {
-    grid-template-columns: 1fr;
-  }
   .case-nav .nav-child {
     display: none;
   }
@@ -563,4 +538,12 @@ html[data-theme="dark"] {
   li:nth-child(even) > .project-banner[data-reveal] {
     transition-delay: 90ms;
   }
+}
+
+.hmi-session {
+  width: 100%;
+  height: min(75vh, 800px);
+  min-height: 420px;
+  border: 1px solid var(--rule-strong);
+  background: #111;
 }

@@ -37,7 +37,7 @@ export default function SiteHeader() {
                     className={
                       isCurrent(item.href)
                         ? "text-accent text-[0.95rem] font-semibold hover:no-underline"
-                        : "text-text hover:text-accent text-[0.95rem] font-light transition-colors duration-200 hover:no-underline"
+                        : "text-text hover:text-accent text-[0.95rem] font-medium transition-colors duration-200 hover:no-underline"
                     }
                   >
                     {item.label}
@@ -96,7 +96,7 @@ export default function SiteHeader() {
                     className={
                       isCurrent(item.href)
                         ? "text-accent block py-2 font-semibold hover:no-underline"
-                        : "text-text block py-2 font-light hover:no-underline"
+                        : "text-text block py-2 font-medium hover:no-underline"
                     }
                   >
                     {item.label}

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo, JetBrains_Mono } from "next/font/google";
+import { Barlow_Condensed, IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -7,10 +7,17 @@ import SectionMotion from "@/components/SectionMotion";
 import SmoothScroll from "@/components/SmoothScroll";
 import { PROFILE } from "@/lib/content";
 
-const archivo = Archivo({
-  variable: "--font-archivo",
+const barlow = Barlow_Condensed({
+  variable: "--font-barlow",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  weight: ["600", "700"],
+  display: "swap",
+});
+
+const plex = IBM_Plex_Sans({
+  variable: "--font-plex",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
@@ -55,7 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${archivo.variable} ${jetbrains.variable}`}
+      className={`${barlow.variable} ${plex.variable} ${jetbrains.variable}`}
       suppressHydrationWarning
     >
       <head>

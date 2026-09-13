@@ -1,11 +1,11 @@
 import Image from "next/image";
+import HmiTryIt from "./HmiTryIt";
 import { HMI_CODE } from "@/lib/hmi-code";
 
 export default function HmiStudy() {
   return (
     <section id="hmi" className="case-section rover-study">
-      <p className="label mb-3">01 / PRIMARY PROJECT · PROJECT OWNER</p>
-      <h2>Human–machine interface</h2>
+      <h2>1) Human-Machine Interface (HMI)</h2>
       <div className="study-prose">
         <p>
           In my eyes, an HMI is developed as a by-product and culmination of all the projects you’ve
@@ -78,6 +78,7 @@ export default function HmiStudy() {
           foundation can keep evolving as other people contribute.
         </p>
       </div>
+      <HmiTryIt />
       <div id="panel-layout" className="study-subsection">
         <h3>Dwindle: a workspace that rearranges itself</h3>
         <p>
