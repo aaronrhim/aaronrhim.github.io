@@ -1,57 +1,5 @@
-import HmiDemo from "./HmiDemo";
+import Image from "next/image";
 import { HMI_CODE } from "@/lib/hmi-code";
-
-const equations = [
-  ["Split fraction", "f = r / 2", "The default r = 1 gives equal halves."],
-  [
-    "First child",
-    "w₀ = max(m, min(⌊w · f⌋, w − m))",
-    "Use the same expression with height for a top/bottom split.",
-  ],
-  [
-    "Second child",
-    "w₁ = w − w₀",
-    "Assign the remainder to the sibling so rounding does not leave a gap.",
-  ],
-  ["Path fraction", "φ = f or 1 − f", "Choose the fraction for the child taken at each split."],
-  [
-    "Leaf area",
-    "A / (W · H) = ∏ φᵢ",
-    "Ideal split fractions along the root-to-leaf path, before integer rounding and minimum-size constraints.",
-  ],
-  [
-    "Dwindle areas",
-    "a_n = 2^(−n); a_N = 2^(−(N−1))",
-    "Repeatedly splitting the newest leaf in half leaves the final two panes equal.",
-  ],
-  ["Smart split", "top/bottom if h ≥ w", "Cut the longer dimension of the target panel."],
-  [
-    "Aspect ratio",
-    "g(ρ) = ρ/2 if ρ > 1; otherwise 2ρ",
-    "Here ρ = w/h, with equal splits and no minimum-size clamp.",
-  ],
-  ["Log-space map", "G(u) = u − sgn⁺(u)", "u = log₂ρ; sgn⁺ is +1 for u > 0 and −1 otherwise."],
-  [
-    "Invariant band",
-    "½ ≤ ρ ≤ 2",
-    "Preserved once a panel is inside the band under ideal equal splits; manual resizing and size constraints can change it.",
-  ],
-  [
-    "Entry time",
-    "T = max(0, ⌈|log₂ρ| − 1⌉)",
-    "Number of successive smart splits along a path needed to enter the band.",
-  ],
-  [
-    "Keyboard resize",
-    "r ← max(0.1, min(r + a · s · ε, 1.9))",
-    "a is direction, ε is the child-side sign, and s = 0.08 moves the divider by 4% of its parent’s extent.",
-  ],
-  [
-    "Mouse resize",
-    "Δr = 2 · Δpx / L",
-    "L is the parent extent along the split axis. Before clamping, the divider follows the cursor one-to-one.",
-  ],
-];
 
 export default function HmiStudy() {
   return (
@@ -103,28 +51,22 @@ export default function HmiStudy() {
           descriptor, and is discovered at startup through ROS 2’s pluginlib.
         </p>
         <figure className="my-6">
-          <div className="pipeline">
-            <div>
-              <strong>ROS 2 node</strong>
-              <span>
-                Shared publishers and subscriptions. A 20 ms Qt timer pumps callbacks through
-                spin_some().
-              </span>
-            </div>
-            <div>
-              <strong>HMI host → GuiModule</strong>
-              <span>
-                Discover plugins, pass in the node, create widgets, and manage module start/stop.
-              </span>
-            </div>
-            <div>
-              <strong>Operator workspace</strong>
-              <span>Tiled modules, multiple windows, saved layouts, and per-module state.</span>
-            </div>
-          </div>
-          <figcaption className="label">
-            System architecture, reconstructed from hmi_host.cpp, gui_module.h, and
-            layout_store.cpp.
+          <a
+            href="/images/hmi-architecture.png"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="System architecture. Open original image at full size."
+          >
+            <Image
+              src="/images/hmi-architecture.png"
+              width={1672}
+              height={941}
+              alt="Rover HMI architecture: ROS 2 topics, Qt host and event loop, and runtime discovery of 28 plugins."
+              className="h-auto w-full"
+            />
+          </a>
+          <figcaption className="label mt-3">
+            System architecture. Click to view full size.
           </figcaption>
         </figure>
         <p>
@@ -142,34 +84,23 @@ export default function HmiStudy() {
           the leaves, and each internal node describes a split. Adding a tool, resizing the
           workspace, and closing a panel all become operations on that tree.
         </p>
-        <div className="my-6">
-          <HmiDemo />
-        </div>
         <figure className="my-6">
-          <div
-            className="dwindle-diagram"
-            aria-label="Splitting Camera creates two children, Camera and Telemetry. Closing Telemetry promotes Camera back to fill the parent."
+          <a
+            href="/images/hmi-dwindle.png"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Dwindle algorithm. Open original image at full size."
           >
-            <div>
-              <span className="label">BEFORE</span>
-              <div className="diagram-pane">Camera</div>
-            </div>
-            <span aria-hidden>→</span>
-            <div>
-              <span className="label">SPLIT</span>
-              <div className="flex">
-                <div className="diagram-pane">Camera</div>
-                <div className="diagram-pane">Telemetry</div>
-              </div>
-            </div>
-            <span aria-hidden>→</span>
-            <div>
-              <span className="label">CLOSE TELEMETRY</span>
-              <div className="diagram-pane">Camera</div>
-            </div>
-          </div>
+            <Image
+              src="/images/hmi-dwindle.png"
+              width={1672}
+              height={941}
+              alt="Dwindle panel layout alongside the binary space partition tree that defines its splits."
+              className="h-auto w-full"
+            />
+          </a>
           <figcaption className="label mt-3">
-            A leaf becomes a split; removing one child promotes its sibling into the parent’s space.
+            Dwindle algorithm. Click to view full size.
           </figcaption>
         </figure>
         <h4>1. Split</h4>
@@ -212,29 +143,45 @@ export default function HmiStudy() {
           aspect-ratio bound applies to ideal equal splits once a pane enters the stated band;
           integer rounding, minimum sizes, and manual resizing need separate treatment.
         </p>
-        <div className="overflow-x-auto">
-          <table className="study-table">
-            <caption className="sr-only">Dwindle equation summary</caption>
-            <thead>
-              <tr>
-                <th scope="col">Operation</th>
-                <th scope="col">Equation and interpretation</th>
-              </tr>
-            </thead>
-            <tbody>
-              {equations.map(([name, equation, note]) => (
-                <tr key={name}>
-                  <th scope="row">{name}</th>
-                  <td>
-                    <code>{equation}</code>
-                    <span>{note}</span>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <figure className="my-6">
+          <a
+            href="/images/hmi-equations.png"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Summary of equations. Open original image at full size."
+          >
+            <Image
+              src="/images/hmi-equations.png"
+              width={1200}
+              height={881}
+              alt="Original equation summary covering split geometry, leaf areas, smart splits, aspect ratios, and keyboard and mouse resizing."
+              className="h-auto w-full"
+            />
+          </a>
+          <figcaption className="label mt-3">
+            Summary of equations. Click to view full size.
+          </figcaption>
+        </figure>
       </div>
+      <figure className="my-6">
+        <a
+          href="/images/hmi-competition.png"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="HMI being used at competition. Open original image at full size."
+        >
+          <Image
+            src="/images/hmi-competition.png"
+            width={2048}
+            height={1535}
+            alt="The HMI running on the rover operator station at competition, with a laptop, three-monitor suitcase, and controllers."
+            className="h-auto w-full"
+          />
+        </a>
+        <figcaption className="label mt-3">
+          HMI being used at competition. Click to view full size.
+        </figcaption>
+      </figure>
       <div id="next-steps" className="study-subsection">
         <h3>Where I want to take the HMI next</h3>
         <p>

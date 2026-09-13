@@ -1,6 +1,6 @@
 # Aaron Rhim — portfolio
 
-A static Next.js portfolio with project build notes, an interactive rover HMI layout study, and light/dark themes.
+A static Next.js portfolio with project build notes, the original rover HMI diagrams and media, and light/dark themes.
 
 ## Development
 
@@ -11,7 +11,6 @@ npm run dev
 
 `npm run build` exports the site to `out/`. `npm run start` serves that export.
 Run `npm run check` for formatting, lint, TypeScript, and a production build.
-Run `node --test tests/dwindle.test.mjs` for the panel-layout invariants.
 
 ## Editing content
 
@@ -29,9 +28,9 @@ The content structure takes inspiration from [Gabriel Yu’s project pages](http
 
 ## HMI study
 
-`lib/dwindle.ts` implements splitting, recursive geometry, and sibling promotion on removal. `components/HmiDemo.tsx` is an accessible browser demonstration with sample data, panel selection, a six-panel limit, and reset. It illustrates the Qt layout behavior; it does not run the real HMI or connect to hardware.
+The architecture diagram, dwindle diagram, equation table, and competition photograph are the original embedded images from Aaron’s Google Doc, saved unchanged as `hmi-architecture.png`, `hmi-dwindle.png`, `hmi-equations.png`, and `hmi-competition.png`. Each opens at full resolution. Use these supplied assets directly; do not rebuild them as custom visuals.
 
-`hmi-debug.mp4` is a web-encoded, audio-free copy of the recording named in the draft. The original roadmap is preserved as historical context, with Aaron’s subsequent digital-twin and task-completion work marked as implemented. The architecture and split illustrations are reconstructed from source; a competition photograph has not been supplied.
+`hmi-debug.mp4` is a web-encoded, audio-free copy of the recording named in the draft. The original roadmap is preserved as historical context, with Aaron’s subsequent digital-twin and task-completion work marked as implemented. The page shows the actual HMI through original media; it does not host the native ROS 2 application.
 
 ## Rover content sources
 
