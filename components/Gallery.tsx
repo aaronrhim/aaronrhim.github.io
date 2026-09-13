@@ -11,7 +11,7 @@ export default function Gallery({ images }: { images: Shot[] }) {
             href={shot.src}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-bg-raised border-rule relative block aspect-[4/3] overflow-hidden rounded-sm border"
+            className="bg-bg-raised border-rule relative block aspect-[4/3] overflow-hidden rounded-none border"
             aria-label={`Open full image: ${shot.alt}`}
           >
             <Image

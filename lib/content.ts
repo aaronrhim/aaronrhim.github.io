@@ -336,7 +336,7 @@ export const PROJECTS: Project[] = [
   {
     slug: "get-swole",
     title: "Get Swole",
-    year: "2025",
+    year: "2024",
     award: "CS6 Hacks, Best Solo Hacker",
     blurb: "A webcam-based form checker that tracks body landmarks and counts repetitions.",
     body: "My first hackathon, built solo: a webcam-based form checker for weight training. It tracks repetitions and returns feedback while you’re lifting. The project won Best Solo Hacker at CS6 Hacks.",

@@ -3,6 +3,8 @@ import { Archivo, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import SectionMotion from "@/components/SectionMotion";
+import SmoothScroll from "@/components/SmoothScroll";
 import { PROFILE } from "@/lib/content";
 
 const archivo = Archivo({
@@ -67,6 +69,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           Skip to content
         </a>
         <SiteHeader />
+        <SectionMotion />
+        <SmoothScroll />
 
         <main id="main" className="pt-18">
           {children}

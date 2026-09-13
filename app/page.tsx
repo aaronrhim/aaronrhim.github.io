@@ -1,11 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import Container from "@/components/Container";
-import ProjectCard from "@/components/ProjectCard";
-import { LINKS, PROFILE, PROJECTS, ROLES } from "@/lib/content";
+import ProjectBanner from "@/components/ProjectBanner";
+import { LINKS, PROFILE, ROLES } from "@/lib/content";
 
 export default function Home() {
-  const selected = ["render-engine", "remember-me", "vennu", "get-swole"];
   return (
     <>
       <Container>
@@ -64,47 +63,15 @@ export default function Home() {
         <section id="selected-work" className="pt-16">
           <div className="section-heading border-t-0">
             <h2>Selected work</h2>
-            <span className="label">Robotics, software & a few experiments</span>
           </div>
-          <article className="project-feature">
-            <Link href="/work/ubc-rover" className="feature-photo" aria-label="Explore UBC Rover">
-              <Image
-                src="/images/rover-model.png"
-                alt="CAD model of the UBC rover and its robotic arm"
-                fill
-                sizes="(max-width: 760px) 95vw, 610px"
-                className="bg-bg-raised object-contain p-4"
-              />
-            </Link>
-            <div className="feature-copy">
-              <p className="label">01 / UBC ROVER · 2025–PRESENT</p>
-              <h3>
-                An interface for the driver.
-                <br />
-                Learning for the arm.
-              </h3>
-              <p className="text-text-dim leading-relaxed">
-                My two main projects on UBC Rover: the human–machine interface and reinforcement
-                learning for our 6-DOF arm. From a modular operator workspace to learning how to
-                approach and press a keyboard key.
-              </p>
-              <div className="mt-5 flex flex-wrap gap-2">
-                {["C++", "ROS 2", "CAN-FD", "MuJoCo", "Qt"].map((s) => (
-                  <span className="tag" key={s}>
-                    {s}
-                  </span>
-                ))}
-              </div>
-              <Link href="/work/ubc-rover" className="mt-8 text-sm">
-                Read the build notes <span aria-hidden>↗</span>
-              </Link>
-            </div>
-          </article>
-          <ul className="mt-6 grid gap-6 sm:grid-cols-2">
-            {selected.map((slug) => (
-              <ProjectCard key={slug} project={PROJECTS.find((p) => p.slug === slug)!} />
-            ))}
-          </ul>
+          <div className="grid gap-5 sm:grid-cols-2">
+            <ProjectBanner
+              href="/work/ubc-rover"
+              title="UBC Rover"
+              image="/images/thumbnails/rover.jpg"
+            />
+            <ProjectBanner href="/work/eithelmir" title="Eithelmir" />
+          </div>
           <div className="mt-7 text-right">
             <Link href="/projects" className="text-sm">
               All projects <span aria-hidden>→</span>
@@ -119,7 +86,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="grid gap-8 sm:grid-cols-2">
-            {ROLES.filter((r) => r.slug !== "ubc-rover").map((role) => (
+            {ROLES.filter((r) => r.slug !== "ubc-rover" && r.slug !== "eithelmir").map((role) => (
               <article key={role.slug} className="border-rule border-l-2 pl-6">
                 <p className="label">{role.dates}</p>
                 <h3 className="mt-3 text-2xl">
@@ -143,7 +110,7 @@ export default function Home() {
               alt="Aaron Rhim"
               width={150}
               height={165}
-              className="aspect-square rounded-sm object-cover object-[50%_22%]"
+              className="aspect-square rounded-none object-cover object-[50%_22%]"
             />
             <p className="label mt-3">Vancouver, BC</p>
           </div>

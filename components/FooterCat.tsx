@@ -21,7 +21,7 @@ export default function FooterCat() {
         type="button"
         onClick={meow}
         aria-label="Play a meow"
-        className="shrink-0 cursor-pointer rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+        className="shrink-0 cursor-pointer rounded-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
       >
         <Image
           src="/images/footer-cat.png"

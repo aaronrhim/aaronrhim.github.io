@@ -51,3 +51,5 @@ The page gives HMI and RL primary-project ownership and places other contributio
 ## Deployment
 
 The existing GitHub Actions workflow exports and deploys to GitHub Pages on pushes to `main`. Keep `public/.nojekyll` so Pages serves `_next/` assets. Pages should use **GitHub Actions** as its source. No deployment or domain changes are required for this redesign.
+
+Banner title lift, arrow fade, text decoding, section reveal timings, and eased wheel scrolling are adapted from Aaron’s local `ubc-rover-web` Explore section. Banners show titles only; descriptions remain on detail pages. Motion respects reduced-motion preferences.

@@ -32,7 +32,7 @@ export default function HmiStudy() {
           playsInline
           preload="none"
           poster="/images/hmi-debug-poster.jpg"
-          className="border-rule w-full rounded-sm border"
+          className="border-rule w-full rounded-none border"
           aria-label="HMI and robotic arm during bench testing, without audio"
         >
           <source src="/images/hmi-debug.mp4" type="video/mp4" />

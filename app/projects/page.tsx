@@ -12,10 +12,7 @@ export const metadata: Metadata = {
 export default function ProjectsPage() {
   return (
     <>
-      <PageHeader
-        title="Projects"
-        lede="Things I’ve built to learn something, solve a problem, or see an idea through a hackathon."
-      />
+      <PageHeader title="Projects" />
       <Container>
         <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2">
           {PROJECTS.map((project) => (

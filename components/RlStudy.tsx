@@ -42,7 +42,7 @@ export default function RlStudy() {
           playsInline
           preload="none"
           poster="/images/rl-typing-poster.jpg"
-          className="border-rule bg-bg-raised max-h-[600px] w-full rounded-sm border object-contain"
+          className="border-rule bg-bg-raised max-h-[600px] w-full rounded-none border object-contain"
           aria-label="RL agent typing on a keyboard in simulation"
         >
           <source src="/images/rover4.mp4" type="video/mp4" />
