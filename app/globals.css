@@ -51,7 +51,7 @@ html[data-theme="dark"] {
 }
 @layer base {
   html {
-    scroll-behavior: smooth;
+    scroll-behavior: auto;
     scroll-padding-top: 6rem;
     -webkit-tap-highlight-color: transparent;
   }
@@ -61,6 +61,7 @@ html[data-theme="dark"] {
     font-family: var(--font-sans);
     font-weight: 500;
     font-variant-numeric: tabular-nums;
+    letter-spacing: 0.012em;
   }
   h1,
   h2,
@@ -70,7 +71,7 @@ html[data-theme="dark"] {
     text-wrap: balance;
     font-family: var(--font-barlow), "Barlow Condensed", sans-serif;
     font-weight: 700;
-    letter-spacing: -0.015em;
+    letter-spacing: 0.035em;
   }
   p {
     text-wrap: pretty;
@@ -187,7 +188,7 @@ html[data-theme="dark"] {
 }
 .hero h1 {
   font-size: clamp(3.8rem, 6.8vw, 6rem);
-  letter-spacing: -0.02em;
+  letter-spacing: 0.025em;
   line-height: 1;
   margin: 1.5rem 0;
 }

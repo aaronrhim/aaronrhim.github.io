@@ -21,7 +21,7 @@ export default function FooterCat() {
         type="button"
         onClick={meow}
         aria-label="Play a meow"
-        className="shrink-0 cursor-pointer rounded-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+        className="relative h-16 w-16 shrink-0 cursor-pointer overflow-hidden rounded-xl focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
       >
         <Image
           src="/images/footer-cat.png"
@@ -29,10 +29,10 @@ export default function FooterCat() {
           width={80}
           height={80}
           sizes="80px"
-          className="h-20 w-20"
+          className="absolute -top-2 -left-2 h-20 w-20 max-w-none"
         />
       </button>
-      <audio ref={audioRef} src="/audio/meow.wav" preload="none" />
+      <audio ref={audioRef} src="/audio/cat-meow.mp3" preload="none" />
     </>
   );
 }

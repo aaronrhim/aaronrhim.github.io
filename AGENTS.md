@@ -4,5 +4,7 @@
 - Retrieve embedded Google Doc images through the native document structure. A text-only fetch does not mean an image is missing. Do not invent replacements for assets you have not fetched.
 - HMI and reinforcement learning are Aaron's two main Rover projects, which he owns. Give them the majority of the content; other contributions are supporting work.
 - Validate completed changes and push them. Aaron has explicitly requested automatic pushes when work is done.
-- Keep site copy free of unsolicited framework, analytics, cookie, or other implementation boilerplate. The footer text should contain only “2026 Aaron Rhim”, with Aaron’s supplied clickable cat image at the bottom right.
+- Keep site copy free of unsolicited framework, analytics, cookie, or other implementation boilerplate. The footer contains “2026 Aaron Rhim”, GitHub, LinkedIn, and Email links, plus Aaron’s supplied clickable cat image at the bottom right.
 - Keep numbered project headings simple, such as “1) Human-Machine Interface (HMI)”. Do not add “project owner” or “primary project” labels. Preserve the HMI try-it feature; connect the native application rather than replacing its interface.
+- Never use decoding/scrambling animations on titles. Keep native browser scrolling; do not intercept wheel input. Keep generous letter spacing with the current heavier fonts.
+- HMI demo hosting: connect to Aaron’s computer initially. Keep the configurable hosted URL and container setup so the same native HMI can later move to the cloud for public visitors.

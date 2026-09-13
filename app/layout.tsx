@@ -4,7 +4,6 @@ import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import SectionMotion from "@/components/SectionMotion";
-import SmoothScroll from "@/components/SmoothScroll";
 import { PROFILE } from "@/lib/content";
 
 const barlow = Barlow_Condensed({
@@ -77,7 +76,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <SiteHeader />
         <SectionMotion />
-        <SmoothScroll />
 
         <main id="main" className="pt-18">
           {children}

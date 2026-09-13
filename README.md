@@ -52,4 +52,6 @@ The page leads with HMI and RL, followed by other contributions. Source material
 
 The existing GitHub Actions workflow exports and deploys to GitHub Pages on pushes to `main`. Keep `public/.nojekyll` so Pages serves `_next/` assets. Pages should use **GitHub Actions** as its source. No deployment or domain changes are required for this redesign.
 
-Banner title lift, arrow fade, text decoding, section reveal timings, and eased wheel scrolling are adapted from Aaron’s local `ubc-rover-web` Explore section. Banners show titles only; descriptions remain on detail pages. Motion respects reduced-motion preferences.
+Banner title lift, arrow fade, and section reveal timings are adapted from Aaron’s local `ubc-rover-web` Explore section. Banners show titles only; descriptions remain on detail pages. Motion respects reduced-motion preferences.
+
+Scrolling uses the browser’s native behavior. Titles never use decoding/scrambling.

@@ -1,9 +1,5 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
-import DecodeText from "./DecodeText";
 
 export default function ProjectBanner({
   href,
@@ -16,18 +12,9 @@ export default function ProjectBanner({
   image?: string;
   level?: 2 | 3;
 }) {
-  const [active, setActive] = useState(false);
   const Heading = level === 2 ? "h2" : "h3";
   return (
-    <Link
-      href={href}
-      aria-label={title}
-      className="project-banner"
-      onPointerEnter={(event) => event.pointerType === "mouse" && setActive(true)}
-      onPointerLeave={() => setActive(false)}
-      onFocus={() => setActive(true)}
-      onBlur={() => setActive(false)}
-    >
+    <Link href={href} aria-label={title} className="project-banner">
       {image && (
         <Image
           src={image}
@@ -38,9 +25,7 @@ export default function ProjectBanner({
         />
       )}
       {image && <span className="banner-scrim" aria-hidden />}
-      <Heading className="banner-title">
-        <DecodeText text={title} active={active} />
-      </Heading>
+      <Heading className="banner-title">{title}</Heading>
       <span className="banner-arrow" aria-hidden>
         →
       </span>
