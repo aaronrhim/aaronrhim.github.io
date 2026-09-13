@@ -62,6 +62,7 @@ export default function HmiStudy() {
               width={1672}
               height={941}
               alt="Rover HMI architecture: ROS 2 topics, Qt host and event loop, and runtime discovery of 28 plugins."
+              sizes="(max-width: 760px) 95vw, 834px"
               className="h-auto w-full"
             />
           </a>
@@ -96,6 +97,7 @@ export default function HmiStudy() {
               width={1672}
               height={941}
               alt="Dwindle panel layout alongside the binary space partition tree that defines its splits."
+              sizes="(max-width: 760px) 95vw, 834px"
               className="h-auto w-full"
             />
           </a>
@@ -155,6 +157,7 @@ export default function HmiStudy() {
               width={1200}
               height={881}
               alt="Original equation summary covering split geometry, leaf areas, smart splits, aspect ratios, and keyboard and mouse resizing."
+              sizes="(max-width: 760px) 95vw, 834px"
               className="h-auto w-full"
             />
           </a>
@@ -175,6 +178,7 @@ export default function HmiStudy() {
             width={2048}
             height={1535}
             alt="The HMI running on the rover operator station at competition, with a laptop, three-monitor suitcase, and controllers."
+            sizes="(max-width: 760px) 95vw, 834px"
             className="h-auto w-full"
           />
         </a>
