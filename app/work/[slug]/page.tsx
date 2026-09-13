@@ -5,6 +5,8 @@ import Container from "@/components/Container";
 import PageHeader from "@/components/PageHeader";
 import Gallery from "@/components/Gallery";
 import HmiStudy from "@/components/HmiStudy";
+import RlStudy from "@/components/RlStudy";
+import RoverSupportingWork from "@/components/RoverSupportingWork";
 import { ROLES } from "@/lib/content";
 
 type Params = { params: Promise<{ slug: string }> };
@@ -26,9 +28,7 @@ export default async function RolePage({ params }: Params) {
   const role = ROLES.find((r) => r.slug === slug);
   if (!role) notFound();
   const rover = slug === "ubc-rover";
-  const sections =
-    role.sections?.filter((s) => !rover || s.title !== "The interface the drivers actually use") ??
-    [];
+  const sections = rover ? [] : (role.sections ?? []);
   return (
     <>
       <Container className="pt-9">
@@ -58,8 +58,36 @@ export default async function RolePage({ params }: Params) {
             <nav aria-label="Experience sections">
               {rover ? (
                 <>
-                  <a href="#hmi">Human–machine interface</a>
-                  <a href="#panel-layout">Interactive panel layout</a>
+                  <a className="nav-primary" href="#hmi">
+                    01 / HMI
+                  </a>
+                  <a className="nav-child" href="#hmi-architecture">
+                    Architecture
+                  </a>
+                  <a className="nav-child" href="#panel-layout">
+                    Dwindle walkthrough
+                  </a>
+                  <a className="nav-child" href="#hmi-equations">
+                    Equations
+                  </a>
+                  <a className="nav-child" href="#next-steps">
+                    HMI next steps
+                  </a>
+                  <a className="nav-primary" href="#reinforcement-learning">
+                    02 / Reinforcement learning
+                  </a>
+                  <a className="nav-child" href="#rl-simulation">
+                    Building the simulation
+                  </a>
+                  <a className="nav-child" href="#rl-learning">
+                    DAgger & workspace tuning
+                  </a>
+                  <a className="nav-child" href="#rl-residual">
+                    Residual RL
+                  </a>
+                  <a className="nav-child" href="#rl-task-completion">
+                    Task completion & results
+                  </a>
                 </>
               ) : null}
               {sections.map((s) => (
@@ -67,8 +95,9 @@ export default async function RolePage({ params }: Params) {
                   {s.title}
                 </a>
               ))}
-              <a href="#contributions">Contributions</a>
-              {rover ? <a href="#next-steps">Next steps</a> : null}
+              <a className={rover ? "nav-primary" : undefined} href="#contributions">
+                {rover ? "03 / Supporting engineering" : "Contributions"}
+              </a>
             </nav>
             <div className="border-rule mt-5 border-t pt-3">
               {role.links.map((l) => (
@@ -79,7 +108,27 @@ export default async function RolePage({ params }: Params) {
             </div>
           </aside>
           <div>
-            {rover ? <HmiStudy /> : null}
+            {rover ? (
+              <>
+                <div className="rover-project-index" aria-label="Primary Rover projects">
+                  <a href="#hmi">
+                    <span className="label">01 / PROJECT OWNER</span>
+                    <strong>Human–machine interface ↗</strong>
+                    <p>A modular operator workspace, from bench debugging to rover-wide tools.</p>
+                  </a>
+                  <a href="#reinforcement-learning">
+                    <span className="label">02 / PROJECT OWNER</span>
+                    <strong>Reinforcement learning ↗</strong>
+                    <p>
+                      A custom arm simulation and learning pipeline for keyboard task completion.
+                    </p>
+                  </a>
+                </div>
+                <HmiStudy />
+                <RlStudy />
+                <RoverSupportingWork />
+              </>
+            ) : null}
             {sections.map((section) => (
               <section className="case-section" key={section.title} id={slugify(section.title)}>
                 <h2>{section.title}</h2>
@@ -95,36 +144,21 @@ export default async function RolePage({ params }: Params) {
                 ) : null}
               </section>
             ))}
-            <section id="contributions" className="case-section">
-              <h2>Contributions at a glance</h2>
-              <ul className="text-text-dim list-disc space-y-3 pl-5 text-sm leading-relaxed">
-                {role.bullets.map((b) => (
-                  <li key={b}>{b}</li>
-                ))}
-              </ul>
-              <div className="mt-6 flex flex-wrap gap-2">
-                {role.stack.map((s) => (
-                  <span className="tag" key={s}>
-                    {s}
-                  </span>
-                ))}
-              </div>
-            </section>
-            {rover ? (
-              <section id="next-steps" className="case-section">
-                <h2>Still on my list</h2>
-                <p className="text-text-dim">
-                  There’s more I want to bring into the HMI. These are future tasks:
-                </p>
-                <ul className="text-text-dim mt-5 list-disc space-y-3 pl-5 text-sm leading-relaxed">
-                  <li>CAN firmware for power-distribution and lighting telemetry.</li>
-                  <li>More science sensor telemetry and a visual roadmap.</li>
-                  <li>
-                    A more reliable digital twin and more intuitive inverse kinematic controls.
-                  </li>
-                  <li>SLAM visualisation for the operator.</li>
-                  <li>Better panel management using binary space partitioning.</li>
+            {!rover ? (
+              <section id="contributions" className="case-section">
+                <h2>Contributions at a glance</h2>
+                <ul className="text-text-dim list-disc space-y-3 pl-5 text-sm leading-relaxed">
+                  {role.bullets.map((b) => (
+                    <li key={b}>{b}</li>
+                  ))}
                 </ul>
+                <div className="mt-6 flex flex-wrap gap-2">
+                  {role.stack.map((s) => (
+                    <span className="tag" key={s}>
+                      {s}
+                    </span>
+                  ))}
+                </div>
               </section>
             ) : null}
             {role.images?.length ? <Gallery images={role.images} /> : null}

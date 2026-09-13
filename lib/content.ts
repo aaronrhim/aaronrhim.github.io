@@ -53,7 +53,7 @@ export const LINKS = [
 export const FIGURES = [
   { value: "9.8", unit: "cm", note: "Mean joint error, half-body pose from egocentric video" },
   { value: "100", unit: "Hz", note: "Arm control loop after the CAN-FD rewrite, up from 10" },
-  { value: "98", unit: "%", note: "Task completion, keyboard typing learned in simulation" },
+  { value: "98.6", unit: "%", note: "Approach-to-Strike completion, 429/435 trials in MuJoCo" },
   { value: "2nd", unit: "/ 40+", note: "Aerial Evolution Association of Canada, 2025" },
 ] as const;
 
@@ -157,17 +157,16 @@ export const ROLES: Role[] = [
     current: true,
     location: "University of British Columbia",
     logo: "/logo/roverlogo.png",
-    blurb: "Arm control and driver interfaces, Mars rover",
+    blurb: "HMI and reinforcement learning for a Mars rover",
     summary:
-      "UBC Rover is a 64-student team that designs and builds a semi-autonomous rover for the University Rover Challenge in Utah and the Canadian International Rover Challenge in Alberta. I co-lead software, which in practice means the 6-DOF arm and everything the drivers touch.",
+      "I co-lead software on UBC Rover. My two main projects, which I fully own, are the human–machine interface and the reinforcement-learning pipeline for our 6-DOF arm. Around those, I build the controls, embedded systems, and software infrastructure that connect the operator to the rover.",
     bullets: [
-      "Rewrote the arm hardware interface from UART serial to a CAN-FD bus with Moteus drivers, taking the control loop from 10 Hz to 100 Hz and fitting over 30 motor parameters into a single 64-byte query",
-      "Implemented singularity-aware inverse kinematics from inverse Jacobian transformations after MoveIt 2 Servo proved unreliable on a fully custom manipulator",
-      "Built a reinforcement learning pipeline in MuJoCo and RoboSuite that reached 98% completion on a keyboard-typing task, and 32% once the environment was randomised",
-      "Rebuilt the Human-Machine Interface as selectable modules on a tiling dashboard, replacing a Glade layout the team could not extend",
-      "Wrote the GNSS mapping and the digital twin visualisation the operators navigate from",
+      "Own the HMI project: a modular Qt operator interface with runtime plugins, dwindle panel management, saved layouts, and multi-monitor support",
+      "Own the reinforcement-learning project: arm simulation, DAgger experiments, and residual RL on IK; recorded 429/435 Approach-to-Strike completions in MuJoCo across 87 keys with five trials each",
+      "Progressed from IK control to IK-driven task completion, alongside embedded GNSS mapping and pathing",
+      "Wrote the 100 Hz CAN-FD arm driver for Moteus controllers, tuned arm PID gains, and built a telemetry-driven digital twin",
+      "Contributed Docker environments, source organisation, Morse-code tools, and the team website",
       "Traced a competition arm failure to a concentric error in a high-load motor, and helped design the CAD fix",
-      "Designed and built the team website at ubcrover.com",
     ],
     stack: [
       "C++",
@@ -186,41 +185,11 @@ export const ROLES: Role[] = [
       { url: "https://github.com/UBC-Snowbots/RoverFlake2", type: "github", label: "RoverFlake2" },
       { url: "https://github.com/UBC-Snowbots/LearnFlake", type: "github", label: "LearnFlake" },
     ],
-    /* Deliberately excludes rover1 and rover6 - both already appear inside the
-       reinforcement learning section below, and showing them twice on one page
-       made the trailing gallery read as a mistake. */
+    // Training images appear inside RlStudy; the trailing gallery shows the field rover.
     images: [
       {
         src: "/images/thumbnails/rover.jpg",
         alt: "Six-wheeled rover with its arm raised, parked on cracked badlands hardpan",
-      },
-    ],
-    sections: [
-      {
-        title: "Reinforcement learning",
-        body: "I started by porting Rover's custom 6-DOF manipulator into MJCF so MuJoCo could load it, which meant learning the whole stack at once and hand-modelling collision geometries, visual geometries and kinematic chains for motors that have no one-to-one simulation equivalent. I then trained a basic Soft Actor-Critic agent on a reach-and-lift task, mostly as a way to get familiar with configuring environments, shaping rewards and reading MuJoCo's failures. \n\nThe real target was typing a string of characters on a physical keyboard. I used a hierarchical setup: a high-level policy sequencing low-level skills - reaching, hovering, pressing - each trained separately with its own reward. That reached 98%. \n\nAdding domain randomisation, where the keyboard position and the arm's initial orientation move every episode, dropped it to about 32%, which is the honest number and the more interesting one.",
-        images: [
-          {
-            src: "/images/rover1.png",
-            alt: "MuJoCo scene of the rover arm above a table, beside the training notebook",
-          },
-          {
-            src: "/images/rover6.png",
-            alt: "Reward curve for run SAC_6 peaking near 18,600 at 187,200 steps",
-          },
-        ],
-      },
-      {
-        title: "Inverse kinematics",
-        body: "Rover already had MoveIt 2 configured for the old arm, so I migrated it into a new ROS 2 package for the new one and expected the IK to come free. It did not. MoveIt 2 Servo's solver is not well tuned for fully custom manipulators, and I hit packet loss and visible jitter even in simulation. \n\nSo I wrote the solver instead, using inverse Jacobian transformations and operational space control. The part I care about is singularity handling: when the arm reaches a configuration where it loses a degree of freedom and the Jacobian stops being invertible, the controller detects it and hands the operator forward kinematics so they can drive back out, rather than fighting a solver that no longer has an answer.",
-      },
-      {
-        title: "The hardware interface",
-        body: "After a Tesla Optimus event where I heard which specialisations the industry is actually short of, I got interested in the layer below the one I had been working at. I started out only refactoring the old arm's hardware interface and ended up rewriting it. The previous version parsed UART query frames with some fragile string handling and drove stepper motors over serial. \n\nThe new one uses the CAN-FD bus properly with Moteus drivers, and because a CAN-FD frame carries 64 bytes rather than 8, a single query now returns over 30 motor parameters instead of a handful. The control loop went from 10 Hz to 100 Hz.",
-      },
-      {
-        title: "The interface the drivers actually use",
-        body: "The old HMI was built in Glade, and the complaints about it were always the same: nobody could add to it. Rewriting it was an excuse to learn what every sub-team actually needs to see. It is Qt now, built as selectable modules the driver arranges on a dashboard, with panel management borrowed from Hyprland's dwindle algorithm so the layout stays sane as modules are added. I put GitHub Actions around the core UI so a future contributor cannot break the parts everything else depends on - I expect to be maintaining this for a few years.",
       },
     ],
   },

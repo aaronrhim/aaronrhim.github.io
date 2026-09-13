@@ -1,94 +1,265 @@
 import HmiDemo from "./HmiDemo";
+import { HMI_CODE } from "@/lib/hmi-code";
+
+const equations = [
+  ["Split fraction", "f = r / 2", "The default r = 1 gives equal halves."],
+  [
+    "First child",
+    "w₀ = max(m, min(⌊w · f⌋, w − m))",
+    "Use the same expression with height for a top/bottom split.",
+  ],
+  [
+    "Second child",
+    "w₁ = w − w₀",
+    "Assign the remainder to the sibling so rounding does not leave a gap.",
+  ],
+  ["Path fraction", "φ = f or 1 − f", "Choose the fraction for the child taken at each split."],
+  [
+    "Leaf area",
+    "A / (W · H) = ∏ φᵢ",
+    "Ideal split fractions along the root-to-leaf path, before integer rounding and minimum-size constraints.",
+  ],
+  [
+    "Dwindle areas",
+    "a_n = 2^(−n); a_N = 2^(−(N−1))",
+    "Repeatedly splitting the newest leaf in half leaves the final two panes equal.",
+  ],
+  ["Smart split", "top/bottom if h ≥ w", "Cut the longer dimension of the target panel."],
+  [
+    "Aspect ratio",
+    "g(ρ) = ρ/2 if ρ > 1; otherwise 2ρ",
+    "Here ρ = w/h, with equal splits and no minimum-size clamp.",
+  ],
+  ["Log-space map", "G(u) = u − sgn⁺(u)", "u = log₂ρ; sgn⁺ is +1 for u > 0 and −1 otherwise."],
+  [
+    "Invariant band",
+    "½ ≤ ρ ≤ 2",
+    "Preserved once a panel is inside the band under ideal equal splits; manual resizing and size constraints can change it.",
+  ],
+  [
+    "Entry time",
+    "T = max(0, ⌈|log₂ρ| − 1⌉)",
+    "Number of successive smart splits along a path needed to enter the band.",
+  ],
+  [
+    "Keyboard resize",
+    "r ← max(0.1, min(r + a · s · ε, 1.9))",
+    "a is direction, ε is the child-side sign, and s = 0.08 moves the divider by 4% of its parent’s extent.",
+  ],
+  [
+    "Mouse resize",
+    "Δr = 2 · Δpx / L",
+    "L is the parent extent along the split axis. Before clamping, the divider follows the cursor one-to-one.",
+  ],
+];
+
 export default function HmiStudy() {
   return (
-    <>
-      <section id="hmi" className="case-section">
-        <p className="label mb-3">01 / HUMAN–MACHINE INTERFACE</p>
-        <h2>An interface that grew out of debugging</h2>
-        <p className="text-text-dim">
-          In my eyes, an HMI is a by-product of all the projects you’ve done along the way. While
-          working on the arm, I kept switching between inverse kinematic controls, Moteus tview
-          graphs, serial connections, and motor debugging. I wanted the telemetry I commonly viewed
-          and the commands I often sent in one place.
+    <section id="hmi" className="case-section rover-study">
+      <p className="label mb-3">01 / PRIMARY PROJECT · PROJECT OWNER</p>
+      <h2>Human–machine interface</h2>
+      <div className="study-prose">
+        <p>
+          In my eyes, an HMI is developed as a by-product and culmination of all the projects you’ve
+          done down the line. It just so happened that while working on software for the arm —
+          developing inverse kinematic controls, analyzing Moteus tview graphs, unplugging and
+          re-plugging serial connections, and debugging motors — I happened to want a more intuitive
+          interface where telemetry data I commonly view and commands I often send are all
+          centralized in one place.
         </p>
-        <p className="text-text-dim">
-          That led me down the “HMI rabbit hole.” What started with the arm became an interface for
-          the other rover subsystems too: sensor telemetry and motor control for field testing,
-          camera views, multiple monitors, GNSS mapping, and a persistent task manager.
+        <p>
+          This development led me down the “HMI rabbit hole” because I ended up integrating it for
+          the other subsystems on our rover. This includes:
         </p>
-        <figure className="mt-7">
-          <video
-            controls
-            playsInline
-            preload="none"
-            poster="/images/hmi-debug-poster.jpg"
-            className="border-rule w-full rounded-sm border"
-            aria-label="Silent footage of HMI testing and debugging while the arm is being built"
-          >
-            <source src="/images/hmi-debug.mp4" type="video/mp4" />
-            Your browser does not support this video.{" "}
-            <a href="/images/hmi-debug.mp4">Download the recording</a>.
-          </video>
-          <figcaption className="label mt-3">
-            Testing and debugging while the arm is being built. Field-of-view recording, presented
-            without audio.
+        <ul>
+          <li>Field testing sensor telemetry and motor control.</li>
+          <li>Camera viewing.</li>
+          <li>Multi-monitor setup.</li>
+          <li>Task-oriented UI such as GNSS mapping and a persistent task manager.</li>
+        </ul>
+      </div>
+      <figure className="my-8">
+        <video
+          controls
+          playsInline
+          preload="none"
+          poster="/images/hmi-debug-poster.jpg"
+          className="border-rule w-full rounded-sm border"
+          aria-label="HMI and robotic arm during bench testing, without audio"
+        >
+          <source src="/images/hmi-debug.mp4" type="video/mp4" />
+          <a href="/images/hmi-debug.mp4">Download the testing video</a>.
+        </video>
+        <figcaption className="label mt-3">
+          Testing and debugging while the arm is being built. Video presented without audio.
+        </figcaption>
+      </figure>
+      <div id="hmi-architecture" className="study-subsection">
+        <h3>Making room for the whole team</h3>
+        <p>
+          The old Glade interface was difficult for the team to extend. I rebuilt the HMI around a
+          shared Qt module interface, so a subsystem can add a tool without changing the host. Each
+          module implements <code>GuiModule</code>, registers through a <code>plugins.xml</code>{" "}
+          descriptor, and is discovered at startup through ROS 2’s pluginlib.
+        </p>
+        <figure className="my-6">
+          <div className="pipeline">
+            <div>
+              <strong>ROS 2 node</strong>
+              <span>
+                Shared publishers and subscriptions. A 20 ms Qt timer pumps callbacks through
+                spin_some().
+              </span>
+            </div>
+            <div>
+              <strong>HMI host → GuiModule</strong>
+              <span>
+                Discover plugins, pass in the node, create widgets, and manage module start/stop.
+              </span>
+            </div>
+            <div>
+              <strong>Operator workspace</strong>
+              <span>Tiled modules, multiple windows, saved layouts, and per-module state.</span>
+            </div>
+          </div>
+          <figcaption className="label">
+            System architecture, reconstructed from hmi_host.cpp, gui_module.h, and
+            layout_store.cpp.
           </figcaption>
         </figure>
-      </section>
-      <section id="panel-layout" className="case-section">
-        <h2>A dashboard that makes room</h2>
-        <p className="text-text-dim">
-          The interface is built in Qt with selectable modules. I borrowed the dwindle idea from
-          Hyprland: instead of giving every tool a fixed place, adding a module splits an existing
-          panel. The layout is represented as a binary tree, with widgets at the leaves and splits
-          at the internal nodes.
+        <p>
+          Keeping ROS callbacks inside the Qt event loop lets modules update their widgets on the
+          GUI thread. The module contract also includes keybindings, visibility, and save/restore
+          hooks. Layout persistence therefore includes the state of the tools inside the panels, not
+          just their positions. I added GitHub Actions checks around the core UI so the shared
+          foundation can keep evolving as other people contribute.
         </p>
-        <div className="mt-6">
+      </div>
+      <div id="panel-layout" className="study-subsection">
+        <h3>Dwindle: a workspace that rearranges itself</h3>
+        <p>
+          I borrowed the dwindle idea from Hyprland. The layout is a binary tree: widgets live at
+          the leaves, and each internal node describes a split. Adding a tool, resizing the
+          workspace, and closing a panel all become operations on that tree.
+        </p>
+        <div className="my-6">
           <HmiDemo />
         </div>
-        <div className="pipeline">
-          <div>
-            <strong>1. Split</strong>
-            <span>
-              Replace a leaf with two children. Split top/bottom when height ≥ width; otherwise
-              split left/right.
-            </span>
+        <figure className="my-6">
+          <div
+            className="dwindle-diagram"
+            aria-label="Splitting Camera creates two children, Camera and Telemetry. Closing Telemetry promotes Camera back to fill the parent."
+          >
+            <div>
+              <span className="label">BEFORE</span>
+              <div className="diagram-pane">Camera</div>
+            </div>
+            <span aria-hidden>→</span>
+            <div>
+              <span className="label">SPLIT</span>
+              <div className="flex">
+                <div className="diagram-pane">Camera</div>
+                <div className="diagram-pane">Telemetry</div>
+              </div>
+            </div>
+            <span aria-hidden>→</span>
+            <div>
+              <span className="label">CLOSE TELEMETRY</span>
+              <div className="diagram-pane">Camera</div>
+            </div>
           </div>
-          <div>
-            <strong>2. Place</strong>
-            <span>
-              Walk the tree recursively, passing each child its share of the parent’s rectangle.
-            </span>
-          </div>
-          <div>
-            <strong>3. Reclaim</strong>
-            <span>
-              When a panel closes, its sibling takes the parent’s place and inherits the available
-              area.
-            </span>
-          </div>
-        </div>
-        <p className="text-text-dim">
-          The split direction follows the longer dimension, which helps avoid narrow panes. In the
-          Qt implementation, the split ratio also controls how much space each child receives.
-          Minimum pane sizes need care when the available space gets small; a layout heuristic alone
-          cannot guarantee every module will fit.
+          <figcaption className="label mt-3">
+            A leaf becomes a split; removing one child promotes its sibling into the parent’s space.
+          </figcaption>
+        </figure>
+        <h4>1. Split</h4>
+        <p>
+          Adding a panel replaces the target leaf with an internal node holding the old and new
+          leaves. If no target is supplied, the implementation walks to the leftmost leaf. The line
+          that makes this “dwindle” is the orientation choice: <code>height ≥ width</code> means
+          top/bottom; otherwise the children go left/right. Cutting the longer dimension helps panes
+          stay close to square as the tree deepens.
         </p>
-        <details className="border-rule mt-6 rounded-sm border p-4">
-          <summary className="text-sm cursor-pointer">A detail from the C++ implementation</summary>
-          <div className="mt-4 space-y-4">
-            <pre className="overflow-x-auto text-xs leading-7">
-              <code>{`// Choose the split direction from the target panel.\nnewParent->splitTop =\n    (target->box.height() >= target->box.width());\n\n// Calculate the first child's width.\nint w0 = (int)(n->box.width() / 2.0f * n->splitRatio);\nw0 = std::max(min_pane_w_,\n    std::min(w0, n->box.width() - min_pane_w_));`}</code>
-            </pre>
-            <p className="text-text-dim">
-              The nested <code>max/min</code> is deliberate. When a box becomes smaller than twice
-              the minimum pane width, the lower and upper bounds cross. Passing those bounds to{" "}
-              <code>std::clamp</code> would be invalid. The guard avoids that operation, though very
-              small windows still need a layout policy for overflow.
-            </p>
-          </div>
-        </details>
-      </section>
-    </>
+        <CodeExcerpt title="Split implementation · dwindle_tree.cpp" code={HMI_CODE.split} />
+        <h4>2. Geometry</h4>
+        <p>
+          The root receives the available rectangle. A recursive descent calculates a rectangle for
+          each child and eventually assigns geometry to its widget. The default split ratio is 1, so
+          multiplying the extent by <code>splitRatio / 2</code> gives a 50/50 split. The second
+          child receives the remaining pixels, and the gap is applied at each leaf.
+        </p>
+        <CodeExcerpt title="Recursive geometry · dwindle_tree.cpp" code={HMI_CODE.geometry} />
+        <p>
+          The <code>max(min())</code> comment is worth keeping: <code>std::clamp</code> has
+          undefined behaviour when its lower bound exceeds its upper bound. That happens here when a
+          box shrinks below twice the minimum pane size. The nested operations avoid that invalid
+          call; the UI still needs to handle cases where the available space cannot accommodate both
+          minimum sizes.
+        </p>
+        <h4>3. Collapse</h4>
+        <p>
+          Removing a panel deletes the leaf and its parent. The sibling takes the parent’s slot in
+          the tree and inherits its box, reclaiming the space from the panel that closed. The same
+          operation works at the root and deeper in the tree.
+        </p>
+        <CodeExcerpt title="Sibling promotion · dwindle_tree.cpp" code={HMI_CODE.collapse} />
+      </div>
+      <div id="hmi-equations" className="study-subsection">
+        <h3>The equations behind the layout</h3>
+        <p>
+          With parent width <code>w</code>, height <code>h</code>, ratio <code>r</code>, and minimum
+          extent <code>m</code>, the same few equations describe splitting and resizing. The
+          aspect-ratio bound applies to ideal equal splits once a pane enters the stated band;
+          integer rounding, minimum sizes, and manual resizing need separate treatment.
+        </p>
+        <div className="overflow-x-auto">
+          <table className="study-table">
+            <caption className="sr-only">Dwindle equation summary</caption>
+            <thead>
+              <tr>
+                <th scope="col">Operation</th>
+                <th scope="col">Equation and interpretation</th>
+              </tr>
+            </thead>
+            <tbody>
+              {equations.map(([name, equation, note]) => (
+                <tr key={name}>
+                  <th scope="row">{name}</th>
+                  <td>
+                    <code>{equation}</code>
+                    <span>{note}</span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div id="next-steps" className="study-subsection">
+        <h3>Where I want to take the HMI next</h3>
+        <p>
+          My original roadmap included power-distribution and lighting telemetry over CAN, more
+          science sensor telemetry and a visual roadmap, digital-twin reliability, visually
+          intuitive inverse kinematic control, SLAM operator visualisation, and better BSP-based
+          panel management.
+        </p>
+        <p>
+          Since that draft, I’ve built a reliable telemetry-driven digital twin and progressed from
+          IK control to IK-driven task completion. Those are part of the supporting systems below.
+          The remaining HMI work is about bringing more of those capabilities into a clear operator
+          workflow and continuing to improve panel management.
+        </p>
+      </div>
+    </section>
+  );
+}
+function CodeExcerpt({ title, code }: { title: string; code: string }) {
+  return (
+    <details className="study-code">
+      <summary>{title}</summary>
+      <pre>
+        <code>{code}</code>
+      </pre>
+    </details>
   );
 }

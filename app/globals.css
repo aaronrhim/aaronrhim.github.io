@@ -277,6 +277,9 @@ html[data-theme="dark"] {
   grid-template-columns: 190px minmax(0, 1fr);
   gap: 4rem;
 }
+.case-layout > * {
+  min-width: 0;
+}
 .case-nav {
   position: sticky;
   top: 6rem;
@@ -445,5 +448,175 @@ html[data-theme="dark"] {
   *::after {
     animation: none !important;
     transition: none !important;
+  }
+}
+
+/* Long-form Rover projects keep their own subsection hierarchy. */
+.study-prose > p,
+.study-subsection > p {
+  color: var(--text-dim);
+  font-size: 1rem;
+  line-height: 1.85;
+  max-width: 68ch;
+  margin-top: 1rem;
+}
+.study-prose > ul {
+  list-style: disc;
+  padding-left: 1.3rem;
+  margin-top: 1rem;
+  color: var(--text-dim);
+  line-height: 1.9;
+}
+.study-subsection {
+  margin-top: 2.75rem;
+}
+.study-subsection h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+.study-subsection h4 {
+  font-size: 1.1rem;
+  margin-top: 1.75rem;
+}
+.study-code {
+  margin: 1.25rem 0;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--card);
+}
+.study-code summary {
+  cursor: pointer;
+  padding: 1rem;
+  font-size: 0.8rem;
+}
+.study-code pre {
+  overflow-x: auto;
+  padding: 1rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.75rem;
+  line-height: 1.8;
+}
+.study-code pre code {
+  background: transparent;
+  padding: 0;
+}
+.study-table {
+  width: 100%;
+  margin-top: 1.5rem;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  line-height: 1.65;
+  text-align: left;
+}
+.study-table caption {
+  text-align: left;
+  margin-bottom: 1rem;
+  color: var(--text-dim);
+  font: 0.7rem/1.7 var(--font-mono);
+}
+.study-table th,
+.study-table td {
+  border-bottom: 1px solid var(--rule);
+  padding: 0.85rem 0.65rem;
+  vertical-align: top;
+}
+.study-table th {
+  font-weight: 500;
+}
+.study-table thead {
+  background: var(--bg-raised);
+}
+.study-table td > span {
+  display: block;
+  margin-top: 0.45rem;
+  color: var(--text-dim);
+}
+.study-table code {
+  overflow-wrap: anywhere;
+}
+.study-formula {
+  background: var(--accent-wash);
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+  overflow-wrap: anywhere;
+}
+.rl-result {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  align-items: center;
+  border-block: 1px solid var(--rule);
+  padding: 1.5rem 0;
+  margin: 1.5rem 0;
+}
+.rl-result > strong {
+  font: 2.4rem var(--font-mono);
+  color: var(--accent);
+}
+.rover-project-index {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+.rover-project-index a {
+  padding: 1.25rem;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  background: var(--card);
+  color: var(--text);
+}
+.rover-project-index strong {
+  display: block;
+  font-weight: 500;
+  margin: 0.5rem 0;
+  font-size: 1.25rem;
+}
+.rover-project-index p {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.case-nav .nav-child {
+  padding-left: 0.8rem;
+  font-size: 0.7rem;
+}
+.case-nav .nav-primary {
+  font-weight: 500;
+  color: var(--text);
+  margin-top: 0.6rem;
+}
+.dwindle-diagram {
+  display: grid;
+  grid-template-columns: 1fr auto 1.4fr auto 1fr;
+  align-items: center;
+  gap: 0.6rem;
+}
+.diagram-pane {
+  flex: 1;
+  min-width: 0;
+  background: var(--accent-wash);
+  border: 1px solid var(--rule-strong);
+  padding: 1.2rem 0.4rem;
+  font: 0.6rem var(--font-mono);
+  text-align: center;
+}
+@media (max-width: 640px) {
+  .rover-project-index {
+    grid-template-columns: 1fr;
+  }
+  .dwindle-diagram {
+    grid-template-columns: 1fr;
+  }
+  .dwindle-diagram > span {
+    transform: rotate(90deg);
+    justify-self: center;
+  }
+  .case-nav .nav-child {
+    display: none;
+  }
+  .study-table th,
+  .study-table td {
+    padding-inline: 0.35rem;
   }
 }

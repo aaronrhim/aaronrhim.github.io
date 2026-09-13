@@ -79,13 +79,14 @@ export default function Home() {
             <div className="feature-copy">
               <p className="label">01 / UBC ROVER · 2025–PRESENT</p>
               <h3>
-                From motor commands
+                An interface for the driver.
                 <br />
-                to a moving rover.
+                Learning for the arm.
               </h3>
               <p className="text-text-dim leading-relaxed">
-                The software behind our 6-DOF arm: a faster hardware interface, inverse kinematics,
-                reinforcement learning, and an HMI built around what the driver needs.
+                My two main projects on UBC Rover: the human–machine interface and reinforcement
+                learning for our 6-DOF arm. From a modular operator workspace to learning how to
+                approach and press a keyboard key.
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
                 {["C++", "ROS 2", "CAN-FD", "MuJoCo", "Qt"].map((s) => (
